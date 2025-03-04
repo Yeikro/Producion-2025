@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1304743812435831653}
   - component: {fileID: 5399951253533176317}
   - component: {fileID: 5087922202993807036}
+  - component: {fileID: 1083153123509975312}
   m_Layer: 5
   m_Name: PlayerListItem
   m_TagString: Untagged
@@ -35,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 70}
+  m_SizeDelta: {x: 600, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5399951253533176317
 CanvasRenderer:
@@ -134,3 +135,16 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1083153123509975312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7597723986283741982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aaa37869bb9b4145a9b34a58ae15f53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 5087922202993807036}
