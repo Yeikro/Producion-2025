@@ -324,6 +324,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animaciones: {fileID: 986232929}
+  controlMover:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Control Mover
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 4f81a558-9fb2-43fb-b1a1-ce829db670b5
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 715768915168859155, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
+  controlSalto:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Control Salto
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: a2a733c5-0874-4984-86de-3da7d1e359ec
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 3425873001818529045, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
+  controlAtaque:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Control Ataque
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 44a70ef6-aa99-4f83-bdd6-c68d832544f0
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 8856210028824350981, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
+  controlDefender:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Control Defender
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: d6ad29bd-ba38-445f-a619-3e99656577d5
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -4210573670837300276, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
+  controlAgacharse:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Control Agacharse
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: c0a114e4-c772-4478-95e5-3715f4c883ed
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 8027445852265682469, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
+  velSuavisada: 10
 --- !u!95 &986232929 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
@@ -334,6 +395,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
   m_PrefabInstance: {fileID: 1640432631}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &986232931
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986232927}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &986232932
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986232927}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1640432631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,6 +511,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 986232928}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 986232932}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 986232931}
   m_SourcePrefab: {fileID: 100100000, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
 --- !u!1 &1869588468
 GameObject:
