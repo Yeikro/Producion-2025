@@ -55,9 +55,9 @@ public class Launcher : MonoBehaviourPunCallbacks
         MenuManager.Instance.OpenMenu("room");
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
-        Player[] players = PhotonNetwork.PlayerList.;
+        Player[] players = PhotonNetwork.PlayerList;
 
-        for (int i = 0; i < players.Count(); i++)
+        for (int i = 0; i < players.Length; i++)
         {
             Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListitem>().SetUp(players[i]);
         }
