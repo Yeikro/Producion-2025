@@ -13,6 +13,9 @@ public class ControlDePersonaje : MonoBehaviour
     public InputActionProperty controlAgacharse;
     Vector2 movimiento;
     public float velSuavisada;
+
+    public Transform pivot;
+    public Transform camara;
     private void Start()
     {
         controlMover.action.Enable();
@@ -45,7 +48,14 @@ public class ControlDePersonaje : MonoBehaviour
         animaciones.SetBool("Defens", controlDefender.action.ReadValue<float>()>0.5f);
         animaciones.SetBool("Down" , controlAgacharse.action.ReadValue<float>()>0.5f);
 
+        pivot.position = transform.position;
+        pivot.forward = (pivot.position - camara.position).normalized;
+        pivot.eulerAngles = new Vector3(0, pivot.eulerAngles.y, 0);
 
+        if (movimiento.y > 0.5)
+        {
+            transform.forward = pivot.forward;
+        }
     }
 
 }
