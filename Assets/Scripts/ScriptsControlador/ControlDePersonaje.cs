@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using Cinemachine;
 
 public class ControlDePersonaje : MonoBehaviour
 {
@@ -24,11 +25,13 @@ public class ControlDePersonaje : MonoBehaviour
 
     void Awake()
     {
-        PV = GetComponentInParent<PhotonView>();
+        PV = GetComponent<PhotonView>();
     }
 
     private void Start()
     {
+        pivot = (new GameObject()).transform;
+        camara = Camera.main.transform;
         controlMover.action.Enable();
         controlSalto.action.Enable();
         controlAtaque.action.Enable();
@@ -36,6 +39,11 @@ public class ControlDePersonaje : MonoBehaviour
         controlAgacharse.action.Enable();
         controlSalto.action.performed += _ => Saltar();
         controlAtaque.action.performed += _ => Ataque();
+        CinemachineFreeLook cfl = Camera.main.GetComponent<CinemachineFreeLook>();
+        if (cfl!=null)
+        {
+            cfl.LookAt = transform;
+        }
     }
     public void Saltar()
     {
