@@ -14,6 +14,8 @@ public class ControlDePersonaje : MonoBehaviour
     public InputActionProperty controlAgacharse;
     Vector2 movimiento;
     public float velSuavisada;
+    public Rigidbody rb;
+    public Vector3 fuerzaSalto;
 
     public Transform pivot;
     public Transform camara;
@@ -38,6 +40,11 @@ public class ControlDePersonaje : MonoBehaviour
     public void Saltar()
     {
         animaciones.SetTrigger("Jump");
+    }
+    public void AplicarSalto()
+    {
+        rb.velocity = fuerzaSalto;
+
     }
     public void Ataque()
     {
