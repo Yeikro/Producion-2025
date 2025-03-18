@@ -23,7 +23,7 @@ public class Enemigo : MonoBehaviour
 
     public bool vivo = true;
 
-    private void Awake()
+    public void Awake()
     {
         if (autoseleccionarTarget)
             target = GameObject.FindGameObjectWithTag("Player").transform;
