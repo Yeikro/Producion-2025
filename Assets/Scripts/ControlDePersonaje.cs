@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class ControlDePersonaje : MonoBehaviour
 {
@@ -16,6 +17,14 @@ public class ControlDePersonaje : MonoBehaviour
 
     public Transform pivot;
     public Transform camara;
+
+    PhotonView PV;
+
+    void Awake()
+    {
+        PV = GetComponentInParent<PhotonView>();
+    }
+
     private void Start()
     {
         controlMover.action.Enable();
@@ -25,8 +34,6 @@ public class ControlDePersonaje : MonoBehaviour
         controlAgacharse.action.Enable();
         controlSalto.action.performed += _ => Saltar();
         controlAtaque.action.performed += _ => Ataque();
-        
-
     }
     public void Saltar()
     {
@@ -40,6 +47,9 @@ public class ControlDePersonaje : MonoBehaviour
 
     void Update()
     {
+        if (!PV.IsMine)
+            return;
+
         movimiento = Vector2.Lerp(movimiento, controlMover.action.ReadValue<Vector2>(), velSuavisada * Time.deltaTime);
 
         animaciones.SetFloat("Horizontal", movimiento.x);
