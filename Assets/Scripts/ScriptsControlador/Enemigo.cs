@@ -58,6 +58,7 @@ public class Enemigo : MonoBehaviour
                 EstadoIdle();
                 break;
             case Estados.Seguir:
+                transform.LookAt(target, Vector3.up);
                 EstadoSeguir();
                 break;
             case Estados.Atacar:
