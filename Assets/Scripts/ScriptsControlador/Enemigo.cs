@@ -25,11 +25,15 @@ public class Enemigo : MonoBehaviour
 
     public void Awake()
     {
-        if (autoseleccionarTarget)
-            target = GameObject.FindGameObjectWithTag("Player").transform;
+        
         StartCoroutine(CalcularDistancia());
     }
 
+    public void Start()
+    {
+        if (autoseleccionarTarget)
+           target = Personaje.singleton.transform;
+    }
 
 
     public void LateUpdate()
@@ -126,9 +130,10 @@ public class Enemigo : MonoBehaviour
         while (vivo) {
             if (target != null)
             {
+                yield return new WaitForSeconds(0.2f);
                 distancia = Vector3.Distance(transform.position, target.position);
             }
-            yield return new WaitForSeconds(0.3f);
+            
         }
     }
 }

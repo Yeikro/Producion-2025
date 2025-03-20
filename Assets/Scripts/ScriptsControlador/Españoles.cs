@@ -48,6 +48,12 @@ public class Españoles : Enemigo
         agente.enabled = false;
     }
 
+    [ContextMenu("Matar")]
+    public void Matar()
+    {
+        CambiarDeEstado(Estados.Muerto);
+    }
+
     public void Atacar()
     {
 
