@@ -21,6 +21,8 @@ public class ControlDePersonaje : MonoBehaviour
     public Transform pivot;
     public Transform camara;
 
+    public Transform camaraPunto;
+
     PhotonView PV;
 
     void Awake()
@@ -30,6 +32,16 @@ public class ControlDePersonaje : MonoBehaviour
 
     private void Start()
     {
+        if (PV.IsMine)
+        {
+            CameraManager.instance.Inicializar(transform, camaraPunto);
+        }
+
+        if (!PV.IsMine)
+        {
+            rb.isKinematic = true;
+        }
+
         pivot = (new GameObject()).transform;
         camara = Camera.main.transform;
         controlMover.action.Enable();
@@ -47,15 +59,18 @@ public class ControlDePersonaje : MonoBehaviour
     }
     public void Saltar()
     {
+        if (!PV.IsMine) return;
         animaciones.SetTrigger("Jump");
     }
     public void AplicarSalto()
     {
+        if (!PV.IsMine) return;
         rb.velocity = fuerzaSalto;
 
     }
     public void Ataque()
     {
+        if (!PV.IsMine) return;
         animaciones.SetTrigger("Atack");
     }
     
