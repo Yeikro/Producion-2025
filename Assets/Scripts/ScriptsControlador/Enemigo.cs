@@ -26,11 +26,19 @@ public class Enemigo : MonoBehaviour
 
     public void Awake()
     {
-        if (autoseleccionarTarget)
-            target = GameObject.FindGameObjectWithTag("Player").transform;
-
         StartCoroutine(CalcularDistancia());
-        vida = vidaMaxima;
+        PosAwake();
+        //vida = vidaMaxima;
+    }
+    public virtual void PosAwake()
+    {
+
+    }
+
+     private void Start()
+    {
+        if (autoseleccionarTarget)
+            target = Personaje.singleton.transform;
     }
 
     public void LateUpdate()
@@ -122,7 +130,7 @@ public class Enemigo : MonoBehaviour
     public virtual void EstadoMuerto()
     {
         vivo = false;
-        Debug.Log("El enemigo ha muerto.");
+        //Debug.Log("El enemigo ha muerto.");
         gameObject.SetActive(false);
     }
 
@@ -132,24 +140,25 @@ public class Enemigo : MonoBehaviour
         {
             if (target != null)
             {
+                yield return new WaitForSeconds(0.5f);
                 distancia = Vector3.Distance(transform.position, target.position);
             }
-            yield return new WaitForSeconds(0.3f);
+            
         }
     }
 
-    public void RecibirDaño(float cantidad)
-    {
-        if (!vivo) return;
+    //public void RecibirDaño(float cantidad)
+    //{
+    //    if (!vivo) return;
 
-        vida -= cantidad;
-        Debug.Log($"El enemigo recibió {cantidad} de daño. Vida restante: {vida}");
+    //    vida -= cantidad;
+    //    Debug.Log($"El enemigo recibió {cantidad} de daño. Vida restante: {vida}");
 
-        if (vida <= 0)
-        {
-            CambiarDeEstado(Estados.Muerto);
-        }
-    }
+    //    if (vida <= 0)
+    //    {
+    //        CambiarDeEstado(Estados.Muerto);
+    //    }
+    //}
 }
 
 public enum Estados

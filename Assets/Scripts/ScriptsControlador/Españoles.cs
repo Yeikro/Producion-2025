@@ -9,12 +9,18 @@ public class Españoles : Enemigo
 {
     private NavMeshAgent agente;
     public Animator animaciones;
+    public float daño = 2;
 
-    private void Awake()
+    public override void PosAwake()
     {
-        base.Awake();
         agente = GetComponent<NavMeshAgent>();
+
     }
+
+    //private void Awake()
+    //{
+    //    base.Awake();
+    //}
 
     public override void EstadoIdle()
     {
@@ -48,9 +54,16 @@ public class Españoles : Enemigo
         agente.enabled = false;
     }
 
+    [ContextMenu("Matar")]
+
+    public void Matar()
+    {
+        CambiarEstado(Estados.Muerto);
+    }
+
     public void Atacar()
     {
-
+        Personaje
     }
 
 }
