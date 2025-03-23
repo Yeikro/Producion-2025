@@ -1005,6 +1005,48 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &986232933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986232927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575e601abdac3c146a23a1b2319e82b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: {fileID: 986232934}
+--- !u!114 &986232934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986232927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dc0b7d1833b847b9bab70708e84a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vidaInicial: 20
+  vidaActual: 0
+  eventoMorir:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 986232927}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1139522814
 GameObject:
   m_ObjectHideFlags: 3
@@ -1076,7 +1118,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139522814}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12665445, y: 0.10271048, z: -0.013186401, w: 0.9865269}
+  m_LocalRotation: {x: 0.12665445, y: 0.10271048, z: -0.0131864, w: 0.98652697}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1400,6 +1442,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 986232931}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 986232934}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 986232933}
   m_SourcePrefab: {fileID: 100100000, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
 --- !u!1 &1869588468
 GameObject:
@@ -1540,11 +1588,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.54
+      value: 8.29
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1574,6 +1622,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -865846996755231412, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
       propertyPath: m_Name
       value: Skeletonzombie T Avelange
@@ -1592,6 +1644,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2076431743}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2076431747}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2076431748}
   m_SourcePrefab: {fileID: 100100000, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
 --- !u!1 &2076431742 stripped
 GameObject:
@@ -1615,10 +1673,13 @@ MonoBehaviour:
   distanciaAtacar: 1.3
   distanciaEscapar: 3.43
   autoseleccionarTarget: 1
-  target: {fileID: 0}
-  distancia: 3
+  target: {fileID: 986232930}
+  distancia: 1
   vivo: 1
+  vidaMaxima: 100
+  vida: 0
   animaciones: {fileID: 2076431745}
+  "da\xF1o": 2
 --- !u!195 &2076431744
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1646,6 +1707,56 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: cec2c0a24e8197541a56d143cc1966da, type: 3}
   m_PrefabInstance: {fileID: 2076431741}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &2076431747
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076431742}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.31291747
+  m_Height: 2.2499938
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.93361497, z: -0.18708253}
+--- !u!54 &2076431748
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076431742}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

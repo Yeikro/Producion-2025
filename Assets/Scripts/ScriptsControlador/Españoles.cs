@@ -10,6 +10,7 @@ public class Españoles : Enemigo
     private NavMeshAgent agente;
     public Animator animaciones;
     public float daño = 2;
+    
 
     public override void PosAwake()
     {
@@ -17,10 +18,10 @@ public class Españoles : Enemigo
 
     }
 
-    //private void Awake()
-    //{
-    //    base.Awake();
-    //}
+    private void Awake()
+    {
+        base.Awake();
+    }
 
     public override void EstadoIdle()
     {
@@ -36,6 +37,7 @@ public class Españoles : Enemigo
         if (animaciones != null) animaciones.SetFloat("Velocidad", 1);
         if (animaciones != null) animaciones.SetBool("Atacando", false);
         agente.SetDestination(target.position);
+        
     }
 
     public override void EstadoAtaque()
@@ -58,12 +60,12 @@ public class Españoles : Enemigo
 
     public void Matar()
     {
-        CambiarEstado(Estados.Muerto);
+        CambiarDeEstado(Estados.Muerto);
     }
 
     public void Atacar()
     {
-        Personaje
+        Personaje.singleton.vida.CausasDaño(daño);
     }
 
 }

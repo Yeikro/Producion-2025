@@ -28,7 +28,7 @@ public class Enemigo : MonoBehaviour
     {
         StartCoroutine(CalcularDistancia());
         PosAwake();
-        //vida = vidaMaxima;
+        vida = vidaMaxima;
     }
     public virtual void PosAwake()
     {
@@ -109,7 +109,7 @@ public class Enemigo : MonoBehaviour
 
     public virtual void EstadoAtaque()
     {
-        if (distancia > distanciaAtacar + 0.4f)
+        if (distancia > distanciaAtacar + 0.5f)
         {
             CambiarDeEstado(Estados.Seguir);
         }
@@ -138,27 +138,27 @@ public class Enemigo : MonoBehaviour
     {
         while (vivo)
         {
+                yield return new WaitForSeconds(0.5f);
             if (target != null)
             {
-                yield return new WaitForSeconds(0.5f);
                 distancia = Vector3.Distance(transform.position, target.position);
             }
             
         }
     }
 
-    //public void RecibirDaño(float cantidad)
-    //{
-    //    if (!vivo) return;
+    public void RecibirDaño(float cantidad)
+    {
+        if (!vivo) return;
 
-    //    vida -= cantidad;
-    //    Debug.Log($"El enemigo recibió {cantidad} de daño. Vida restante: {vida}");
+        vida -= cantidad;
+        Debug.Log($"El enemigo recibió {cantidad} de daño. Vida restante: {vida}");
 
-    //    if (vida <= 0)
-    //    {
-    //        CambiarDeEstado(Estados.Muerto);
-    //    }
-    //}
+       if (vida <= 0)
+        {
+            CambiarDeEstado(Estados.Muerto);
+        }
+    }
 }
 
 public enum Estados
