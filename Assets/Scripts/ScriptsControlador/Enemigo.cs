@@ -4,8 +4,6 @@ using UnityEngine;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
 
-
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -23,14 +21,25 @@ public class Enemigo : MonoBehaviour
 
     public bool vivo = true;
 
+    public float vidaMaxima = 100f;
+    public float vida;
+
     public void Awake()
     {
-        if (autoseleccionarTarget)
-            target = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(CalcularDistancia());
+        PosAwake();
+        vida = vidaMaxima;
+    }
+    public virtual void PosAwake()
+    {
+
     }
 
-
+     private void Start()
+    {
+        if (autoseleccionarTarget)
+            target = Personaje.singleton.transform;
+    }
 
     public void LateUpdate()
     {
@@ -38,13 +47,12 @@ public class Enemigo : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.red;
         Handles.DrawWireDisc(transform.position, Vector3.up, distanciaAtacar);
         Handles.color = Color.yellow;
-        Handles.DrawWireDisc(transform.position, Vector3.up, distanciaSeguir); 
+        Handles.DrawWireDisc(transform.position, Vector3.up, distanciaSeguir);
         Handles.color = Color.green;
         Handles.DrawWireDisc(transform.position, Vector3.up, distanciaEscapar);
     }
@@ -52,24 +60,24 @@ public class Enemigo : MonoBehaviour
 
     public void CheckEstados()
     {
-        switch (estado) 
+        switch (estado)
         {
             case Estados.Idle:
                 EstadoIdle();
                 break;
             case Estados.Seguir:
+                transform.LookAt(target, Vector3.up);
                 EstadoSeguir();
                 break;
             case Estados.Atacar:
                 EstadoAtaque();
                 break;
             case Estados.Muerto:
-                
+                EstadoMuerto();
                 break;
             default:
                 break;
         }
-
     }
 
     public void CambiarDeEstado(Estados e)
@@ -90,6 +98,7 @@ public class Enemigo : MonoBehaviour
         }
         estado = e;
     }
+
     public virtual void EstadoIdle()
     {
         if (distancia < distanciaSeguir)
@@ -97,44 +106,60 @@ public class Enemigo : MonoBehaviour
             CambiarDeEstado(Estados.Seguir);
         }
     }
+
     public virtual void EstadoAtaque()
     {
-        if (distancia > distanciaAtacar + 0.4f)
+        if (distancia > distanciaAtacar + 0.5f)
         {
-            CambiarDeEstado (Estados.Seguir);
+            CambiarDeEstado(Estados.Seguir);
         }
     }
+
     public virtual void EstadoSeguir()
     {
         if (distancia < distanciaAtacar)
         {
             CambiarDeEstado(Estados.Atacar);
         }
-        else if (distancia> distanciaEscapar)
+        else if (distancia > distanciaEscapar)
         {
             CambiarDeEstado(Estados.Idle);
         }
     }
+
     public virtual void EstadoMuerto()
     {
-
+        vivo = false;
+        //Debug.Log("El enemigo ha muerto.");
+        gameObject.SetActive(false);
     }
 
     IEnumerator CalcularDistancia()
     {
-        while (vivo) {
+        while (vivo)
+        {
+                yield return new WaitForSeconds(0.5f);
             if (target != null)
             {
                 distancia = Vector3.Distance(transform.position, target.position);
             }
-            yield return new WaitForSeconds(0.3f);
+            
+        }
+    }
+
+    public void RecibirDaño(float cantidad)
+    {
+        if (!vivo) return;
+
+        vida -= cantidad;
+        Debug.Log($"El enemigo recibió {cantidad} de daño. Vida restante: {vida}");
+
+       if (vida <= 0)
+        {
+            CambiarDeEstado(Estados.Muerto);
         }
     }
 }
-
-
-
-
 
 public enum Estados
 {
