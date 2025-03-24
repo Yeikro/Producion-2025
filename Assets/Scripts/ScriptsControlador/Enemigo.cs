@@ -21,7 +21,7 @@ public class Enemigo : MonoBehaviour
 
     public bool vivo = true;
 
-    public float vidaMaxima = 100f;
+    public float vidaMaxima = 10f;
     public float vida;
 
     public void Awake()
