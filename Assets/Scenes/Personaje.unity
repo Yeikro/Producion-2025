@@ -1040,6 +1040,7 @@ MonoBehaviour:
   rb: {fileID: 986232931}
   fuerzaSalto: {x: 0, y: 3, z: 0}
   pivot: {fileID: 1275398434}
+  "da\xF1o": 2
   camara: {fileID: 526711640}
 --- !u!95 &986232929 stripped
 Animator:
@@ -1298,6 +1299,37 @@ Transform:
   m_Children:
   - {fileID: 926549933}
   m_Father: {fileID: 526711640}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1265552793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1265552794}
+  m_Layer: 0
+  m_Name: Vacio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1265552794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265552793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.7505496, y: 0.24007046, z: 8.2211895}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1275398433
 GameObject:
@@ -2084,3 +2116,4 @@ SceneRoots:
   - {fileID: 2076431741}
   - {fileID: 990744806}
   - {fileID: 175138408}
+  - {fileID: 1265552794}

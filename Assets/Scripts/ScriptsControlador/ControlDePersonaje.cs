@@ -19,6 +19,7 @@ public class ControlDePersonaje : MonoBehaviour
     public Vector3 fuerzaSalto;
 
     public Transform pivot;
+    public float daño = 2;
     public Transform camara;
 
     public Transform camaraPunto;
@@ -96,6 +97,11 @@ public class ControlDePersonaje : MonoBehaviour
         {
             transform.forward = pivot.forward;
         }
+    }
+
+    public void Atacar()
+    {
+        Personaje.singleton.vida.CausasDaño(daño);
     }
 
 }
