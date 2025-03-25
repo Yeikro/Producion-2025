@@ -57,6 +57,8 @@ public class ControlDePersonaje : MonoBehaviour
         {
             cfl.LookAt = transform;
         }
+
+        ControlObjetivos.singleton.objetivos.Add(this.transform);
     }
     public void Saltar()
     {
@@ -101,7 +103,7 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Atacar()
     {
-        Personaje.singleton.vida.CausasDaño(daño);
+        //Personaje.personajeLocal.vida.CausasDaño(daño);
     }
 
 }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Personaje : MonoBehaviour
 {
-    public static Personaje singleton;
+    public static Personaje personajeLocal;
 
     public Vida vida;
     void Awake()
     {
-        if (singleton == null)
+        if (personajeLocal == null)
         {
-            singleton = this;
+            personajeLocal = this;
         }
         else
         {
