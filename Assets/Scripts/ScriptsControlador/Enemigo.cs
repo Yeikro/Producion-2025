@@ -21,16 +21,24 @@ public class Enemigo : MonoBehaviour
 
     public bool vivo = true;
 
-    public float vidaMaxima = 100f;
+    public float vidaMaxima = 10f;
     public float vida;
 
     public void Awake()
     {
-        if (autoseleccionarTarget)
-            target = GameObject.FindGameObjectWithTag("Player").transform;
-
         StartCoroutine(CalcularDistancia());
+        PosAwake();
         vida = vidaMaxima;
+    }
+    public virtual void PosAwake()
+    {
+
+    }
+
+     private void Start()
+    {
+        if (autoseleccionarTarget)
+            target = Personaje.singleton.transform;
     }
 
     public void LateUpdate()
@@ -58,6 +66,7 @@ public class Enemigo : MonoBehaviour
                 EstadoIdle();
                 break;
             case Estados.Seguir:
+                transform.LookAt(target, Vector3.up);
                 EstadoSeguir();
                 break;
             case Estados.Atacar:
@@ -100,7 +109,7 @@ public class Enemigo : MonoBehaviour
 
     public virtual void EstadoAtaque()
     {
-        if (distancia > distanciaAtacar + 0.4f)
+        if (distancia > distanciaAtacar + 0.5f)
         {
             CambiarDeEstado(Estados.Seguir);
         }
@@ -121,7 +130,7 @@ public class Enemigo : MonoBehaviour
     public virtual void EstadoMuerto()
     {
         vivo = false;
-        Debug.Log("El enemigo ha muerto.");
+        //Debug.Log("El enemigo ha muerto.");
         gameObject.SetActive(false);
     }
 
@@ -129,11 +138,12 @@ public class Enemigo : MonoBehaviour
     {
         while (vivo)
         {
+                yield return new WaitForSeconds(0.5f);
             if (target != null)
             {
                 distancia = Vector3.Distance(transform.position, target.position);
             }
-            yield return new WaitForSeconds(0.3f);
+            
         }
     }
 
@@ -144,7 +154,7 @@ public class Enemigo : MonoBehaviour
         vida -= cantidad;
         Debug.Log($"El enemigo recibió {cantidad} de daño. Vida restante: {vida}");
 
-        if (vida <= 0)
+       if (vida <= 0)
         {
             CambiarDeEstado(Estados.Muerto);
         }
