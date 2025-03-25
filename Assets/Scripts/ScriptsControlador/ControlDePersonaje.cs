@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
+using Cinemachine;
 
 public class ControlDePersonaje : MonoBehaviour
 {
@@ -19,8 +21,30 @@ public class ControlDePersonaje : MonoBehaviour
     public Transform pivot;
     public float daño = 2;
     public Transform camara;
+
+    public Transform camaraPunto;
+
+    PhotonView PV;
+
+    void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
     private void Start()
     {
+        if (PV.IsMine)
+        {
+            CameraManager.instance.Inicializar(transform, camaraPunto);
+        }
+
+        if (!PV.IsMine)
+        {
+            rb.isKinematic = true;
+        }
+
+        pivot = (new GameObject()).transform;
+        camara = Camera.main.transform;
         controlMover.action.Enable();
         controlSalto.action.Enable();
         controlAtaque.action.Enable();
@@ -28,26 +52,35 @@ public class ControlDePersonaje : MonoBehaviour
         controlAgacharse.action.Enable();
         controlSalto.action.performed += _ => Saltar();
         controlAtaque.action.performed += _ => Ataque();
-        
-
+        CinemachineFreeLook cfl = Camera.main.GetComponent<CinemachineFreeLook>();
+        if (cfl!=null)
+        {
+            cfl.LookAt = transform;
+        }
     }
     public void Saltar()
     {
+        if (!PV.IsMine) return;
         animaciones.SetTrigger("Jump");
     }
     public void AplicarSalto()
     {
+        if (!PV.IsMine) return;
         rb.velocity = fuerzaSalto;
 
     }
     public void Ataque()
     {
+        if (!PV.IsMine) return;
         animaciones.SetTrigger("Atack");
     }
     
 
     void Update()
     {
+        if (!PV.IsMine)
+            return;
+
         movimiento = Vector2.Lerp(movimiento, controlMover.action.ReadValue<Vector2>(), velSuavisada * Time.deltaTime);
 
         animaciones.SetFloat("Horizontal", movimiento.x);

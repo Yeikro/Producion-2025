@@ -477,7 +477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409472556}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16237524, y: 0.10395439, z: -0.01720502, w: 0.981087}
+  m_LocalRotation: {x: 0.16237523, y: 0.10395442, z: -0.017205022, w: 0.981087}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1042,6 +1042,7 @@ MonoBehaviour:
   pivot: {fileID: 1275398434}
   "da\xF1o": 2
   camara: {fileID: 526711640}
+  camaraPunto: {fileID: 0}
 --- !u!95 &986232929 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 0a19c19e07ca7b6489f9c112f829963a, type: 3}
