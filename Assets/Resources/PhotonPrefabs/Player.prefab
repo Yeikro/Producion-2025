@@ -1437,6 +1437,8 @@ GameObject:
   - component: {fileID: 6022220599012104446}
   - component: {fileID: 4645519826159433428}
   - component: {fileID: 2181338121538730850}
+  - component: {fileID: 1821441314814717849}
+  - component: {fileID: 8354371859905026614}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1692,6 +1694,48 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &1821441314814717849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292867939082285691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dc0b7d1833b847b9bab70708e84a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vidaInicial: 20
+  vidaActual: 0
+  eventoMorir:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5292867939082285691}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8354371859905026614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292867939082285691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575e601abdac3c146a23a1b2319e82b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: {fileID: 1821441314814717849}
 --- !u!1 &5401853695038201149
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,6 +76,11 @@ public class EnemigoSigue : Enemigo
     public void Atacar()
     {
         //Personaje.personajeLocal.vida.CausasDaño(daño);
+        Vida v = target.GetComponent<Vida>();
+        if (v!=null)
+        {
+            v.CausasDaño(daño);
+        }
     }
 
 }
