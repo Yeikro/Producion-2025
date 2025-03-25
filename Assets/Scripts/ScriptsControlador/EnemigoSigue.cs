@@ -75,7 +75,7 @@ public class EnemigoSigue : Enemigo
 
     public void Atacar()
     {
-        Personaje.singleton.vida.CausasDaño(daño);
+        //Personaje.personajeLocal.vida.CausasDaño(daño);
     }
 
 }

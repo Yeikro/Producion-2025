@@ -1563,6 +1563,7 @@ MonoBehaviour:
   rb: {fileID: 6499592557596025878}
   fuerzaSalto: {x: 0, y: 3, z: 2}
   pivot: {fileID: 0}
+  "da\xF1o": 2
   camara: {fileID: 0}
   camaraPunto: {fileID: 3738445331350671398}
 --- !u!136 &6666563340571142190
