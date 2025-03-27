@@ -46,7 +46,7 @@ public class EnemigoSigue : Enemigo
         base.EstadoSeguir();
         if (animaciones != null) animaciones.SetFloat("Velocidad", 1);
         if (animaciones != null) animaciones.SetBool("Atacando", false);
-        agente.SetDestination(target.position);
+        if (target != null) agente.SetDestination(target.position);
 
     }
 
