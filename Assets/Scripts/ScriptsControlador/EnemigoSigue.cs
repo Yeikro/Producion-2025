@@ -79,7 +79,8 @@ public class EnemigoSigue : Enemigo
         Vida v = target.GetComponent<Vida>();
         if (v!=null)
         {
-            v.CausasDaño(daño);
+           v.CausasDaño(daño);
+           
         }
     }
 

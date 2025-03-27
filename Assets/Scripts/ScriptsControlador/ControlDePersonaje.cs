@@ -104,6 +104,7 @@ public class ControlDePersonaje : MonoBehaviour
     public void Atacar()
     {
         //Personaje.personajeLocal.vida.CausasDaño(daño);
+
     }
 
 }

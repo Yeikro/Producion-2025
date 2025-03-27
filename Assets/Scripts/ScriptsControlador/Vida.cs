@@ -23,4 +23,5 @@ public class Vida : MonoBehaviour
             eventoMorir.Invoke();
         }
     }
+    
 }

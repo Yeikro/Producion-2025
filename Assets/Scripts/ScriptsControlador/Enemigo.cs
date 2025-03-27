@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Events;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -22,6 +24,7 @@ public class Enemigo : MonoBehaviour
 
     public float vidaMaxima = 10f;
     public float vida;
+    public UnityEvent eventoMorir;
 
     PhotonView PV;
 
@@ -44,7 +47,7 @@ public class Enemigo : MonoBehaviour
      private void Start()
     {
         if (autoseleccionarTarget)
-            target = Personaje.personajeLocal.transform;
+            CalcularTarget();
     }
 
     public void CalcularTarget()
@@ -112,6 +115,7 @@ public class Enemigo : MonoBehaviour
                 break;
             case Estados.Muerto:
                 vivo = false;
+                transform.position = PuntosRespown.singleton.GetPosEnemigo().position;
                 break;
             default:
                 break;
@@ -180,6 +184,22 @@ public class Enemigo : MonoBehaviour
             CambiarDeEstado(Estados.Muerto);
         }
     }
+    public void CausasDaño(float cuanto)
+    {
+        vidaMaxima -= cuanto;
+        if (vida < 0)
+        {
+            print("Muerto!! ->" + gameObject.name);
+            eventoMorir.Invoke();
+            CambiarDeEstado(Estados.Muerto);
+        }
+    }
+    [ContextMenu("CausarDaño")]
+    public void Dañar()
+    {
+        CausasDaño(5);
+    }
+    
 }
 
 public enum Estados
