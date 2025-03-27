@@ -44,7 +44,7 @@ public class Enemigo : MonoBehaviour
      private void Start()
     {
         if (autoseleccionarTarget)
-            target = Personaje.personajeLocal.transform;
+            CalcularTarget();
     }
 
     public void CalcularTarget()
