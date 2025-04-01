@@ -70,7 +70,7 @@ public class EnemigoSigue : Enemigo
 
     public void Matar()
     {
-        if (estado!=Estados.Muerto)
+        if (vivo)
         {
             CambiarDeEstado(Estados.Muerto);
             Invoke("Respawn", 5f);
@@ -96,6 +96,8 @@ public class EnemigoSigue : Enemigo
         transform.position = puntoRespawn.position;
 
         CambiarDeEstado(Estados.Idle);
+        vida = vidaMaxima;
+        vivo = true;
         Debug.Log("¡Has reaparecido!");
     }
 
