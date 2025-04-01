@@ -15,7 +15,7 @@ public class Personaje : MonoBehaviour
         }
         else
         {
-            DestroyImmediate(this.gameObject);
+            //DestroyImmediate(this.gameObject);
         }
     }
 }

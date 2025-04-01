@@ -44,8 +44,10 @@ public class Enemigo : MonoBehaviour
 
     }
 
-     private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
+        yield return null;
         if (autoseleccionarTarget)
             CalcularTarget();
     }
