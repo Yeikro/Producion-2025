@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +15,8 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMenu(string menuName)
     {
+        Launcher.Instance.GenerarNombreUnico();  // 🔹 Genera un nombre único cuando se abra la UI.
+
         for (int i = 0; i < menus.Length; i++)
         {
             if (menus[i].menuName == menuName)
