@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,14 @@ public class Vida : MonoBehaviour
     public float vidaInicial;
     public float vidaActual;
     public UnityEvent eventoMorir;
+    public bool estaMuerto = false;
+
     void Start()
     {
-        vidaActual = vidaInicial;
+        Reiniciar();
     }
 
-  
+
     public void CausasDaño(float cuanto)
     {
         vidaActual -= cuanto;
@@ -21,7 +24,14 @@ public class Vida : MonoBehaviour
         {
             print("Muerto!! ->" + gameObject.name);
             eventoMorir.Invoke();
+            estaMuerto= true;
         }
     }
-    
+
+    public void Reiniciar()
+    {
+        vidaActual = vidaInicial;
+        estaMuerto= false;
+    }
+
 }

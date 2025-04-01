@@ -26,6 +26,12 @@ public class ControlDePersonaje : MonoBehaviour
 
     PhotonView PV;
 
+    public float rangoAtaque = 3f;
+    public float dañoRaycast = 5f;
+    public LayerMask capaEnemigos;
+    public Vida vida;
+
+
     void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -104,7 +110,46 @@ public class ControlDePersonaje : MonoBehaviour
     public void Atacar()
     {
         //Personaje.personajeLocal.vida.CausasDaño(daño);
+        if (!PV.IsMine) return;
 
+        // Crear un raycast desde el personaje hacia adelante
+        RaycastHit hit;
+        Vector3 direccionAtaque = transform.forward;
+        Vector3 origen = transform.position + Vector3.up; // Ajusta la altura según necesites
+
+        Debug.DrawRay(origen, direccionAtaque * rangoAtaque, Color.red, 1f);
+
+        if (Physics.Raycast(origen, direccionAtaque, out hit, rangoAtaque, capaEnemigos))
+        {
+            // Verificar si el objeto golpeado es un enemigo español
+            Enemigo enemigo = hit.collider.GetComponent<Enemigo>();
+            if (enemigo != null)
+            {
+                // Aplicar daño al enemigo
+                enemigo.RecibirDaño(dañoRaycast);
+                Debug.Log("¡Golpeaste a un enemigo español!");
+            }
+
+        }
     }
 
+    public void Morir()
+    {
+        if (!vida.estaMuerto)
+        {
+            Invoke("Respawn", 5f);
+        }
+    }
+
+    public void Respawn()
+    {
+
+        // Obtiene una posición aleatoria de respawn
+        Transform puntoRespawn = PuntosRespown.singleton.GetPosPersonaje();
+        transform.position = puntoRespawn.position;
+
+        vida.Reiniciar();
+
+        Debug.Log("¡Has reaparecido!");
+    }
 }

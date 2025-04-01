@@ -1568,6 +1568,12 @@ MonoBehaviour:
   "da\xF1o": 2
   camara: {fileID: 0}
   camaraPunto: {fileID: 3738445331350671398}
+  rangoAtaque: 3
+  "da\xF1oRaycast": 2
+  capaEnemigos:
+    serializedVersion: 2
+    m_Bits: 64
+  vida: {fileID: 1821441314814717849}
 --- !u!136 &6666563340571142190
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1711,10 +1717,10 @@ MonoBehaviour:
   eventoMorir:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5292867939082285691}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 759808118104847036}
+        m_TargetAssemblyTypeName: ControlDePersonaje, Assembly-CSharp
+        m_MethodName: Morir
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1723,6 +1729,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  estaMuerto: 0
 --- !u!114 &8354371859905026614
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -70,7 +70,11 @@ public class EnemigoSigue : Enemigo
 
     public void Matar()
     {
-        CambiarDeEstado(Estados.Muerto);
+        if (estado!=Estados.Muerto)
+        {
+            CambiarDeEstado(Estados.Muerto);
+            Invoke("Respawn", 5f);
+        }
     }
 
     public void Atacar()
@@ -82,6 +86,17 @@ public class EnemigoSigue : Enemigo
            v.CausasDaño(daño);
            
         }
+    }
+
+    public void Respawn()
+    {
+
+        // Obtiene una posición aleatoria de respawn
+        Transform puntoRespawn = PuntosRespown.singleton.GetPosEnemigo();
+        transform.position = puntoRespawn.position;
+
+        CambiarDeEstado(Estados.Idle);
+        Debug.Log("¡Has reaparecido!");
     }
 
 }

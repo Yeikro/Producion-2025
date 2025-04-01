@@ -155,7 +155,7 @@ public class Enemigo : MonoBehaviour
     {
         vivo = false;
         //Debug.Log("El enemigo ha muerto.");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     IEnumerator CalcularDistancia()
