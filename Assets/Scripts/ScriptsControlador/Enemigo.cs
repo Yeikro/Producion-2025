@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Events;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -22,6 +24,7 @@ public class Enemigo : MonoBehaviour
 
     public float vidaMaxima = 10f;
     public float vida;
+    public UnityEvent eventoMorir;
 
     PhotonView PV;
 
@@ -114,6 +117,7 @@ public class Enemigo : MonoBehaviour
                 break;
             case Estados.Muerto:
                 vivo = false;
+                transform.position = PuntosRespown.singleton.GetPosEnemigo().position;
                 break;
             default:
                 break;
@@ -153,7 +157,7 @@ public class Enemigo : MonoBehaviour
     {
         vivo = false;
         //Debug.Log("El enemigo ha muerto.");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     IEnumerator CalcularDistancia()
@@ -182,6 +186,22 @@ public class Enemigo : MonoBehaviour
             CambiarDeEstado(Estados.Muerto);
         }
     }
+    public void CausasDaño(float cuanto)
+    {
+        vidaMaxima -= cuanto;
+        if (vida < 0)
+        {
+            print("Muerto!! ->" + gameObject.name);
+            eventoMorir.Invoke();
+            CambiarDeEstado(Estados.Muerto);
+        }
+    }
+    [ContextMenu("CausarDaño")]
+    public void Dañar()
+    {
+        CausasDaño(5);
+    }
+    
 }
 
 public enum Estados
