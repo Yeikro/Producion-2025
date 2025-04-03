@@ -117,7 +117,7 @@ public class Enemigo : MonoBehaviour
                 break;
             case Estados.Muerto:
                 vivo = false;
-                transform.position = PuntosRespown.singleton.GetPosEnemigo().position;
+                
                 break;
             default:
                 break;
@@ -183,7 +183,7 @@ public class Enemigo : MonoBehaviour
 
        if (vida <= 0)
         {
-            CambiarDeEstado(Estados.Muerto);
+            //CambiarDeEstado(Estados.Muerto);
             eventoMorir.Invoke();
         }
     }

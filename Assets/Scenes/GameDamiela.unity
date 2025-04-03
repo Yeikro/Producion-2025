@@ -899,7 +899,7 @@ Transform:
   m_GameObject: {fileID: 1332638915}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4191318, y: 0.95, z: -0.21121979}
+  m_LocalPosition: {x: -2.4191318, y: -2.17, z: -0.21121979}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1026,9 +1026,8 @@ MonoBehaviour:
         m_CallState: 2
   animaciones: {fileID: 1379214678}
   checkPoint:
-  - {fileID: 1543447320}
   - {fileID: 203561174}
-  - {fileID: 510134650}
+  - {fileID: 1543447320}
   distanciaCheckPoint: 1
   "da\xF1o": 2
 --- !u!1 &1543447319
@@ -1203,6 +1202,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraFreeLook: {fileID: 4300775973464142567}
+--- !u!1 &1825409827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1825409829}
+  - component: {fileID: 1825409828}
+  m_Layer: 0
+  m_Name: Diosa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1825409828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825409827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec06633473f8f43be8f2b6c4ee10b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modo: 1
+--- !u!4 &1825409829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825409827}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.36797, y: -3.9233332, z: -14.430562}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1910532324
 GameObject:
   m_ObjectHideFlags: 0
@@ -2013,6 +2057,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1825409829}
   - {fileID: 432971093}
   - {fileID: 43305351}
   - {fileID: 4653738139223729476}
