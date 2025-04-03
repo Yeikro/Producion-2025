@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.VisualScripting;
-using UnityEngine.UIElements;
+using Photon.Pun;
+using UnityEngine.Events;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -23,24 +24,48 @@ public class Enemigo : MonoBehaviour
 
     public float vidaMaxima = 10f;
     public float vida;
+    public UnityEvent eventoMorir;
+
+    PhotonView PV;
 
     public void Awake()
     {
         StartCoroutine(CalcularDistancia());
         PosAwake();
         vida = vidaMaxima;
+        PV = GetComponent<PhotonView>();
+        if (PV != null && ! PV.IsMine)
+        {
+            this.enabled = false;
+        }
     }
     public virtual void PosAwake()
     {
 
     }
 
-     private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
+        yield return null;
         if (autoseleccionarTarget)
-            target = Personaje.singleton.transform;
+            CalcularTarget();
     }
 
+    public void CalcularTarget()
+    {
+        float d = 100000;
+        target = ControlObjetivos.singleton.objetivos[0];
+        for (int i = 0; i < ControlObjetivos.singleton.objetivos.Count; i++)
+        {
+            float d2 = (transform.position - ControlObjetivos.singleton.objetivos[i].position).sqrMagnitude;
+            if (d2<d)
+            {
+                d2 = d;
+                target = ControlObjetivos.singleton.objetivos[i];
+            }
+        }
+    }
     public void LateUpdate()
     {
         CheckEstados();
@@ -92,6 +117,7 @@ public class Enemigo : MonoBehaviour
                 break;
             case Estados.Muerto:
                 vivo = false;
+                transform.position = PuntosRespown.singleton.GetPosEnemigo().position;
                 break;
             default:
                 break;
@@ -131,14 +157,15 @@ public class Enemigo : MonoBehaviour
     {
         vivo = false;
         //Debug.Log("El enemigo ha muerto.");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     IEnumerator CalcularDistancia()
     {
         while (vivo)
         {
-                yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f);
+            CalcularTarget();
             if (target != null)
             {
                 distancia = Vector3.Distance(transform.position, target.position);
@@ -159,6 +186,22 @@ public class Enemigo : MonoBehaviour
             CambiarDeEstado(Estados.Muerto);
         }
     }
+    public void CausasDaño(float cuanto)
+    {
+        vidaMaxima -= cuanto;
+        if (vida < 0)
+        {
+            print("Muerto!! ->" + gameObject.name);
+            eventoMorir.Invoke();
+            CambiarDeEstado(Estados.Muerto);
+        }
+    }
+    [ContextMenu("CausarDaño")]
+    public void Dañar()
+    {
+        CausasDaño(5);
+    }
+    
 }
 
 public enum Estados

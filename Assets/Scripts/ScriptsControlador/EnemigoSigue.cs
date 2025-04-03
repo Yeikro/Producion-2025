@@ -46,7 +46,7 @@ public class EnemigoSigue : Enemigo
         base.EstadoSeguir();
         if (animaciones != null) animaciones.SetFloat("Velocidad", 1);
         if (animaciones != null) animaciones.SetBool("Atacando", false);
-        agente.SetDestination(target.position);
+        if (target != null) agente.SetDestination(target.position);
 
     }
 
@@ -70,12 +70,33 @@ public class EnemigoSigue : Enemigo
 
     public void Matar()
     {
-        CambiarDeEstado(Estados.Muerto);
+        if (estado!=Estados.Muerto)
+        {
+            CambiarDeEstado(Estados.Muerto);
+            Invoke("Respawn", 5f);
+        }
     }
 
     public void Atacar()
     {
-        Personaje.singleton.vida.CausasDaño(daño);
+        //Personaje.personajeLocal.vida.CausasDaño(daño);
+        Vida v = target.GetComponent<Vida>();
+        if (v!=null)
+        {
+           v.CausasDaño(daño);
+           
+        }
+    }
+
+    public void Respawn()
+    {
+
+        // Obtiene una posición aleatoria de respawn
+        Transform puntoRespawn = PuntosRespown.singleton.GetPosEnemigo();
+        transform.position = puntoRespawn.position;
+
+        CambiarDeEstado(Estados.Idle);
+        Debug.Log("¡Has reaparecido!");
     }
 
 }

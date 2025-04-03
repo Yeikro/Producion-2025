@@ -1,9 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
+using System.Linq;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -17,6 +18,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomListItemPrefab;
     [SerializeField] GameObject playerListItemPrefab;
     [SerializeField] GameObject startGameButton;
+    private List<string> roomNames = new List<string>();
 
     void Awake()
     {
@@ -54,6 +56,15 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        if (!PhotonNetwork.CurrentRoom.IsOpen)
+        {
+            Debug.Log("Intentaste unirte a una sala ya iniciada.");
+            PhotonNetwork.LeaveRoom();  // 🔹 Expulsar al jugador de la sala cerrada.
+            return;
+        }
+
+        Debug.Log("Unido a la sala correctamente.");
+
         MenuManager.Instance.OpenMenu("room");
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
@@ -86,7 +97,12 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(1);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;  // 🔹 Evita que nuevos jugadores se unan.
+            PhotonNetwork.CurrentRoom.IsVisible = false;  // 🔹 Oculta la sala de la lista.
+            PhotonNetwork.LoadLevel(1);  // 🔹 Cargar la escena del juego.
+        }
     }
 
     public void LeaveRoom()
@@ -108,12 +124,12 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach(Transform trans in roomListContent)
+        foreach (Transform trans in roomListContent)
         {
             Destroy(trans.gameObject);
         }
 
-        for(int i = 0; i < roomList.Count; i++)
+        for (int i = 0; i < roomList.Count; i++)
         {
             if (roomList[i].RemovedFromList)
                 continue;
@@ -124,5 +140,23 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Instantiate(playerListItemPrefab, playerListContent).GetComponent<PlayerListitem>().SetUp(newPlayer);
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("No se pudo unir a la sala: " + message);
+    }
+
+    public void GenerarNombreUnico()
+    {
+        string nuevoNombre;
+
+        do
+        {
+            nuevoNombre = "Sala_" + Random.Range(1000, 9999);  // 🔹 Genera un nombre aleatorio.
+        }
+        while (roomNames.Contains(nuevoNombre));  // 🔹 Verifica si ya existe en la lista.
+
+        roomNameInputField.text = nuevoNombre;  // 🔹 Asigna el nombre al input.
     }
 }
