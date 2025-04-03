@@ -50,7 +50,8 @@ public class Vida : MonoBehaviour
     public void Reiniciar()
     {
         vidaActual = vidaInicial;
-        estaMuerto= false;
+        healthbarImage.fillAmount = vidaActual / vidaInicial;
+        estaMuerto = false;
     }
 
 }
