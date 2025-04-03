@@ -1000,12 +1000,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   estado: 0
-  distanciaSeguir: 3.91
-  distanciaAtacar: 1.47
-  distanciaEscapar: 5.36
+  distanciaSeguir: 7
+  distanciaAtacar: 1.5
+  distanciaEscapar: 9
   autoseleccionarTarget: 1
   target: {fileID: 0}
-  distancia: 0
+  distancia: 0.95
   vivo: 1
   vidaMaxima: 10
   vida: 0
@@ -1028,7 +1028,8 @@ MonoBehaviour:
   checkPoint:
   - {fileID: 203561174}
   - {fileID: 1543447320}
-  distanciaCheckPoint: 1
+  - {fileID: 510134650}
+  distanciaCheckPoint: 3
   "da\xF1o": 2
 --- !u!1 &1543447319
 GameObject:
