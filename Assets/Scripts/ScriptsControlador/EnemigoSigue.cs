@@ -63,14 +63,14 @@ public class EnemigoSigue : Enemigo
     {
         base.EstadoMuerto();
         if (animaciones != null) animaciones.SetBool("Vivo", false);
-        agente.enabled = false;
+        //agente.enabled = true;
     }
 
     [ContextMenu("Matar")]
 
     public void Matar()
     {
-        if (estado!=Estados.Muerto)
+        if (vivo)
         {
             CambiarDeEstado(Estados.Muerto);
             Invoke("Respawn", 5f);
@@ -96,6 +96,10 @@ public class EnemigoSigue : Enemigo
         transform.position = puntoRespawn.position;
 
         CambiarDeEstado(Estados.Idle);
+        agente.enabled = true;
+        if (animaciones != null) animaciones.SetBool("Vivo", true);
+        vida = vidaMaxima;
+        vivo = true;
         Debug.Log("¡Has reaparecido!");
     }
 

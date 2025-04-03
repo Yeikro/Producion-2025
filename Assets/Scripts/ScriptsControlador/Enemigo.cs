@@ -117,7 +117,7 @@ public class Enemigo : MonoBehaviour
                 break;
             case Estados.Muerto:
                 vivo = false;
-                transform.position = PuntosRespown.singleton.GetPosEnemigo().position;
+                
                 break;
             default:
                 break;
@@ -183,23 +183,14 @@ public class Enemigo : MonoBehaviour
 
        if (vida <= 0)
         {
-            CambiarDeEstado(Estados.Muerto);
-        }
-    }
-    public void CausasDaño(float cuanto)
-    {
-        vidaMaxima -= cuanto;
-        if (vida < 0)
-        {
-            print("Muerto!! ->" + gameObject.name);
+            //CambiarDeEstado(Estados.Muerto);
             eventoMorir.Invoke();
-            CambiarDeEstado(Estados.Muerto);
         }
     }
     [ContextMenu("CausarDaño")]
     public void Dañar()
     {
-        CausasDaño(5);
+        RecibirDaño(5);
     }
     
 }
