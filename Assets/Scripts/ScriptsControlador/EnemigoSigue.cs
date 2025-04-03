@@ -37,7 +37,7 @@ public class EnemigoSigue : Enemigo
         agente.SetDestination(checkPoint[indice].position);
         if ((checkPoint[indice].position - transform.position).sqrMagnitude < distanciaCheckPoint2)
         {
-            indice = (indice + 1) % checkPoint.Length;
+            indice = Random.Range(0,checkPoint.Length);
         }
         
     }
