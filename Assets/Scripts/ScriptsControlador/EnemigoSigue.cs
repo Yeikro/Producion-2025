@@ -32,6 +32,7 @@ public class EnemigoSigue : Enemigo
         base.EstadoIdle();
         if (animaciones != null) animaciones.SetFloat("Velocidad", 1);
         if (animaciones != null) animaciones.SetBool("Atacando", false);
+        if (animaciones != null) animaciones.SetBool("Vivo", true);
 
         agente.SetDestination(checkPoint[indice].position);
         if ((checkPoint[indice].position - transform.position).sqrMagnitude < distanciaCheckPoint2)
@@ -57,6 +58,7 @@ public class EnemigoSigue : Enemigo
         if (animaciones != null) animaciones.SetBool("Atacando", true);
         agente.SetDestination(transform.position);
         transform.LookAt(target, Vector3.up);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
     public override void EstadoMuerto()

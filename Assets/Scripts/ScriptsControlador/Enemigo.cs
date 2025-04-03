@@ -162,7 +162,7 @@ public class Enemigo : MonoBehaviour
 
     IEnumerator CalcularDistancia()
     {
-        while (vivo)
+        while (true)
         {
             yield return new WaitForSeconds(0.5f);
             CalcularTarget();
