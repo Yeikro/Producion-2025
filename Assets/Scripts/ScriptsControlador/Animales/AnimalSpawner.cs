@@ -2,42 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PilarSpawner : MonoBehaviour
+public class AnimalSpawner : MonoBehaviour
 {
-    public GameObject pillarPrefab;
-    public List<Transform> spawnPoints = new List<Transform>();
-    public int numeroPilares = 3;
-    public float distanciaMinima = 10f;
-    public int intentosMaximos = 10; // Número de intentos para encontrar un punto válido
+    public GameObject[] animalPrefabs; // Lista de prefabs de animales
+    public List<Transform> spawnPoints = new List<Transform>(); // Puntos de spawn
+    public int numeroAnimales = 5; // Número de animales a generar
+    public float distanciaMinima = 5f; // Distancia mínima entre animales
+    public float rangoMovimiento = 3f; // Rango de movimiento de los animales
+    public float velocidadMovimiento = 2f; // Velocidad de los animales
 
     private List<Transform> puntosOcupados = new List<Transform>();
 
     private void Start()
     {
-        for (int i = 0; i < numeroPilares; i++)
+        for (int i = 0; i < numeroAnimales; i++)
         {
             Transform selectedPoint = ObtenerPuntoAlejado();
             if (selectedPoint != null)
             {
-                Instantiate(pillarPrefab, selectedPoint.position, Quaternion.identity);
+                GameObject animalPrefab = animalPrefabs[Random.Range(0, animalPrefabs.Length)]; // Selecciona un animal aleatorio
+                GameObject animal = Instantiate(animalPrefab, selectedPoint.position, Quaternion.identity);
                 puntosOcupados.Add(selectedPoint);
                 spawnPoints.Remove(selectedPoint);
+
+                // Agregar script de movimiento al animal
+                AnimalMover mover = animal.AddComponent<AnimalMover>();
+                mover.rangoMovimiento = rangoMovimiento;
+                mover.velocidadMovimiento = velocidadMovimiento;
             }
             else
             {
-                Debug.LogWarning($"No se encontró un punto válido para el pilar {i + 1}. Reduciendo restricciones...");
-                distanciaMinima /= 2; // Reduce la distancia mínima para evitar bloqueos
-                selectedPoint = ObtenerPuntoAlejado(); // Intenta de nuevo con menor distancia
-                if (selectedPoint != null)
-                {
-                    Instantiate(pillarPrefab, selectedPoint.position, Quaternion.identity);
-                    puntosOcupados.Add(selectedPoint);
-                    spawnPoints.Remove(selectedPoint);
-                }
-                else
-                {
-                    Debug.LogWarning("No se pudo colocar el pilar a pesar de reducir la distancia mínima.");
-                }
+                Debug.LogWarning("No se encontró un punto válido para un animal.");
             }
         }
     }
