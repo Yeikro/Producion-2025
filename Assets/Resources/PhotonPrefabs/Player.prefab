@@ -1726,6 +1726,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   vida: {fileID: 1821441314814717849}
+  defensa: 0.5
+  obstaculos:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!136 &6666563340571142190
 CapsuleCollider:
   m_ObjectHideFlags: 0

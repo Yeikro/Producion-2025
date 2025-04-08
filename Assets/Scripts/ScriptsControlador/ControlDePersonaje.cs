@@ -31,6 +31,7 @@ public class ControlDePersonaje : MonoBehaviour
     public LayerMask capaEnemigos;
     public Vida vida;
     public float defensa = 0.5f;
+    public LayerMask obstaculos;
    
 
     void Awake()
@@ -93,12 +94,29 @@ public class ControlDePersonaje : MonoBehaviour
         movimiento = Vector2.Lerp(movimiento, controlMover.action.ReadValue<Vector2>(), velSuavisada * Time.deltaTime);
 
         animaciones.SetFloat("Horizontal", movimiento.x);
-        animaciones.SetFloat("Vertical", movimiento.y);
+        
+        
 
         animaciones.SetBool("Defens", controlDefender.action.ReadValue<float>()>0.5f);
         animaciones.SetBool("Down" , controlAgacharse.action.ReadValue<float>()>0.5f);
 
-        pivot.position = transform.position;
+        RaycastHit hit;
+        Vector3 direccion = transform.forward;
+        Vector3 origen = transform.position + Vector3.up; // Ajusta la altura según necesites
+
+        Debug.DrawRay(origen, direccion, Color.red, 1f);
+
+        if ((Physics.Raycast(origen - transform.right * 0.2f, direccion, out hit, 1, obstaculos) || Physics.Raycast(origen + transform.right * 0.2f, direccion, out hit, 1, obstaculos)) && movimiento.y>0)
+        {
+            animaciones.SetFloat("Vertical", 0);
+
+        }
+        else
+        {
+            animaciones.SetFloat("Vertical", movimiento.y);
+        }
+
+            pivot.position = transform.position;
         pivot.forward = (pivot.position - camara.position).normalized;
         pivot.eulerAngles = new Vector3(0, pivot.eulerAngles.y, 0);
 
