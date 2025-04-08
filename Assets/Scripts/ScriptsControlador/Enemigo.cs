@@ -28,7 +28,7 @@ public class Enemigo : MonoBehaviour, IPunObservable
     public float vida;
     public UnityEvent eventoMorir;
 
-    protected PhotonView PV;
+    PhotonView PV;
 
     public void Awake()
     {
