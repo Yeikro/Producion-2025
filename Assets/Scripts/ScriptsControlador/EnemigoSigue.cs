@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 [RequireComponent(typeof(NavMeshAgent))]
 
@@ -15,6 +16,8 @@ public class EnemigoSigue : Enemigo
     private float distanciaCheckPoint2;
     public float daño = 2;
 
+    PhotonView PV;
+
 
     public override void PosAwake()
     {
@@ -25,10 +28,12 @@ public class EnemigoSigue : Enemigo
     private void Awake()
     {
         base.Awake();
+        PV = GetComponent<PhotonView>();
     }
 
     public override void EstadoIdle()
     {
+        if (!PV.IsMine) return;
         base.EstadoIdle();
         if (animaciones != null) animaciones.SetFloat("Velocidad", 1);
         if (animaciones != null) animaciones.SetBool("Atacando", false);
@@ -37,13 +42,14 @@ public class EnemigoSigue : Enemigo
         agente.SetDestination(checkPoint[indice].position);
         if ((checkPoint[indice].position - transform.position).sqrMagnitude < distanciaCheckPoint2)
         {
-            indice = Random.Range(0,checkPoint.Length);
+            indice = Random.Range(0, checkPoint.Length);
         }
-        
+
     }
 
     public override void EstadoSeguir()
     {
+        if (!PV.IsMine) return;
         base.EstadoSeguir();
         if (animaciones != null) animaciones.SetFloat("Velocidad", 1);
         if (animaciones != null) animaciones.SetBool("Atacando", false);
@@ -53,6 +59,7 @@ public class EnemigoSigue : Enemigo
 
     public override void EstadoAtaque()
     {
+        if (!PV.IsMine) return;
         base.EstadoAtaque();
         if (animaciones != null) animaciones.SetFloat("Velocidad", 0);
         if (animaciones != null) animaciones.SetBool("Atacando", true);
@@ -63,6 +70,7 @@ public class EnemigoSigue : Enemigo
 
     public override void EstadoMuerto()
     {
+        if (!PV.IsMine) return;
         base.EstadoMuerto();
         if (animaciones != null) animaciones.SetBool("Vivo", false);
         //agente.enabled = true;
@@ -72,6 +80,7 @@ public class EnemigoSigue : Enemigo
 
     public void Matar()
     {
+        if (!PV.IsMine) return;
         if (vivo)
         {
             CambiarDeEstado(Estados.Muerto);
@@ -81,18 +90,19 @@ public class EnemigoSigue : Enemigo
 
     public void Atacar()
     {
-        //Personaje.personajeLocal.vida.CausasDaño(daño);
-        Vida v = target.GetComponent<Vida>();
-        if (v!=null)
+        if (!PV.IsMine) return;
+
+        PhotonView targetPV = target.GetComponent<PhotonView>();
+
+        if (targetPV != null)
         {
-           v.CausasDaño(daño);
-           
+            targetPV.RPC("CausarDañoRPC", targetPV.Owner, daño);
         }
     }
 
     public void Respawn()
     {
-
+        if (!PV.IsMine) return;
         // Obtiene una posición aleatoria de respawn
         Transform puntoRespawn = PuntosRespown.singleton.GetPosEnemigo();
         transform.position = puntoRespawn.position;

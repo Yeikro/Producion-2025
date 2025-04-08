@@ -65,7 +65,7 @@ public class Españoles : Enemigo
 
     public void Atacar()
     {
-        Personaje.personajeLocal.vida.CausasDaño(daño);
+        //Personaje.personajeLocal.vida.CausasDaño(daño);
     }
 
 }
