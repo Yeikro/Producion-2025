@@ -126,7 +126,8 @@ public class ControlDePersonaje : MonoBehaviour
             if (enemigo != null)
             {
                 // Aplicar daño al enemigo
-                enemigo.RecibirDaño(dañoRaycast);
+                //enemigo.RecibirDaño(dañoRaycast);
+                enemigo.PV.RPC("RPC_RecibirDaño", enemigo.PV.Owner, dañoRaycast);
                 Debug.Log("¡Golpeaste a un enemigo español!");
             }
 

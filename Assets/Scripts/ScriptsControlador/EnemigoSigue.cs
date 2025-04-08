@@ -16,9 +16,6 @@ public class EnemigoSigue : Enemigo
     private float distanciaCheckPoint2;
     public float daño = 2;
 
-    PhotonView PV;
-
-
     public override void PosAwake()
     {
         agente = GetComponent<NavMeshAgent>();
@@ -28,7 +25,6 @@ public class EnemigoSigue : Enemigo
     private void Awake()
     {
         base.Awake();
-        PV = GetComponent<PhotonView>();
     }
 
     public override void EstadoIdle()
