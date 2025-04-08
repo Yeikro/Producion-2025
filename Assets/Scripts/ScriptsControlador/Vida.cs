@@ -29,21 +29,19 @@ public class Vida : MonoBehaviour
             Destroy(ui);
     }
 
-
-    public void CausasDaño(float cuanto)
+    [PunRPC]
+    public void CausarDañoRPC(float cuanto)
     {
-        if (!PV.IsMine)
-            return;
+        if (estaMuerto) return;
 
         vidaActual -= cuanto;
-
         healthbarImage.fillAmount = vidaActual / vidaInicial;
 
-        if (vidaActual < 0)
+        if (vidaActual <= 0)
         {
             print("Muerto!! ->" + gameObject.name);
             eventoMorir.Invoke();
-            estaMuerto= true;
+            estaMuerto = true;
         }
     }
 

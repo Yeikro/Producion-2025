@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Events;
-
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-public class Enemigo : MonoBehaviour
+public class Enemigo : MonoBehaviour, IPunObservable
 {
+    [SerializeField] Image healthbarImage;
+    [SerializeField] GameObject ui;
     public Estados estado;
     public float distanciaSeguir;
     public float distanciaAtacar;
@@ -26,7 +28,7 @@ public class Enemigo : MonoBehaviour
     public float vida;
     public UnityEvent eventoMorir;
 
-    PhotonView PV;
+    protected PhotonView PV;
 
     public void Awake()
     {
@@ -34,7 +36,7 @@ public class Enemigo : MonoBehaviour
         PosAwake();
         vida = vidaMaxima;
         PV = GetComponent<PhotonView>();
-        if (PV != null && ! PV.IsMine)
+        if (PV != null && !PV.IsMine)
         {
             this.enabled = false;
         }
@@ -59,9 +61,9 @@ public class Enemigo : MonoBehaviour
         for (int i = 0; i < ControlObjetivos.singleton.objetivos.Count; i++)
         {
             float d2 = (transform.position - ControlObjetivos.singleton.objetivos[i].position).sqrMagnitude;
-            if (d2<d)
+            if (d2 < d)
             {
-                d2 = d;
+                d = d2;
                 target = ControlObjetivos.singleton.objetivos[i];
             }
         }
@@ -117,7 +119,7 @@ public class Enemigo : MonoBehaviour
                 break;
             case Estados.Muerto:
                 vivo = false;
-                
+
                 break;
             default:
                 break;
@@ -170,7 +172,7 @@ public class Enemigo : MonoBehaviour
             {
                 distancia = Vector3.Distance(transform.position, target.position);
             }
-            
+
         }
     }
 
@@ -179,12 +181,13 @@ public class Enemigo : MonoBehaviour
         if (!vivo) return;
 
         vida -= cantidad;
+        healthbarImage.fillAmount = vida / vidaMaxima;
         Debug.Log($"El enemigo recibió {cantidad} de daño. Vida restante: {vida}");
 
-       if (vida <= 0)
+        if (vida <= 0 && PV.IsMine)
         {
-            //CambiarDeEstado(Estados.Muerto);
             eventoMorir.Invoke();
+            CambiarDeEstado(Estados.Muerto);
         }
     }
     [ContextMenu("CausarDaño")]
@@ -192,7 +195,41 @@ public class Enemigo : MonoBehaviour
     {
         RecibirDaño(5);
     }
-    
+
+    [PunRPC]
+    public void RPC_RecibirDaño(float cantidad)
+    {
+        RecibirDaño(cantidad); // Solo lo ejecuta el dueño del enemigo
+    }
+
+    public void SolicitarDaño(float cantidad)
+    {
+        if (!PV.IsMine)
+        {
+            // Si NO soy el dueño del enemigo, le pido al dueño que aplique el daño
+            PV.RPC("RPC_RecibirDaño", PV.Owner, cantidad);
+        }
+        else
+        {
+            // Si soy el dueño, lo aplico directamente
+            RecibirDaño(cantidad);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // Soy el dueño, envío mi valor de vida
+            stream.SendNext(vida);
+        }
+        else
+        {
+            // Soy un observador, recibo el valor de vida
+            vida = (float)stream.ReceiveNext();
+            healthbarImage.fillAmount = vida / vidaMaxima;
+        }
+    }
 }
 
 public enum Estados
