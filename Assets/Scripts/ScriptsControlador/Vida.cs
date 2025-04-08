@@ -15,6 +15,7 @@ public class Vida : MonoBehaviour
     public float vidaActual;
     public UnityEvent eventoMorir;
     public bool estaMuerto = false;
+    public float modificador = 1;//hace que tenga mas o menos daño, sirve para la trasformacion de los animales//
 
     void Awake()
     {
@@ -34,7 +35,7 @@ public class Vida : MonoBehaviour
     {
         if (estaMuerto) return;
 
-        vidaActual -= cuanto;
+        vidaActual -= cuanto*modificador;
         healthbarImage.fillAmount = vidaActual / vidaInicial;
 
         if (vidaActual <= 0)

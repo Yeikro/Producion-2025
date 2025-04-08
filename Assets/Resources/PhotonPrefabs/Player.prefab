@@ -1884,6 +1884,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   estaMuerto: 0
+  modificador: 1
 --- !u!114 &8354371859905026614
 MonoBehaviour:
   m_ObjectHideFlags: 0

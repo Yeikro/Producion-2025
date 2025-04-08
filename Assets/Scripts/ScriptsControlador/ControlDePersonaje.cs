@@ -30,7 +30,8 @@ public class ControlDePersonaje : MonoBehaviour
     public float dañoRaycast = 5f;
     public LayerMask capaEnemigos;
     public Vida vida;
-
+    public float defensa = 0.5f;
+   
 
     void Awake()
     {
@@ -104,6 +105,14 @@ public class ControlDePersonaje : MonoBehaviour
         if (movimiento.y > 0.5)
         {
             transform.forward = pivot.forward;
+        }
+        if (controlDefender.action.ReadValue<float>() > 0.5f)
+        {
+            vida.modificador = defensa;
+        }
+        else
+        {
+            vida.modificador = 1;
         }
     }
 
