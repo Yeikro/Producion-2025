@@ -1,12 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PilarSpawner : MonoBehaviour
 {
-    public GameObject pillarPrefab;
+    public GameObject[] pilares;
     public List<Transform> spawnPoints = new List<Transform>();
-    public int numeroPilares = 3;
     public float distanciaMinima = 10f;
     public int intentosMaximos = 10; // Número de intentos para encontrar un punto válido
 
@@ -14,12 +12,12 @@ public class PilarSpawner : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < numeroPilares; i++)
+        for (int i = 0; i < pilares.Length; i++)
         {
             Transform selectedPoint = ObtenerPuntoAlejado();
             if (selectedPoint != null)
             {
-                Instantiate(pillarPrefab, selectedPoint.position, Quaternion.identity);
+                pilares[i].transform.position = selectedPoint.position;
                 puntosOcupados.Add(selectedPoint);
                 spawnPoints.Remove(selectedPoint);
             }
@@ -30,7 +28,7 @@ public class PilarSpawner : MonoBehaviour
                 selectedPoint = ObtenerPuntoAlejado(); // Intenta de nuevo con menor distancia
                 if (selectedPoint != null)
                 {
-                    Instantiate(pillarPrefab, selectedPoint.position, Quaternion.identity);
+                    pilares[i].transform.position = selectedPoint.position;
                     puntosOcupados.Add(selectedPoint);
                     spawnPoints.Remove(selectedPoint);
                 }

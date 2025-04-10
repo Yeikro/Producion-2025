@@ -35,7 +35,7 @@ public class Vida : MonoBehaviour
         if (estaMuerto) return;
 
         vidaActual -= cuanto;
-        healthbarImage.fillAmount = vidaActual / vidaInicial;
+        ActualizarInterfaz();
 
         if (vidaActual <= 0)
         {
@@ -43,6 +43,11 @@ public class Vida : MonoBehaviour
             eventoMorir.Invoke();
             estaMuerto = true;
         }
+    }
+
+    public void ActualizarInterfaz()
+    {
+        healthbarImage.fillAmount = vidaActual / vidaInicial;
     }
 
     public void Reiniciar()
