@@ -88,11 +88,17 @@ public class EnemigoSigue : Enemigo
     {
         if (!PV.IsMine) return;
 
+        if (target == null) return;
+
         PhotonView targetPV = target.GetComponent<PhotonView>();
 
         if (targetPV != null)
         {
-            targetPV.RPC("CausarDañoRPC", targetPV.Owner, daño);
+            Vida vidaTarget = target.GetComponent<Vida>();
+            if (vidaTarget != null && !vidaTarget.estaMuerto)
+            {
+                targetPV.RPC("CausarDañoRPC", targetPV.Owner, daño);
+            }
         }
     }
 

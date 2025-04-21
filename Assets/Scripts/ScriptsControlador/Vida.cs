@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Vida : MonoBehaviour
+public class Vida : MonoBehaviour, IPunObservable
 {
     [SerializeField] Image healthbarImage;
     [SerializeField] GameObject ui;
@@ -25,7 +25,7 @@ public class Vida : MonoBehaviour
     {
         Reiniciar();
 
-        if (!PV.IsMine)
+        if (CompareTag("Jugador") && !PV.IsMine)
             Destroy(ui);
     }
 
@@ -39,6 +39,7 @@ public class Vida : MonoBehaviour
 
         if (vidaActual <= 0)
         {
+            vidaActual = 0;
             print("Muerto!! ->" + gameObject.name);
             eventoMorir.Invoke();
             estaMuerto = true;
@@ -57,4 +58,18 @@ public class Vida : MonoBehaviour
         estaMuerto = false;
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(vidaActual);
+            stream.SendNext(estaMuerto);
+        }
+        else
+        {
+            vidaActual = (float)stream.ReceiveNext();
+            estaMuerto = (bool)stream.ReceiveNext();
+            ActualizarInterfaz();
+        }
+    }
 }

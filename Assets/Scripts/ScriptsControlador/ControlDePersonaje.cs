@@ -1,9 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class ControlDePersonaje : MonoBehaviour
 {
@@ -13,24 +14,32 @@ public class ControlDePersonaje : MonoBehaviour
     public InputActionProperty controlAtaque;
     public InputActionProperty controlDefender;
     public InputActionProperty controlAgacharse;
+    public InputActionProperty controlCorrer;
+
     Vector2 movimiento;
     public float velSuavisada;
     public Rigidbody rb;
     public Vector3 fuerzaSalto;
 
     public Transform pivot;
-    public float daño = 2;
+    public float daÃ±o = 2;
     public Transform camara;
-
     public Transform camaraPunto;
-
     PhotonView PV;
 
     public float rangoAtaque = 3f;
-    public float dañoRaycast = 5f;
+    public float daÃ±oRaycast = 5f;
     public LayerMask capaEnemigos;
     public Vida vida;
 
+    // ðŸƒâ€â™‚ï¸ Correr
+    public float multiplicadorCorrer = 1.5f;
+    public float energiaMaxima = 1f;
+    public float energiaActual = 1f;
+    public float velocidadGasto = 0.5f;
+    public float velocidadRecarga = 0.3f;
+    public Image barraEnergia;
+    bool estaCorriendo = false;
 
     void Awake()
     {
@@ -51,38 +60,43 @@ public class ControlDePersonaje : MonoBehaviour
 
         pivot = (new GameObject()).transform;
         camara = Camera.main.transform;
+
         controlMover.action.Enable();
         controlSalto.action.Enable();
         controlAtaque.action.Enable();
         controlDefender.action.Enable();
         controlAgacharse.action.Enable();
+        controlCorrer.action.Enable();
+
         controlSalto.action.performed += _ => Saltar();
         controlAtaque.action.performed += _ => Ataque();
+
         CinemachineFreeLook cfl = Camera.main.GetComponent<CinemachineFreeLook>();
-        if (cfl!=null)
+        if (cfl != null)
         {
             cfl.LookAt = transform;
         }
 
         ControlObjetivos.singleton.objetivos.Add(this.transform);
     }
+
     public void Saltar()
     {
         if (!PV.IsMine) return;
         animaciones.SetTrigger("Jump");
     }
+
     public void AplicarSalto()
     {
         if (!PV.IsMine) return;
         rb.velocity = fuerzaSalto;
-
     }
+
     public void Ataque()
     {
         if (!PV.IsMine) return;
         animaciones.SetTrigger("Atack");
     }
-    
 
     void Update()
     {
@@ -93,9 +107,8 @@ public class ControlDePersonaje : MonoBehaviour
 
         animaciones.SetFloat("Horizontal", movimiento.x);
         animaciones.SetFloat("Vertical", movimiento.y);
-
-        animaciones.SetBool("Defens", controlDefender.action.ReadValue<float>()>0.5f);
-        animaciones.SetBool("Down" , controlAgacharse.action.ReadValue<float>()>0.5f);
+        animaciones.SetBool("Defens", controlDefender.action.ReadValue<float>() > 0.5f);
+        animaciones.SetBool("Down", controlAgacharse.action.ReadValue<float>() > 0.5f);
 
         pivot.position = transform.position;
         pivot.forward = (pivot.position - camara.position).normalized;
@@ -105,32 +118,51 @@ public class ControlDePersonaje : MonoBehaviour
         {
             transform.forward = pivot.forward;
         }
+
+        // Detectar Shift para correr
+        estaCorriendo = controlCorrer.action.ReadValue<float>() > 0.5f && energiaActual > 0 && movimiento.y > 0.1f;
+
+        // Aplicar correr
+        float multiplicador = estaCorriendo ? multiplicadorCorrer : 1f;
+        transform.position += transform.forward * movimiento.y * multiplicador * Time.deltaTime * 1f; // Ajusta el 5f a tu velocidad base si es necesario
+
+        // Gastar energÃ­a
+        if (estaCorriendo)
+        {
+            energiaActual -= velocidadGasto * Time.deltaTime;
+            energiaActual = Mathf.Clamp01(energiaActual);
+        }
+        else
+        {
+            energiaActual += velocidadRecarga * Time.deltaTime;
+            energiaActual = Mathf.Clamp01(energiaActual);
+        }
+
+        // Actualizar barra UI
+        if (barraEnergia != null)
+        {
+            barraEnergia.fillAmount = energiaActual;
+        }
     }
 
     public void Atacar()
     {
-        //Personaje.personajeLocal.vida.CausasDaño(daño);
         if (!PV.IsMine) return;
 
-        // Crear un raycast desde el personaje hacia adelante
         RaycastHit hit;
         Vector3 direccionAtaque = transform.forward;
-        Vector3 origen = transform.position + Vector3.up; // Ajusta la altura según necesites
+        Vector3 origen = transform.position + Vector3.up;
 
         Debug.DrawRay(origen, direccionAtaque * rangoAtaque, Color.red, 1f);
 
         if (Physics.Raycast(origen, direccionAtaque, out hit, rangoAtaque, capaEnemigos))
         {
-            // Verificar si el objeto golpeado es un enemigo español
             Enemigo enemigo = hit.collider.GetComponent<Enemigo>();
             if (enemigo != null)
             {
-                // Aplicar daño al enemigo
-                //enemigo.RecibirDaño(dañoRaycast);
-                enemigo.PV.RPC("RPC_RecibirDaño", enemigo.PV.Owner, dañoRaycast);
-                Debug.Log("¡Golpeaste a un enemigo español!");
+                enemigo.PV.RPC("RPC_RecibirDaÃ±o", enemigo.PV.Owner, daÃ±oRaycast);
+                Debug.Log("Â¡Golpeaste a un enemigo espaÃ±ol!");
             }
-
         }
     }
 
@@ -144,13 +176,9 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Respawn()
     {
-
-        // Obtiene una posición aleatoria de respawn
         Transform puntoRespawn = PuntosRespown.singleton.GetPosPersonaje();
         transform.position = puntoRespawn.position;
-
         vida.Reiniciar();
-
-        Debug.Log("¡Has reaparecido!");
+        Debug.Log("Â¡Has reaparecido!");
     }
 }
