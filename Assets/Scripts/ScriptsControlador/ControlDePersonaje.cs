@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using Cinemachine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class ControlDePersonaje : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class ControlDePersonaje : MonoBehaviour
     public LayerMask capaEnemigos;
     public Vida vida;
 
-    // 🏃‍♂️ Correr
+    //Correr
     public float multiplicadorCorrer = 1.5f;
     public float energiaMaxima = 1f;
     public float energiaActual = 1f;
@@ -40,6 +41,11 @@ public class ControlDePersonaje : MonoBehaviour
     public float velocidadRecarga = 0.3f;
     public Image barraEnergia;
     bool estaCorriendo = false;
+
+    // Post procesamiento
+    ChromaticAberration chromatic;
+    Vignette vignette;
+    PostProcessVolume postProcesamiento;
 
     void Awake()
     {
@@ -78,6 +84,25 @@ public class ControlDePersonaje : MonoBehaviour
         }
 
         ControlObjetivos.singleton.objetivos.Add(this.transform);
+
+        // Obtener efectos de post procesamiento
+        GameObject postFX = GameObject.Find("PostProcessing");
+        if (postFX != null)
+        {
+            postProcesamiento = postFX.GetComponent<PostProcessVolume>();
+            if (postProcesamiento != null && postProcesamiento.profile != null)
+            {
+                if (postProcesamiento.profile.HasSettings<ChromaticAberration>())
+                {
+                    chromatic = postProcesamiento.profile.GetSetting<ChromaticAberration>();
+                }
+
+                if (postProcesamiento.profile.HasSettings<Vignette>())
+                {
+                    vignette = postProcesamiento.profile.GetSetting<Vignette>();
+                }
+            }
+        }
     }
 
     public void Saltar()
@@ -142,6 +167,18 @@ public class ControlDePersonaje : MonoBehaviour
         if (barraEnergia != null)
         {
             barraEnergia.fillAmount = energiaActual;
+        }
+
+        // Aplicar efectos post procesamiento al correr
+        if (chromatic != null && vignette != null)
+        {
+            float velocidadCambio = 1.5f * Time.deltaTime;
+
+            float intensidadChromaticObjetivo = (estaCorriendo && energiaActual > 0) ? 0.523f : 0f;
+            float intensidadVignetteObjetivo = (estaCorriendo && energiaActual > 0) ? 0.304f : 0f;
+
+            chromatic.intensity.value = Mathf.MoveTowards(chromatic.intensity.value, intensidadChromaticObjetivo, velocidadCambio);
+            vignette.intensity.value = Mathf.MoveTowards(vignette.intensity.value, intensidadVignetteObjetivo, velocidadCambio);
         }
     }
 

@@ -52,12 +52,16 @@ public class ZonaPilar : MonoBehaviour
                 // Pilar muerto → marcar como tal, quitar de objetivos y desactivar zona
                 vida.estaMuerto = true;
 
+                Debug.Log("pilar caido");
+
+                PilarScoreManager.instance.RegistrarPilarMuerto();
+
                 if (ControlObjetivos.singleton.objetivos.Contains(transform.parent))
                 {
                     ControlObjetivos.singleton.objetivos.Remove(transform.parent);
                 }
 
-                gameObject.SetActive(false); // 🔥 Desactiva la zona de curación
+                gameObject.SetActive(false); //Desactiva la zona de curación
                 return;
             }
 
@@ -85,6 +89,10 @@ public class ZonaPilar : MonoBehaviour
                 {
                     vida.estaMuerto = true;
 
+                    Debug.Log("pilar caido");
+
+                    PilarScoreManager.instance.RegistrarPilarMuerto();
+
                     if (ControlObjetivos.singleton.objetivos.Contains(transform.parent))
                     {
                         ControlObjetivos.singleton.objetivos.Remove(transform.parent);
@@ -102,6 +110,8 @@ public class ZonaPilar : MonoBehaviour
             {
                 ControlObjetivos.singleton.objetivos.Remove(transform.parent);
             }
+
+            PilarScoreManager.instance.RegistrarPilarRecuperado();
         }
     }
 }
