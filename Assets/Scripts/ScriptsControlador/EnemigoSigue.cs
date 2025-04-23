@@ -20,6 +20,7 @@ public class EnemigoSigue : Enemigo
     {
         agente = GetComponent<NavMeshAgent>();
         distanciaCheckPoint2 = distanciaCheckPoint * distanciaCheckPoint;
+        BuscarCheckpoints();
     }
 
     private void Awake()
@@ -117,5 +118,17 @@ public class EnemigoSigue : Enemigo
         Debug.Log("¡Has reaparecido!");
     }
 
+    private void BuscarCheckpoints()
+    {
+        GameObject[] puntos = GameObject.FindGameObjectsWithTag("Checkpoint");
+        checkPoint = new Transform[puntos.Length];
+
+        for (int i = 0; i < puntos.Length; i++)
+        {
+            checkPoint[i] = puntos[i].transform;
+        }
+
+        Debug.Log("Se encontraron " + checkPoint.Length + " checkpoints.");
+    }
 }
 

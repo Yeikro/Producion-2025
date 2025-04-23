@@ -1,10 +1,9 @@
-using Photon.Pun;
+ï»¿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
-
 
 public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -23,12 +22,16 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
     public Button botonVolverInicio;
     private bool juegoFinalizado = false;
 
+    private PhotonView PV;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
+
+        PV = GetComponent<PhotonView>(); // ðŸ‘ˆ Agregado
     }
 
     private void Start()
@@ -43,25 +46,31 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
             botonVolverInicio.gameObject.SetActive(false);
             botonVolverInicio.onClick.AddListener(() =>
             {
-                Time.timeScale = 1f; // reanudar el tiempo si se pausó
-                StartCoroutine(VolverAlInicio());
+                VolverAlInicioSeguro();
             });
         }
     }
 
-    private IEnumerator VolverAlInicio()
+    public void VolverAlInicioSeguro()
     {
+        Time.timeScale = 1f;
+        PhotonNetwork.LeaveRoom();  // Se encadena todo por callbacks
+    }
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("Se saliÃ³ de la sala, ahora desconectando...");
         PhotonNetwork.Disconnect();
+    }
 
-        while (PhotonNetwork.IsConnected)
-        {
-            yield return null;
-        }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("Desconectado de Photon. Cargando escena online...");
 
-        // Destruye todos los objetos marcados como DontDestroyOnLoad si los tienes
-        foreach (var go in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
+        // Destruir objetos persistentes (mÃ¡s confiable)
+        foreach (GameObject go in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
-            if (go.scene.name == null || go.scene.name == "") // está fuera de la escena actual
+            if (go.scene.buildIndex == -1)
             {
                 Destroy(go);
             }
@@ -69,7 +78,6 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
 
         SceneManager.LoadScene("online");
     }
-
 
     public void RegistrarPilarRecuperado()
     {
@@ -97,25 +105,30 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
             textoPilaresVivos.text = "Pilares Vivos: " + pilaresVivos.ToString();
 
         if (textoPilaresCaidos != null)
-            textoPilaresCaidos.text = "Pilares Caídos: " + pilaresCaidos.ToString();
+            textoPilaresCaidos.text = "Pilares CaÃ­dos: " + pilaresCaidos.ToString();
     }
 
     private void RevisarCondicionesVictoria()
     {
         if (juegoFinalizado) return;
 
+        if (!PhotonNetwork.IsMasterClient) return; // ðŸ‘ˆ Solo el master revisa
+
         if (pilaresCaidos >= 3)
         {
-            FinDelJuego("¡Victoria de los españoles!");
+            PV.RPC("RPC_FinDelJuego", RpcTarget.All, "Â¡Victoria de los espaÃ±oles!");
         }
         else if (pilaresVivos >= 1)
         {
-            FinDelJuego("¡Victoria de los jugadores!");
+            PV.RPC("RPC_FinDelJuego", RpcTarget.All, "Â¡Victoria de los jugadores!");
         }
     }
 
-    private void FinDelJuego(string mensaje)
+    [PunRPC]
+    private void RPC_FinDelJuego(string mensaje)
     {
+        if (juegoFinalizado) return;
+
         juegoFinalizado = true;
         Time.timeScale = 0f;
 
@@ -144,6 +157,8 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
             pilaresVivos = (int)stream.ReceiveNext();
             pilaresCaidos = (int)stream.ReceiveNext();
             ActualizarUI();
+            RevisarCondicionesVictoria();
         }
     }
 }
+

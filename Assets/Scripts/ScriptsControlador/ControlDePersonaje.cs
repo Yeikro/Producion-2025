@@ -107,7 +107,7 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Saltar()
     {
-        if (!PV.IsMine) return;
+        if (!PV.IsMine || animaciones == null) return;
         animaciones.SetTrigger("Jump");
     }
 
@@ -119,7 +119,7 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Ataque()
     {
-        if (!PV.IsMine) return;
+        if (!PV.IsMine || animaciones == null) return;
         animaciones.SetTrigger("Atack");
     }
 
@@ -130,10 +130,13 @@ public class ControlDePersonaje : MonoBehaviour
 
         movimiento = Vector2.Lerp(movimiento, controlMover.action.ReadValue<Vector2>(), velSuavisada * Time.deltaTime);
 
-        animaciones.SetFloat("Horizontal", movimiento.x);
-        animaciones.SetFloat("Vertical", movimiento.y);
-        animaciones.SetBool("Defens", controlDefender.action.ReadValue<float>() > 0.5f);
-        animaciones.SetBool("Down", controlAgacharse.action.ReadValue<float>() > 0.5f);
+        if (animaciones != null)
+        {
+            animaciones.SetFloat("Horizontal", movimiento.x);
+            animaciones.SetFloat("Vertical", movimiento.y);
+            animaciones.SetBool("Defens", controlDefender.action.ReadValue<float>() > 0.5f);
+            animaciones.SetBool("Down", controlAgacharse.action.ReadValue<float>() > 0.5f);
+        }
 
         pivot.position = transform.position;
         pivot.forward = (pivot.position - camara.position).normalized;

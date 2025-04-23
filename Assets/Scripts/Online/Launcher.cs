@@ -27,7 +27,18 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        Debug.Log("PhotonNetwork.IsConnected: " + PhotonNetwork.IsConnected);
+
+        if (!PhotonNetwork.IsConnected)
+        {
+            Debug.Log("Intentando conectar a Photon...");
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        else
+        {
+            Debug.Log("Ya conectado. Saltando conexión...");
+            PhotonNetwork.JoinLobby();
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -35,6 +46,11 @@ public class Launcher : MonoBehaviourPunCallbacks
         Debug.Log("Conecto con el master");
         PhotonNetwork.JoinLobby();
         PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
+    public override void OnDisconnected(Photon.Realtime.DisconnectCause cause)
+    {
+        Debug.LogWarning("Desconectado de Photon: " + cause);
     }
 
     public override void OnJoinedLobby()

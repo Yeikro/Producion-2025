@@ -42,6 +42,7 @@ MonoBehaviour:
   - "RPC_RecibirDa\xF1o"
   - "CausarDa\xF1oRPC"
   - CurarRPC
+  - RPC_FinDelJuego
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

@@ -58,13 +58,16 @@ public class Enemigo : MonoBehaviour, IPunObservable
     {
         float d = 100000;
         target = ControlObjetivos.singleton.objetivos[0];
-        for (int i = 0; i < ControlObjetivos.singleton.objetivos.Count; i++)
+
+        foreach (var objetivo in ControlObjetivos.singleton.objetivos)
         {
-            float d2 = (transform.position - ControlObjetivos.singleton.objetivos[i].position).sqrMagnitude;
+            if (objetivo == null || objetivo.gameObject == null) continue;
+
+            float d2 = (transform.position - objetivo.position).sqrMagnitude;
             if (d2 < d)
             {
                 d = d2;
-                target = ControlObjetivos.singleton.objetivos[i];
+                target = objetivo;
             }
         }
     }
@@ -168,7 +171,7 @@ public class Enemigo : MonoBehaviour, IPunObservable
         {
             yield return new WaitForSeconds(0.5f);
             CalcularTarget();
-            if (target != null)
+            if (target != null && target.gameObject != null)
             {
                 distancia = Vector3.Distance(transform.position, target.position);
             }
