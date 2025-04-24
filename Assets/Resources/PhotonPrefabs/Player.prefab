@@ -1964,6 +1964,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   vida: {fileID: 1821441314814717849}
+  defensa: 0.5
+  obstaculos:
+    serializedVersion: 2
+    m_Bits: 0
   multiplicadorCorrer: 3.5
   energiaMaxima: 1
   energiaActual: 1

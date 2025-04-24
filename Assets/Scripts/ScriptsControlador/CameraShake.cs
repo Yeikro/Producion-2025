@@ -1,56 +1,59 @@
 using System.Collections;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraShake : MonoBehaviour
 {
-    public static CameraShake Instance; // Singleton
+    public static CameraShake Instance;
 
-    private Transform camTransform;
-    private Vector3 originalPos;
+    [Header("Cinemachine")]
+    public CinemachineFreeLook freeLookCam;
+
+    [Header("Shake Settings")]
+    public float shakeDuration = 0.2f;
+    public float shakeAmplitude = 2f;
+    public float shakeFrequency = 2f;
+
+    private CinemachineBasicMultiChannelPerlin[] noiseProfiles;
 
     private void Awake()
     {
-        // Singleton Setup
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
+            Destroy(this);
         }
         else
         {
-            Destroy(gameObject);
-            return;
+            Instance = this;
         }
 
-        camTransform = Camera.main.transform;
-        originalPos = camTransform.localPosition;
+        // Obtener los noise profiles de los 3 rigs
+        noiseProfiles = new CinemachineBasicMultiChannelPerlin[3];
+        noiseProfiles[0] = freeLookCam.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        noiseProfiles[1] = freeLookCam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        noiseProfiles[2] = freeLookCam.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
-    /// <summary>
-    /// Llama a este método para sacudir la cámara.
-    /// </summary>
-    /// <param name="duration">Duración del efecto en segundos.</param>
-    /// <param name="magnitude">Intensidad de la sacudida.</param>
-    public void Shake(float duration, float magnitude)
+    public void ShakeCamera(float duration, float amplitude, float frequency)
     {
-        StopAllCoroutines(); // Por si hay otra sacudida activa
-        StartCoroutine(ShakeCoroutine(duration, magnitude));
+        StopAllCoroutines(); // Reinicia cualquier shake anterior
+        StartCoroutine(ShakeCoroutine(duration, amplitude, frequency));
     }
 
-    private IEnumerator ShakeCoroutine(float duration, float magnitude)
+    private IEnumerator ShakeCoroutine(float duration, float amplitude, float frequency)
     {
-        float elapsed = 0f;
-
-        while (elapsed < duration)
+        foreach (var noise in noiseProfiles)
         {
-            float offsetX = Random.Range(-1f, 1f) * magnitude;
-            float offsetY = Random.Range(-1f, 1f) * magnitude;
-
-            camTransform.localPosition = new Vector3(originalPos.x + offsetX, originalPos.y + offsetY, originalPos.z);
-
-            elapsed += Time.deltaTime;
-            yield return null;
+            noise.m_AmplitudeGain = amplitude;
+            noise.m_FrequencyGain = frequency;
         }
 
-        camTransform.localPosition = originalPos;
+        yield return new WaitForSeconds(duration);
+
+        foreach (var noise in noiseProfiles)
+        {
+            noise.m_AmplitudeGain = 0;
+            noise.m_FrequencyGain = 0;
+        }
     }
 }

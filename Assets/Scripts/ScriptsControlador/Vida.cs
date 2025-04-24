@@ -31,7 +31,7 @@ public class Vida : MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
-    public void CausarDa�oRPC(float cuanto)
+    public void CausarDañoRPC(float cuanto)
     {
         if (estaMuerto) return;
 
@@ -46,7 +46,10 @@ public class Vida : MonoBehaviour, IPunObservable
             eventoMorir.Invoke();
             estaMuerto = true;
         }
-        CameraShake.Instance.Shake(0.5f, 0.3f);
+        
+        CameraShake.Instance.ShakeCamera(0.3f, 0.5f, 3f);
+
+
     }
 
     public void ActualizarInterfaz()
