@@ -17,19 +17,16 @@ public class EnemigoSigue : Enemigo
     public float daño = 2;
    
 
-    PhotonView PV;
-
-
     public override void PosAwake()
     {
         agente = GetComponent<NavMeshAgent>();
         distanciaCheckPoint2 = distanciaCheckPoint * distanciaCheckPoint;
+        BuscarCheckpoints();
     }
 
     private void Awake()
     {
         base.Awake();
-        PV = GetComponent<PhotonView>();
     }
 
     public override void EstadoIdle()
@@ -93,11 +90,17 @@ public class EnemigoSigue : Enemigo
     {
         if (!PV.IsMine) return;
 
+        if (target == null) return;
+
         PhotonView targetPV = target.GetComponent<PhotonView>();
 
         if (targetPV != null)
         {
-            targetPV.RPC("CausarDañoRPC", targetPV.Owner, daño);
+            Vida vidaTarget = target.GetComponent<Vida>();
+            if (vidaTarget != null && !vidaTarget.estaMuerto)
+            {
+                targetPV.RPC("CausarDañoRPC", targetPV.Owner, daño);
+            }
         }
     }
 
@@ -116,5 +119,17 @@ public class EnemigoSigue : Enemigo
         Debug.Log("¡Has reaparecido!");
     }
 
+    private void BuscarCheckpoints()
+    {
+        GameObject[] puntos = GameObject.FindGameObjectsWithTag("Checkpoint");
+        checkPoint = new Transform[puntos.Length];
+
+        for (int i = 0; i < puntos.Length; i++)
+        {
+            checkPoint[i] = puntos[i].transform;
+        }
+
+        Debug.Log("Se encontraron " + checkPoint.Length + " checkpoints.");
+    }
 }
 
