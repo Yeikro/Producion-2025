@@ -44,6 +44,7 @@ public class Vida : MonoBehaviour
             eventoMorir.Invoke();
             estaMuerto = true;
         }
+        CameraShake.Instance.Shake(0.5f, 0.3f);
     }
 
     public void Reiniciar()
