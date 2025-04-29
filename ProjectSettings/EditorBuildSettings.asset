@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/GameDamiela.unity
     guid: 9fdc5c6748634914a955ba0b333e87b3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Santi A/Game.unity
     guid: 04278baa1f370394caf36a7db22e360a
   - enabled: 1
