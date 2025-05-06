@@ -138,6 +138,8 @@ public class ControlDePersonaje : MonoBehaviour
             animaciones.SetBool("Down", controlAgacharse.action.ReadValue<float>() > 0.5f);
         }
 
+        vida.cubierto = controlDefender.action.ReadValue<float>() > 0.5f;
+
         pivot.position = transform.position;
         pivot.forward = (pivot.position - camara.position).normalized;
         pivot.eulerAngles = new Vector3(0, pivot.eulerAngles.y, 0);

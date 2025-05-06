@@ -89,7 +89,7 @@ public class PiPiece : MonoBehaviour
             {
                 isOver = true;
             }
-            else if (parent.useController && isInteractable)
+            /*else if (parent.useController && isInteractable)
             {
                 temp = inputAxis;
                 angle = (Mathf.Atan2(temp.y, temp.x) * Mathf.Rad2Deg);
@@ -108,7 +108,7 @@ public class PiPiece : MonoBehaviour
                     thisImg.color= Color.Lerp(thisImg.color, normalColor, Time.deltaTime * 10f);
                 }
 
-            }
+            }*/
             else
             {
                 isOver = false;
@@ -127,7 +127,7 @@ public class PiPiece : MonoBehaviour
                 scaledOR *= parent.hoverScale;
                 transform.SetAsLastSibling( );
                 thisImg.color= Color.Lerp(thisImg.color, highlightColor, Time.deltaTime * 10f);
-                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0) || parent.useController && parent.joystickButton)
+                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0) /*|| parent.useController && parent.joystickButton*/)
                 {
                     clickEvent.Invoke( );
                 }
@@ -240,4 +240,25 @@ public class PiPiece : MonoBehaviour
         onHoverExit.Invoke( );
     }
 
+    public void FadeInAndEnable(float duration)
+    {
+        StartCoroutine(FadeToWhiteThenEnable(duration));
+    }
+
+    private IEnumerator FadeToWhiteThenEnable(float duration)
+    {
+        Color startColor = thisImg.color;
+        Color targetColor = Color.white;
+        float time = 0;
+
+        while (time < duration)
+        {
+            thisImg.color = Color.Lerp(startColor, targetColor, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        thisImg.color = targetColor;
+        isInteractable = true;
+    }
 }

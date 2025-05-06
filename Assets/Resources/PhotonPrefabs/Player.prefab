@@ -2130,6 +2130,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   estaMuerto: 0
+  cubierto: 0
+  cobertura: 0.5
 --- !u!114 &8354371859905026614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2156,6 +2158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   piUi: {fileID: 2084680547188808884}
+  piMenu: {fileID: 4612839680992142320}
   menuRadial:
     m_UseReference: 1
     m_Action:
@@ -2168,6 +2171,8 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 414694318034272427, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
+  controlDePersonaje: {fileID: 759808118104847036}
+  duracionPoder: 5
 --- !u!1 &5335353073929671666
 GameObject:
   m_ObjectHideFlags: 0
@@ -3808,6 +3813,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3632375572119239218}
     m_Modifications:
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].angle
+      value: 114.20001
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[0].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7384984193999668191}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[0].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Jaguar
+      objectReference: {fileID: 0}
     - target: {fileID: 1204808426753628292, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3866,6 +3883,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0473888730c8a294fb6de4729423eb7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4612839680992142320 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+  m_PrefabInstance: {fileID: 5316698584924435182}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d756ce428286446a7a7c4412a5d3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &6444901553004489322 stripped

@@ -16,6 +16,9 @@ public class Vida : MonoBehaviour, IPunObservable
     public UnityEvent eventoMorir;
     public bool estaMuerto = false;
 
+    public bool cubierto = false;
+    public float cobertura = 0.5f;
+
     void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -34,7 +37,7 @@ public class Vida : MonoBehaviour, IPunObservable
     {
         if (estaMuerto) return;
 
-        vidaActual -= cuanto;
+        vidaActual -= cubierto ? cuanto * (1 - cobertura) : cuanto;
         ActualizarInterfaz();
 
         if (vidaActual <= 0)
