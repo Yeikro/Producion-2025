@@ -143,6 +143,7 @@ public class Test : MonoBehaviour
 
     private PiUI normalMenu;
     public InputActionProperty menuRadial;
+    //public ControlDePersonaje controlDePersonaje;
 
     private void Awake()
     {
@@ -196,7 +197,7 @@ public class Test : MonoBehaviour
                 if (data.onSlicePressed == null || data.onSlicePressed.GetPersistentEventCount() == 0)
                 {
                     data.onSlicePressed = new UnityEngine.Events.UnityEvent();
-                    data.onSlicePressed.AddListener(TestFunction);
+                    data.onSlicePressed.AddListener(Jaguar);
                 }
 
                 i++;
@@ -218,15 +219,17 @@ public class Test : MonoBehaviour
         piUi.ChangeMenuState("Normal Menu", new Vector2(Screen.width / 2f, Screen.height / 2f));
     }
 
-    public void TestFunction()
+    public void Jaguar()
     {
         piUi.ChangeMenuState("Normal Menu");
 
         // ✅ Ocultar cursor al cerrar el menú
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        //controlDePersonaje.velSuavisada = controlDePersonaje.velSuavisada * 3;
+        //controlDePersonaje.fuerzaSalto = controlDePersonaje.fuerzaSalto * 3;
 
-        Debug.Log("You Clicked me!");
+        Debug.Log("Jaguar");
     }
 
     public void OnHoverEnter()

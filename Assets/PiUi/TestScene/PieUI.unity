@@ -785,7 +785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114358342674604368, guid: f8d1463efe512bc4a90597e508985031, type: 3}
       propertyPath: piData.Array.data[3].angle
-      value: 114.20001
+      value: 57.099976
       objectReference: {fileID: 0}
     - target: {fileID: 114358342674604368, guid: f8d1463efe512bc4a90597e508985031, type: 3}
       propertyPath: piData.Array.data[3].order
