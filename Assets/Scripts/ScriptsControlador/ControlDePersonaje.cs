@@ -223,4 +223,16 @@ public class ControlDePersonaje : MonoBehaviour
         vida.Reiniciar();
         Debug.Log("¡Has reaparecido!");
     }
+
+    public void BloquearAtaque(bool bloquear)
+    {
+        if (bloquear)
+        {
+            controlAtaque.action.Disable();
+        }
+        else
+        {
+            controlAtaque.action.Enable();
+        }
+    }
 }

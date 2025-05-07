@@ -242,7 +242,14 @@ public class PiPiece : MonoBehaviour
 
     public void FadeInAndEnable(float duration)
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("Intentando usar FadeInAndEnable en un objeto inactivo. Cancelado.");
+            return;
+        }
+
         StartCoroutine(FadeToWhiteThenEnable(duration));
+        isInteractable = true;
     }
 
     private IEnumerator FadeToWhiteThenEnable(float duration)

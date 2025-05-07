@@ -2159,6 +2159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piUi: {fileID: 2084680547188808884}
   piMenu: {fileID: 4612839680992142320}
+  vida: {fileID: 1821441314814717849}
   menuRadial:
     m_UseReference: 1
     m_Action:
@@ -2172,7 +2173,9 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 414694318034272427, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
   controlDePersonaje: {fileID: 759808118104847036}
-  duracionPoder: 5
+  duracionPoderJaguar: 5
+  duracionPoder: 15
+  enfriamientoHabilidad: 10
 --- !u!1 &5335353073929671666
 GameObject:
   m_ObjectHideFlags: 0
@@ -3815,15 +3818,55 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[3].angle
-      value: 114.20001
+      value: 57.099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[1].isInteractable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[0].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7384984193999668191}
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[1].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7384984193999668191}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[2].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7384984193999668191}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7384984193999668191}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[0].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Jaguar
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[1].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Mono
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[2].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Rana
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Tucan
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[1].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuRadial, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[2].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuRadial, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuRadial, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1204808426753628292, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: m_LocalPosition.x
