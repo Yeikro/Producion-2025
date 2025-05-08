@@ -10,12 +10,16 @@ public class Vida : MonoBehaviour, IPunObservable
     [SerializeField] Image healthbarImage;
     [SerializeField] GameObject ui;
     PhotonView PV;
+    public MenuRadial menuRadial;
 
     public float vidaInicial;
     public float vidaActual;
     public UnityEvent eventoMorir;
     public bool estaMuerto = false;
     public float modificador = 1;//hace que tenga mas o menos da�o, sirve para la trasformacion de los animales//
+
+    public bool cubierto = false;
+    public float cobertura = 0.5f;
 
     void Awake()
     {
@@ -28,6 +32,11 @@ public class Vida : MonoBehaviour, IPunObservable
 
         if (CompareTag("Jugador") && !PV.IsMine)
             Destroy(ui);
+
+        if (menuRadial == null && PV.IsMine)
+        {
+            menuRadial = FindAnyObjectByType<MenuRadial>();
+        }
     }
 
     [PunRPC]
@@ -35,8 +44,15 @@ public class Vida : MonoBehaviour, IPunObservable
     {
         if (estaMuerto) return;
 
-        vidaActual -= cuanto*modificador;
-        healthbarImage.fillAmount = vidaActual / vidaInicial;
+        if (menuRadial.inmune)
+        {
+            vidaActual -= cuanto * (1 - cobertura);
+        }
+        else
+        {
+            vidaActual -= cubierto ? cuanto * (1 - cobertura) : cuanto;
+        }
+
         ActualizarInterfaz();
 
         if (vidaActual <= 0)

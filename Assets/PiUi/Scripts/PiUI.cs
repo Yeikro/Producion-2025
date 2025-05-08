@@ -78,7 +78,7 @@ public class PiUI : MonoBehaviour
     public float textVerticalOffset;
 
     [Tooltip("Enable Controller Support")]
-    public bool useController;
+    //public bool useController;
 
     [HideInInspector]
     public bool joystickButton;
@@ -803,5 +803,14 @@ public class PiUI : MonoBehaviour
         }
 #endif
 
+    }
+
+    public void SetSliceInteractable(int index, bool state)
+    {
+        if (index >= 0 && index < piList.Count)
+        {
+            piData[index].isInteractable = state;
+            piList[index].SetData(piData[index], innerRadius, outerRadius, this); // actualiza visual
+        }
     }
 }
