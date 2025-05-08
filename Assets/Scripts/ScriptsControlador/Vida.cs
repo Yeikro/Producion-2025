@@ -44,7 +44,7 @@ public class Vida : MonoBehaviour, IPunObservable
     {
         if (estaMuerto) return;
 
-        if (menuRadial.inmune)
+        if (menuRadial!=null && menuRadial.inmune)
         {
             vidaActual -= cuanto * (1 - cobertura);
         }
