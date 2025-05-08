@@ -2112,6 +2112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthbarImage: {fileID: 4426521118847051290}
   ui: {fileID: 5335353073929671666}
+  menuRadial: {fileID: 7384984193999668191}
   vidaInicial: 20
   vidaActual: 0
   eventoMorir:
@@ -2176,6 +2177,7 @@ MonoBehaviour:
   duracionPoderJaguar: 5
   duracionPoder: 15
   enfriamientoHabilidad: 10
+  inmune: 0
 --- !u!1 &5335353073929671666
 GameObject:
   m_ObjectHideFlags: 0

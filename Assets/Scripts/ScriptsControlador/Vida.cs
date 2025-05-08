@@ -10,6 +10,7 @@ public class Vida : MonoBehaviour, IPunObservable
     [SerializeField] Image healthbarImage;
     [SerializeField] GameObject ui;
     PhotonView PV;
+    public MenuRadial menuRadial;
 
     public float vidaInicial;
     public float vidaActual;
@@ -30,6 +31,11 @@ public class Vida : MonoBehaviour, IPunObservable
 
         if (CompareTag("Jugador") && !PV.IsMine)
             Destroy(ui);
+
+        if (menuRadial == null && PV.IsMine)
+        {
+            menuRadial = FindAnyObjectByType<MenuRadial>();
+        }
     }
 
     [PunRPC]
@@ -37,7 +43,15 @@ public class Vida : MonoBehaviour, IPunObservable
     {
         if (estaMuerto) return;
 
-        vidaActual -= cubierto ? cuanto * (1 - cobertura) : cuanto;
+        if (menuRadial.inmune)
+        {
+            vidaActual -= cuanto * (1 - cobertura);
+        }
+        else
+        {
+            vidaActual -= cubierto ? cuanto * (1 - cobertura) : cuanto;
+        }
+
         ActualizarInterfaz();
 
         if (vidaActual <= 0)

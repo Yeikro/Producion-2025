@@ -22,6 +22,7 @@ public class MenuRadial : MonoBehaviour
     public float duracionPoderJaguar = 5f;
     public float duracionPoder = 15f;
     public float enfriamientoHabilidad = 10f;
+    public bool inmune = false;
 
     // Valores originales
     private Vector3 fuerzaSaltoOriginal;
@@ -50,6 +51,7 @@ public class MenuRadial : MonoBehaviour
         velocidadRecargaOriginal = controlDePersonaje.velocidadRecarga;
         rangoAtaqueOriginal = controlDePersonaje.rangoAtaque;
         coberturaOriginal = vida.cobertura;
+        inmune = false;
     }
 
     private void OnDisable()
@@ -254,12 +256,13 @@ public class MenuRadial : MonoBehaviour
     {
         coberturaOriginal = vida.cobertura;
 
+        inmune = true;
+
         vida.cubierto = true;
 
         if(vida.cubierto)
         {
             vida.cobertura = 1f;
-            vida.cubierto = false;
         }
 
         // Iniciar la corrutina para restaurar valores
@@ -303,7 +306,9 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        vida.cubierto = false;
         vida.cobertura = coberturaOriginal;
+        inmune = false;
 
         StartCoroutine(HabilitarConFadeMono(piMenu.piList[1], enfriamientoHabilidad));
     }
