@@ -52,6 +52,7 @@ public class Enemigo : MonoBehaviour, IPunObservable
         yield return null;
         if (autoseleccionarTarget)
             CalcularTarget();
+
     }
 
     public void CalcularTarget()
@@ -74,6 +75,7 @@ public class Enemigo : MonoBehaviour, IPunObservable
     public void LateUpdate()
     {
         CheckEstados();
+        healthbarImage.fillAmount = vida / vidaMaxima;
     }
 
 #if UNITY_EDITOR

@@ -15,6 +15,7 @@ public class EnemigoSigue : Enemigo
     public float distanciaCheckPoint;
     private float distanciaCheckPoint2;
     public float daño = 2;
+   
 
     public override void PosAwake()
     {

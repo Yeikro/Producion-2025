@@ -16,6 +16,7 @@ public class Vida : MonoBehaviour, IPunObservable
     public float vidaActual;
     public UnityEvent eventoMorir;
     public bool estaMuerto = false;
+    public float modificador = 1;//hace que tenga mas o menos daï¿½o, sirve para la trasformacion de los animales//
 
     public bool cubierto = false;
     public float cobertura = 0.5f;
@@ -39,7 +40,7 @@ public class Vida : MonoBehaviour, IPunObservable
     }
 
     [PunRPC]
-    public void CausarDañoRPC(float cuanto)
+    public void CausarDaÃ±oRPC(float cuanto)
     {
         if (estaMuerto) return;
 
@@ -61,6 +62,10 @@ public class Vida : MonoBehaviour, IPunObservable
             eventoMorir.Invoke();
             estaMuerto = true;
         }
+        
+        CameraShake.Instance.ShakeCamera(0.3f, 0.5f, 3f);
+
+
     }
 
     public void ActualizarInterfaz()

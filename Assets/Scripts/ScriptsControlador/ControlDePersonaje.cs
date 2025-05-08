@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,6 +32,9 @@ public class ControlDePersonaje : MonoBehaviour
     public float dañoRaycast = 5f;
     public LayerMask capaEnemigos;
     public Vida vida;
+    public float defensa = 0.5f;
+    public LayerMask obstaculos;
+   
 
     //Correr
     public float multiplicadorCorrer = 1.5f;
