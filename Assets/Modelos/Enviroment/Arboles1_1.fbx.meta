@@ -18,42 +18,42 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Hojas_Base_color
-    second: {fileID: 2800000, guid: 25e499355e9c1a64e8de57ea8e566212, type: 3}
+    second: {fileID: 2800000, guid: 7e0f717911b7ee543aea5785b6b15fd1, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Hojas_Metallic
-    second: {fileID: 2800000, guid: 397e492280be26445bd99ba688194341, type: 3}
+    second: {fileID: 2800000, guid: d81d16b6bac39a149be26d4499e1c262, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Hojas_Normal_OpenGL
-    second: {fileID: 2800000, guid: 9ad968abbae7bdb4b82a882e91aca0ac, type: 3}
+    second: {fileID: 2800000, guid: 2c072b3a42c1c0842950929565561623, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Hojas_Roughness
-    second: {fileID: 2800000, guid: 794105a52fb52bd488d48bd3404ad392, type: 3}
+    second: {fileID: 2800000, guid: 3e884d1d62c4e384d9fcf9277868a49d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tronco_Base_color
-    second: {fileID: 2800000, guid: cf8beedf84536684e9dc6b5e3fc3bf94, type: 3}
+    second: {fileID: 2800000, guid: f63c6ddeddc1ab64fb537d9b81da40d2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tronco_Metallic
-    second: {fileID: 2800000, guid: 2a80569003772b749bfa0c35b57fdc02, type: 3}
+    second: {fileID: 2800000, guid: 89a446ccce7ab5840a132ceeb8c7af2f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tronco_Normal_OpenGL
-    second: {fileID: 2800000, guid: fa4620ea5819e2b49aecac530da1ce56, type: 3}
+    second: {fileID: 2800000, guid: ab8250f2ab7326742aea76927d9bcdcc, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Tronco_Roughness
-    second: {fileID: 2800000, guid: c8059ce8b7a36c64186749d2375e3d6d, type: 3}
+    second: {fileID: 2800000, guid: befe3ae56325dff4e9649c1512f69140, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -86,7 +86,7 @@ ModelImporter:
     - 0.25
     - 0.125
     - 0.01
-    globalScale: 1
+    globalScale: 1.43
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -141,7 +141,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.014299999
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
