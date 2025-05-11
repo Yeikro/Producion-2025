@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ControladorAnimal : MonoBehaviour
 {
@@ -23,9 +24,14 @@ public class ControladorAnimal : MonoBehaviour
 
     private bool estaEsperando = false;
 
-    private void Start()
+    private IEnumerator Start()
     {
-        jugador = GameObject.FindGameObjectWithTag("Jugador");
+        // Esperar hasta que el jugador esté en escena
+        while (jugador == null)
+        {
+            jugador = GameObject.FindGameObjectWithTag("Jugador");
+            yield return null; // espera un frame
+        }
 
         if (accionInteractuar != null)
             accionInteractuar.action.Enable();
@@ -104,7 +110,7 @@ public class ControladorAnimal : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         Transform nuevoPunto = puntosMovimiento[Random.Range(0, puntosMovimiento.Count)];
-        rb.position = nuevoPunto.position;
+        rb.MovePosition(nuevoPunto.position);
 
         EscogerNuevoPunto();
         estaInteractuando = false;
