@@ -116,11 +116,26 @@ public class ControladorAnimal : MonoBehaviour
             transform.rotation = rotacionObjetivo;
         }
 
+        var controlPersonaje = jugador.GetComponent<ControlDePersonaje>();
+        if (controlPersonaje != null)
+        {
+            controlPersonaje.controlesBloqueados = true;
+        }
+
+        var menuRadial = jugador.GetComponent<MenuRadial>();
+        if (menuRadial != null)
+        {
+            menuRadial.menuBloqueado = true;
+        }
+
         var camara = GetComponentInChildren<SecuenciaCamaraAnimal>();
 
         camara.IniciarSecuencia();
         
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(12f);
+
+        controlPersonaje.controlesBloqueados = false;
+        menuRadial.menuBloqueado = false;
 
         Transform nuevoPunto = puntosMovimiento[Random.Range(0, puntosMovimiento.Count)];
         rb.MovePosition(nuevoPunto.position);

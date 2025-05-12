@@ -1976,6 +1976,7 @@ MonoBehaviour:
   velocidadGasto: 0.6
   velocidadRecarga: 0.08
   barraEnergia: {fileID: 7702116864656759861}
+  controlesBloqueados: 0
 --- !u!136 &6666563340571142190
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2183,6 +2184,7 @@ MonoBehaviour:
   duracionPoder: 15
   enfriamientoHabilidad: 10
   inmune: 0
+  menuBloqueado: 0
 --- !u!1 &5335353073929671666
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,6 +33,8 @@ public class MenuRadial : MonoBehaviour
     private float rangoAtaqueOriginal;
     private float coberturaOriginal;
 
+    public bool menuBloqueado = false;
+
     private void Awake()
     {
         menuRadial.action.Enable();
@@ -57,7 +59,7 @@ public class MenuRadial : MonoBehaviour
     private void OnDisable()
     {
         menuRadial.action.performed -= OnOpenMenu;
-        menuRadial.action.Disable();
+        menuRadial.action.Disable();  
     }
 
     void Start()
@@ -79,6 +81,9 @@ public class MenuRadial : MonoBehaviour
     //Esta función será llamada cuando presiones "E"
     private void OnOpenMenu(InputAction.CallbackContext context)
     {
+        if (menuBloqueado)
+            return;
+
         bool isOpen = piUi.PiOpened("Normal Menu");
 
         if (!isOpen)

@@ -45,6 +45,8 @@ public class ControlDePersonaje : MonoBehaviour
     public Image barraEnergia;
     bool estaCorriendo = false;
 
+    public bool controlesBloqueados = false;
+
     // Post procesamiento
     ChromaticAberration chromatic;
     Vignette vignette;
@@ -110,7 +112,7 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Saltar()
     {
-        if (!PV.IsMine || animaciones == null) return;
+        if (controlesBloqueados || !PV.IsMine || animaciones == null) return;
         animaciones.SetTrigger("Jump");
     }
 
@@ -122,14 +124,20 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Ataque()
     {
-        if (!PV.IsMine || animaciones == null) return;
+        if (!PV.IsMine || animaciones == null || controlesBloqueados) return;
         animaciones.SetTrigger("Atack");
     }
 
     void Update()
     {
-        if (!PV.IsMine)
+        if (!PV.IsMine || controlesBloqueados)
+        {
+            animaciones.SetFloat("Horizontal", 0f);
+            animaciones.SetFloat("Vertical", 0f);
+            animaciones.SetBool("Defens", false);
+            animaciones.SetBool("Down", false);
             return;
+        }
 
         movimiento = Vector2.Lerp(movimiento, controlMover.action.ReadValue<Vector2>(), velSuavisada * Time.deltaTime);
 
