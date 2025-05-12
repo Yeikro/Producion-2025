@@ -107,7 +107,20 @@ public class ControladorAnimal : MonoBehaviour
         estaInteractuando = true;
 
         Debug.Log(">> Inicia secuencia de cámara...");
-        yield return new WaitForSeconds(3f);
+
+        Vector3 direccion = jugador.transform.position - transform.position;
+        direccion.y = 0f;
+        if (direccion.sqrMagnitude > 0.01f)
+        {
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion.normalized);
+            transform.rotation = rotacionObjetivo;
+        }
+
+        var camara = GetComponentInChildren<SecuenciaCamaraAnimal>();
+
+        camara.IniciarSecuencia();
+        
+        yield return new WaitForSeconds(20f);
 
         Transform nuevoPunto = puntosMovimiento[Random.Range(0, puntosMovimiento.Count)];
         rb.MovePosition(nuevoPunto.position);
