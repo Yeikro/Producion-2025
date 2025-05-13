@@ -26,16 +26,11 @@ public class ControladorAnimal : MonoBehaviour
 
     private bool estaEsperando = false;
     public string nombreAnimal = "Jaguar";
+    private GameObject jugadorObjetivoLocal = null;
+    private bool estaInteractuandoGlobal = false;
 
     private IEnumerator Start()
     {
-        // Esperar hasta que el jugador esté en escena
-        /*while (jugador == null)
-        {
-            jugador = GameObject.FindGameObjectWithTag("Jugador");
-            yield return null; // espera un frame
-        }*/
-
         if (accionInteractuar != null)
             accionInteractuar.action.Enable();
 
@@ -50,30 +45,36 @@ public class ControladorAnimal : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (estaInteractuando || objetivoActual == null || estaEsperando) return;
+        if (estaInteractuandoGlobal)
+        {
+            // Mientras esté en interacción, el animal no camina ni rota por su cuenta
+            return;
+        }
 
-        Vector3 direccion = objetivoActual.position - transform.position;
-        direccion.y = 0f;
+        if (objetivoActual == null || estaEsperando) return;
 
-        if (direccion.magnitude > 0.1f)
+        // Movimiento aleatorio
+        Vector3 direccionNormal = objetivoActual.position - transform.position;
+        direccionNormal.y = 0f;
+
+        if (direccionNormal.magnitude > 0.1f)
         {
             Vector3 nuevaPos = Vector3.MoveTowards(transform.position, objetivoActual.position, velocidadMovimiento * Time.fixedDeltaTime);
             rb.MovePosition(nuevaPos);
 
-            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion.normalized);
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionNormal.normalized);
             Quaternion rotacionSuave = Quaternion.Slerp(transform.rotation, rotacionObjetivo, velocidadRotacion * Time.fixedDeltaTime);
             rb.MoveRotation(rotacionSuave);
         }
         else
         {
-            // Llegó al punto
             StartCoroutine(EsperarYSiguientePunto());
         }
     }
 
     private void Update()
     {
-        if (estaInteractuando) return;
+        //if (estaInteractuando) return;
 
         if (accionInteractuar.action.triggered)
         {
@@ -99,11 +100,6 @@ public class ControladorAnimal : MonoBehaviour
                 }
             }
         }
-
-        /*if (accionInteractuar.action.triggered && Vector3.Distance(transform.position, jugador.transform.position) <= rangoInteraccion)
-        {
-            StartCoroutine(InteraccionConJugador());
-        }*/
     }
 
     private void EscogerNuevoPunto()
@@ -134,7 +130,8 @@ public class ControladorAnimal : MonoBehaviour
 
     private IEnumerator InteraccionConJugador()
     {
-        estaInteractuando = true;
+        //estaInteractuando = true;
+        jugadorObjetivoLocal = jugador;
 
         Debug.Log(">> Inicia secuencia de cámara...");
 
@@ -190,6 +187,8 @@ public class ControladorAnimal : MonoBehaviour
         
         yield return new WaitForSeconds(12f);
 
+        pv.RPC("FinalizarInteraccion", RpcTarget.All);
+
         controlPersonaje.controlesBloqueados = false;
         menuRadial.menuBloqueado = false;
 
@@ -197,13 +196,15 @@ public class ControladorAnimal : MonoBehaviour
         rb.MovePosition(nuevoPunto.position);
 
         EscogerNuevoPunto();
-        estaInteractuando = false;
+        //estaInteractuando = false;
 
         var registro = jugador.GetComponent<RegistroInteracciones>();
         if (registro != null)
         {
             registro.RegistrarInteraccion(nombreAnimal);
         }
+
+        jugadorObjetivoLocal = null;
     }
 
     [PunRPC]
@@ -218,6 +219,12 @@ public class ControladorAnimal : MonoBehaviour
             transform.rotation = rotacionObjetivo;
         }
 
-        estaInteractuando = true; // También puedes detener el movimiento si quieres
+        estaInteractuandoGlobal = true;
+    }
+
+    [PunRPC]
+    public void FinalizarInteraccion()
+    {
+        estaInteractuandoGlobal = false;
     }
 }

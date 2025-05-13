@@ -44,6 +44,7 @@ MonoBehaviour:
   - CurarRPC
   - RPC_FinDelJuego
   - ApuntarHacia
+  - FinalizarInteraccion
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
