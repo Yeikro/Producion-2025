@@ -50,7 +50,7 @@ MonoBehaviour:
   - {fileID: 0}
   style:
     texture: {fileID: 2800000, guid: 08a84d61cf2c0e945a5c8ac13735ace7, type: 3}
-    color: {r: 0.1139551, g: 0.6226415, b: 0.12049914, a: 1}
+    color: {r: 1, g: 0, b: 0.030918121, a: 1}
     width: 48
     height: 48
 --- !u!114 &4539405385936723216
@@ -70,13 +70,13 @@ MonoBehaviour:
   - {fileID: 0}
   style:
     texture: {fileID: 2800000, guid: 08a84d61cf2c0e945a5c8ac13735ace7, type: 3}
-    color: {r: 0.1137255, g: 0.62352943, b: 0.121568635, a: 1}
+    color: {r: 1, g: 0, b: 0.03137255, a: 1}
     width: 48
     height: 48
   showArrow: 1
   arrowStyle:
     texture: {fileID: 2800000, guid: b14d512c127ad2545b2ce2126a7690c6, type: 3}
-    color: {r: 0.1137255, g: 0.62352943, b: 0.121568635, a: 1}
+    color: {r: 1, g: 0, b: 0.03137255, a: 1}
     margin: -10
     width: 24
     height: 24

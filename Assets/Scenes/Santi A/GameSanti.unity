@@ -4778,6 +4778,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tucan
       objectReference: {fileID: 0}
+    - target: {fileID: 3967166191976710264, guid: 3dc8a0746154bf0468b94bd910dcc819, type: 3}
+      propertyPath: sceneViewId
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4960547307968409148, guid: 3dc8a0746154bf0468b94bd910dcc819, type: 3}
       propertyPath: textoInteraccion
       value: 
@@ -5040,6 +5044,10 @@ PrefabInstance:
       propertyPath: 'puntosMovimiento.Array.data[7]'
       value: 
       objectReference: {fileID: 1877283967}
+    - target: {fileID: 6664761523014979259, guid: c52cea59e6386e448966c54be75fc0f6, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7579627502528695410, guid: c52cea59e6386e448966c54be75fc0f6, type: 3}
       propertyPath: textoInteraccion
       value: 
@@ -5451,6 +5459,10 @@ PrefabInstance:
     - target: {fileID: 1171318002259875252, guid: 3e8b5b3d77dce254e9b1f061f0f682e6, type: 3}
       propertyPath: m_Name
       value: "MonoAra\xF1a"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716008112714335797, guid: 3e8b5b3d77dce254e9b1f061f0f682e6, type: 3}
+      propertyPath: sceneViewId
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5821268336416593662, guid: 3e8b5b3d77dce254e9b1f061f0f682e6, type: 3}
       propertyPath: m_LocalPosition.x
