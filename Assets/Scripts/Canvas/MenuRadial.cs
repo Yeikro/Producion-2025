@@ -23,15 +23,11 @@ public class MenuRadial : MonoBehaviour
     public float duracionPoder = 15f;
     public float enfriamientoHabilidad = 10f;
     public bool inmune = false;
+    public CustomGravity customGravity;
 
     // Valores originales
-    private Vector3 fuerzaSaltoOriginal;
-    private float dañoRaycastOriginal;
-    private float multiplicadorCorrerOriginal;
-    private float velocidadGastoOriginal;
-    private float velocidadRecargaOriginal;
-    private float rangoAtaqueOriginal;
-    private float coberturaOriginal;
+    public EstadoIndigena estadoOriginal;
+    public EstadoIndigena[] estadosTransformaciones;
 
     public bool menuBloqueado = false;
 
@@ -40,19 +36,21 @@ public class MenuRadial : MonoBehaviour
         menuRadial.action.Enable();
         menuRadial.action.performed += OnOpenMenu;
         freeLookCam = FindFirstObjectByType<CinemachineFreeLook>();
+        customGravity = GetComponent<CustomGravity>();
         if (freeLookCam != null)
         {
             originalXSpeed = freeLookCam.m_XAxis.m_MaxSpeed;
             originalYSpeed = freeLookCam.m_YAxis.m_MaxSpeed;
         }
-
-        fuerzaSaltoOriginal = controlDePersonaje.fuerzaSalto;
-        dañoRaycastOriginal = controlDePersonaje.dañoRaycast;
-        multiplicadorCorrerOriginal = controlDePersonaje.multiplicadorCorrer;
-        velocidadGastoOriginal = controlDePersonaje.velocidadGasto;
-        velocidadRecargaOriginal = controlDePersonaje.velocidadRecarga;
-        rangoAtaqueOriginal = controlDePersonaje.rangoAtaque;
-        coberturaOriginal = vida.cobertura;
+        estadoOriginal = new EstadoIndigena();
+        estadoOriginal.fuerzaSalto = controlDePersonaje.fuerzaSalto;
+        estadoOriginal.dañoRaycast = controlDePersonaje.dañoRaycast;
+        estadoOriginal.multiplicadorCorrer = controlDePersonaje.multiplicadorCorrer;
+        estadoOriginal.velocidadGasto = controlDePersonaje.velocidadGasto;
+        estadoOriginal.velocidadRecarga = controlDePersonaje.velocidadRecarga;
+        estadoOriginal.rangoAtaque = controlDePersonaje.rangoAtaque;
+        estadoOriginal.cobertura = vida.cobertura;
+        estadoOriginal.gravedad = customGravity.gravityScale;
         inmune = false;
         for (int i = 0; i < piMenu.piData.Length; i++)
         {
@@ -220,19 +218,8 @@ public class MenuRadial : MonoBehaviour
 
     public void ActivarPoderJaguar()
     {
-        // Guardar valores originales
-        fuerzaSaltoOriginal = controlDePersonaje.fuerzaSalto;
-        dañoRaycastOriginal = controlDePersonaje.dañoRaycast;
-        multiplicadorCorrerOriginal = controlDePersonaje.multiplicadorCorrer;
-        velocidadGastoOriginal = controlDePersonaje.velocidadGasto;
-        velocidadRecargaOriginal = controlDePersonaje.velocidadRecarga;
-
         // Aplicar los cambios
-        controlDePersonaje.fuerzaSalto *= 1.5f;
-        controlDePersonaje.daño = 4;
-        controlDePersonaje.multiplicadorCorrer = 10f;
-        controlDePersonaje.velocidadGasto = 0.2f;
-        controlDePersonaje.velocidadRecarga = 0.5f;
+        ActivarPoder(estadosTransformaciones[0]);
 
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesJaguar());
@@ -240,11 +227,8 @@ public class MenuRadial : MonoBehaviour
 
     public void ActivarPoderTucan()
     {
-        // Guardar valores originales
-        fuerzaSaltoOriginal = controlDePersonaje.fuerzaSalto;
-
         // Aplicar los cambios
-        controlDePersonaje.fuerzaSalto *= 3.5f;
+        ActivarPoder(estadosTransformaciones[1]);
 
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesTucan());
@@ -252,11 +236,8 @@ public class MenuRadial : MonoBehaviour
 
     public void ActivarPoderRana()
     {
-        // Guardar valores originales
-        rangoAtaqueOriginal = controlDePersonaje.rangoAtaque;
-
         // Aplicar los cambios
-        controlDePersonaje.rangoAtaque *= 3.5f;
+        ActivarPoder(estadosTransformaciones[2]);
 
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesRana());
@@ -264,15 +245,13 @@ public class MenuRadial : MonoBehaviour
 
     public void ActivarPoderMono()
     {
-        coberturaOriginal = vida.cobertura;
-
         inmune = true;
 
         vida.cubierto = true;
 
         if(vida.cubierto)
         {
-            vida.cobertura = 1f;
+            ActivarPoder(estadosTransformaciones[3]);
         }
 
         // Iniciar la corrutina para restaurar valores
@@ -284,11 +263,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoderJaguar);
 
         // Restaurar valores originales
-        controlDePersonaje.fuerzaSalto = fuerzaSaltoOriginal;
-        controlDePersonaje.dañoRaycast = dañoRaycastOriginal;
-        controlDePersonaje.multiplicadorCorrer = multiplicadorCorrerOriginal;
-        controlDePersonaje.velocidadGasto = velocidadGastoOriginal;
-        controlDePersonaje.velocidadRecarga = velocidadRecargaOriginal;
+        ActivarPoder(estadoOriginal);
         StartCoroutine(HabilitarConFadeJaguar(piMenu.piList[0], enfriamientoHabilidad));
     }
     private IEnumerator RestaurarValoresOriginalesTucan()
@@ -296,7 +271,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
-        controlDePersonaje.fuerzaSalto = fuerzaSaltoOriginal;
+        ActivarPoder(estadoOriginal);
 
         StartCoroutine(HabilitarConFadeTucan(piMenu.piList[3], enfriamientoHabilidad));
     }
@@ -306,7 +281,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
-        controlDePersonaje.rangoAtaque = rangoAtaqueOriginal;
+        ActivarPoder(estadoOriginal);
 
         StartCoroutine(HabilitarConFadeRana(piMenu.piList[2], enfriamientoHabilidad));
     }
@@ -317,7 +292,7 @@ public class MenuRadial : MonoBehaviour
 
         // Restaurar valores originales
         vida.cubierto = false;
-        vida.cobertura = coberturaOriginal;
+        ActivarPoder(estadoOriginal);
         inmune = false;
 
         StartCoroutine(HabilitarConFadeMono(piMenu.piList[1], enfriamientoHabilidad));
@@ -389,13 +364,7 @@ public class MenuRadial : MonoBehaviour
 
     public void RestaurarTodosLosValores()
     {
-        controlDePersonaje.fuerzaSalto = fuerzaSaltoOriginal;
-        controlDePersonaje.dañoRaycast = dañoRaycastOriginal;
-        controlDePersonaje.multiplicadorCorrer = multiplicadorCorrerOriginal;
-        controlDePersonaje.velocidadGasto = velocidadGastoOriginal;
-        controlDePersonaje.velocidadRecarga = velocidadRecargaOriginal;
-        controlDePersonaje.rangoAtaque = rangoAtaqueOriginal;
-        vida.cobertura = coberturaOriginal;
+        ActivarPoder(estadoOriginal);
     }
 
     public void OnHoverEnter()
@@ -406,5 +375,17 @@ public class MenuRadial : MonoBehaviour
     public void OnHoverExit()
     {
         Debug.Log("That's right and dont come back!");
+    }
+
+    void ActivarPoder(EstadoIndigena ei)
+    {
+        controlDePersonaje.fuerzaSalto = ei.fuerzaSalto;
+        controlDePersonaje.dañoRaycast = ei.dañoRaycast;
+        controlDePersonaje.multiplicadorCorrer = ei.multiplicadorCorrer;
+        controlDePersonaje.velocidadGasto = ei.velocidadGasto;
+        controlDePersonaje.velocidadRecarga = ei.velocidadRecarga;
+        controlDePersonaje.rangoAtaque = ei.rangoAtaque;
+        vida.cobertura = ei.cobertura;
+        customGravity.gravityScale = ei.gravedad;
     }
 }

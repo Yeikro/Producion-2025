@@ -1818,6 +1818,7 @@ GameObject:
   - component: {fileID: 7384984193999668191}
   - component: {fileID: 4099931393752290512}
   - component: {fileID: 1011675875667197655}
+  - component: {fileID: 7255912467056431973}
   m_Layer: 0
   m_Name: Player
   m_TagString: Jugador
@@ -2024,7 +2025,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -2186,6 +2187,13 @@ MonoBehaviour:
   duracionPoder: 15
   enfriamientoHabilidad: 10
   inmune: 0
+  customGravity: {fileID: 0}
+  estadoOriginal: {fileID: 0}
+  estadosTransformaciones:
+  - {fileID: 11400000, guid: ece545380d275bc4faf8ef1033a2a319, type: 2}
+  - {fileID: 11400000, guid: b529c6f5caddae448b87c7a30c865b28, type: 2}
+  - {fileID: 11400000, guid: b9f7f595b2c18f34db092a558d7438c1, type: 2}
+  - {fileID: 11400000, guid: f9e649ce0b732434eb7df08462e2e8b1, type: 2}
   menuBloqueado: 0
 --- !u!114 &4099931393752290512
 MonoBehaviour:
@@ -2212,6 +2220,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d9048cd91a82c4da2ff0dde9d14801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7255912467056431973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292867939082285691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4fc245d5534e254f95959e4101672d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityScale: 1
 --- !u!1 &5335353073929671666
 GameObject:
   m_ObjectHideFlags: 0
