@@ -54,6 +54,11 @@ public class MenuRadial : MonoBehaviour
         rangoAtaqueOriginal = controlDePersonaje.rangoAtaque;
         coberturaOriginal = vida.cobertura;
         inmune = false;
+        for (int i = 0; i < piMenu.piData.Length; i++)
+        {
+            piMenu.piData[i].isInteractable = false;
+            //piMenu.piList[i].SetData(piMenu.piData[i], piMenu.innerRadius, piMenu.outerRadius, piMenu);
+        }
     }
 
     private void OnDisable()

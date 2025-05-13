@@ -820,6 +820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoInteraccion: {fileID: 176024274}
   nombreAnimal: Tucan
+  controladorAnimal: {fileID: 1093830784}
 --- !u!135 &125869627
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1709,6 +1710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoInteraccion: {fileID: 176024274}
   nombreAnimal: Rana Dorada
+  controladorAnimal: {fileID: 494275880}
 --- !u!135 &409272875
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2115,8 +2117,10 @@ GameObject:
   - component: {fileID: 494275882}
   - component: {fileID: 494275881}
   - component: {fileID: 494275880}
+  - component: {fileID: 494275887}
+  - component: {fileID: 494275886}
   m_Layer: 0
-  m_Name: Tucan (5)
+  m_Name: RanaDorada
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2159,6 +2163,9 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 332406678616244838, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
   rangoInteraccion: 2.5
+  estaInteractuando: 0
+  nombreAnimal: Rana
+  yaInteractuo: 0
 --- !u!54 &494275881
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2275,6 +2282,45 @@ Transform:
   - {fileID: 2062756342}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &494275886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494275879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 494275887}
+  sceneViewId: 11
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &494275887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494275879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &502274075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2615,6 +2661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoInteraccion: {fileID: 176024274}
   nombreAnimal: "Mono Ara\xF1a"
+  controladorAnimal: {fileID: 2124241987}
 --- !u!135 &610469396
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2826,8 +2873,10 @@ GameObject:
   - component: {fileID: 636553804}
   - component: {fileID: 636553803}
   - component: {fileID: 636553802}
+  - component: {fileID: 636553809}
+  - component: {fileID: 636553808}
   m_Layer: 0
-  m_Name: Tucan (3)
+  m_Name: Jaguar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2870,6 +2919,9 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 332406678616244838, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
   rangoInteraccion: 2.5
+  estaInteractuando: 0
+  nombreAnimal: Jaguar
+  yaInteractuo: 0
 --- !u!54 &636553803
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2986,6 +3038,45 @@ Transform:
   - {fileID: 3754248458303906578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &636553808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636553801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &636553809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636553801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 636553808}
+  sceneViewId: 8
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &672146250
 GameObject:
   m_ObjectHideFlags: 0
@@ -4289,8 +4380,10 @@ GameObject:
   - component: {fileID: 1093830786}
   - component: {fileID: 1093830785}
   - component: {fileID: 1093830784}
+  - component: {fileID: 1093830791}
+  - component: {fileID: 1093830790}
   m_Layer: 0
-  m_Name: Tucan (4)
+  m_Name: Tucan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4333,6 +4426,9 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 332406678616244838, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
   rangoInteraccion: 2.5
+  estaInteractuando: 0
+  nombreAnimal: Tucan
+  yaInteractuo: 0
 --- !u!54 &1093830785
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4449,6 +4545,45 @@ Transform:
   - {fileID: 1879349554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1093830790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093830783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1093830791}
+  sceneViewId: 9
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1093830791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093830783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &1115330459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4746,6 +4881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoInteraccion: {fileID: 176024274}
   nombreAnimal: Jaguar
+  controladorAnimal: {fileID: 636553802}
 --- !u!135 &1176385028
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8694,8 +8830,10 @@ GameObject:
   - component: {fileID: 2124241989}
   - component: {fileID: 2124241988}
   - component: {fileID: 2124241987}
+  - component: {fileID: 2124241994}
+  - component: {fileID: 2124241993}
   m_Layer: 0
-  m_Name: Tucan (2)
+  m_Name: "MonoAra\xF1a"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8738,6 +8876,9 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 332406678616244838, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
   rangoInteraccion: 2.5
+  estaInteractuando: 0
+  nombreAnimal: Mono
+  yaInteractuo: 0
 --- !u!54 &2124241988
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8854,6 +8995,45 @@ Transform:
   - {fileID: 1916691321}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2124241993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124241986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &2124241994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124241986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2124241993}
+  sceneViewId: 10
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &117650986984458291
 MonoBehaviour:
   m_ObjectHideFlags: 3

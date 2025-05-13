@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class ControladorAnimal : MonoBehaviour
 {
@@ -16,22 +18,23 @@ public class ControladorAnimal : MonoBehaviour
     public InputActionProperty accionInteractuar;
     public float rangoInteraccion = 3f;
 
-    private bool estaInteractuando = false;
+    public bool estaInteractuando = false;
     private Transform objetivoActual;
     private GameObject jugador;
     private Rigidbody rb;
     private GameObject puntoTemporalAnterior;
 
     private bool estaEsperando = false;
+    public string nombreAnimal = "Jaguar";
 
     private IEnumerator Start()
     {
         // Esperar hasta que el jugador esté en escena
-        while (jugador == null)
+        /*while (jugador == null)
         {
             jugador = GameObject.FindGameObjectWithTag("Jugador");
             yield return null; // espera un frame
-        }
+        }*/
 
         if (accionInteractuar != null)
             accionInteractuar.action.Enable();
@@ -41,6 +44,8 @@ public class ControladorAnimal : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         EscogerNuevoPunto();
+
+        yield return null;
     }
 
     private void FixedUpdate()
@@ -70,10 +75,35 @@ public class ControladorAnimal : MonoBehaviour
     {
         if (estaInteractuando) return;
 
-        if (accionInteractuar.action.triggered && Vector3.Distance(transform.position, jugador.transform.position) <= rangoInteraccion)
+        if (accionInteractuar.action.triggered)
+        {
+            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Jugador"))
+            {
+                if (Vector3.Distance(transform.position, go.transform.position) <= rangoInteraccion)
+                {
+                    var photonView = go.GetComponent<PhotonView>();
+                    if (photonView != null && photonView.IsMine)
+                    {
+                        var registro = go.GetComponent<RegistroInteracciones>();
+                        if (registro != null && !registro.YaInteractuoCon(nombreAnimal))
+                        {
+                            jugador = go;
+                            StartCoroutine(InteraccionConJugador());
+                        }
+                        else
+                        {
+                            Debug.Log($"[{nombreAnimal}] Ya interactuaste con este animal.");
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        /*if (accionInteractuar.action.triggered && Vector3.Distance(transform.position, jugador.transform.position) <= rangoInteraccion)
         {
             StartCoroutine(InteraccionConJugador());
-        }
+        }*/
     }
 
     private void EscogerNuevoPunto()
@@ -108,12 +138,38 @@ public class ControladorAnimal : MonoBehaviour
 
         Debug.Log(">> Inicia secuencia de cámara...");
 
-        Vector3 direccion = jugador.transform.position - transform.position;
-        direccion.y = 0f;
-        if (direccion.sqrMagnitude > 0.01f)
+        var piMenu = jugador.GetComponentInChildren<PiUI>();
+
+        if (piMenu != null)
         {
-            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion.normalized);
-            transform.rotation = rotacionObjetivo;
+            switch (nombreAnimal)
+            {
+                case "Jaguar":
+                    piMenu.piData[0].isInteractable = true;
+                    piMenu.piList[0].SetData(piMenu.piData[0], piMenu.innerRadius, piMenu.outerRadius, piMenu);
+                    break;
+
+                case "Mono":
+                    piMenu.piData[1].isInteractable = true;
+                    piMenu.piList[1].SetData(piMenu.piData[1], piMenu.innerRadius, piMenu.outerRadius, piMenu);
+                    break;
+
+                case "Rana":
+                    piMenu.piData[2].isInteractable = true;
+                    piMenu.piList[2].SetData(piMenu.piData[2], piMenu.innerRadius, piMenu.outerRadius, piMenu);
+                    break;
+
+                case "Tucan":
+                    piMenu.piData[3].isInteractable = true;
+                    piMenu.piList[3].SetData(piMenu.piData[3], piMenu.innerRadius, piMenu.outerRadius, piMenu);
+                    break;
+            }
+        }
+
+        PhotonView pv = GetComponent<PhotonView>();
+        if (pv != null)
+        {
+            pv.RPC("ApuntarHacia", RpcTarget.All, jugador.transform.position);
         }
 
         var controlPersonaje = jugador.GetComponent<ControlDePersonaje>();
@@ -142,6 +198,26 @@ public class ControladorAnimal : MonoBehaviour
 
         EscogerNuevoPunto();
         estaInteractuando = false;
+
+        var registro = jugador.GetComponent<RegistroInteracciones>();
+        if (registro != null)
+        {
+            registro.RegistrarInteraccion(nombreAnimal);
+        }
+    }
+
+    [PunRPC]
+    public void ApuntarHacia(Vector3 posicionJugador)
+    {
+        Vector3 direccion = posicionJugador - transform.position;
+        direccion.y = 0f;
+
+        if (direccion.sqrMagnitude > 0.01f)
+        {
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccion.normalized);
+            transform.rotation = rotacionObjetivo;
+        }
+
+        estaInteractuando = true; // También puedes detener el movimiento si quieres
     }
 }
-

@@ -43,6 +43,7 @@ MonoBehaviour:
   - "CausarDa\xF1oRPC"
   - CurarRPC
   - RPC_FinDelJuego
+  - ApuntarHacia
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

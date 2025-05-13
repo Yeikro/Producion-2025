@@ -1816,6 +1816,8 @@ GameObject:
   - component: {fileID: 1821441314814717849}
   - component: {fileID: 8354371859905026614}
   - component: {fileID: 7384984193999668191}
+  - component: {fileID: 4099931393752290512}
+  - component: {fileID: 1011675875667197655}
   m_Layer: 0
   m_Name: Player
   m_TagString: Jugador
@@ -2185,6 +2187,31 @@ MonoBehaviour:
   enfriamientoHabilidad: 10
   inmune: 0
   menuBloqueado: 0
+--- !u!114 &4099931393752290512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292867939082285691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603f47924899ddf41a16ad7b868cabf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiCanvas: {fileID: 7632041584381752532}
+--- !u!114 &1011675875667197655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292867939082285691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d9048cd91a82c4da2ff0dde9d14801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5335353073929671666
 GameObject:
   m_ObjectHideFlags: 0
@@ -3827,11 +3854,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[3].angle
-      value: 57.099976
+      value: 114.20001
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[0].isInteractable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[1].isInteractable
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[2].isInteractable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].isInteractable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[0].onSlicePressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3951,5 +3990,10 @@ MonoBehaviour:
 --- !u!4 &6444901553004489322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1204808426753628292, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+  m_PrefabInstance: {fileID: 5316698584924435182}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7632041584381752532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2315624624763389498, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
   m_PrefabInstance: {fileID: 5316698584924435182}
   m_PrefabAsset: {fileID: 0}
