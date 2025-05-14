@@ -52,6 +52,15 @@ public class ControlDePersonaje : MonoBehaviour
     Vignette vignette;
     PostProcessVolume postProcesamiento;
 
+    [Header("Perfiles de habilidad")]
+    public PostProcessProfile jaguarProfile;
+    public PostProcessProfile tucanProfile;
+    public PostProcessProfile ranaProfile;
+    public PostProcessProfile monoProfile;
+    public PostProcessProfile perfilOriginal;
+
+    private Coroutine efectoHabilidadActivo;
+
     void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -59,6 +68,11 @@ public class ControlDePersonaje : MonoBehaviour
 
     private void Start()
     {
+        if (postProcesamiento != null && postProcesamiento.profile != null)
+        {
+            perfilOriginal = postProcesamiento.profile;
+        }
+
         if (PV.IsMine)
         {
             CameraManager.instance.Inicializar(transform, camaraPunto);
@@ -246,4 +260,74 @@ public class ControlDePersonaje : MonoBehaviour
             controlAtaque.action.Enable();
         }
     }
+
+    private void ActualizarReferenciasPostProcesado()
+    {
+        chromatic = null;
+        vignette = null;
+
+        if (postProcesamiento != null && postProcesamiento.profile != null)
+        {
+            if (postProcesamiento.profile.HasSettings<ChromaticAberration>())
+            {
+                postProcesamiento.profile.TryGetSettings(out chromatic);
+            }
+
+            if (postProcesamiento.profile.HasSettings<Vignette>())
+            {
+                postProcesamiento.profile.TryGetSettings(out vignette);
+            }
+        }
+    }
+
+    public void ActivarPostProcesadoTemporal(PostProcessProfile nuevoPerfil, float duracion)
+    {
+        if (efectoHabilidadActivo != null)
+            StopCoroutine(efectoHabilidadActivo);
+
+        efectoHabilidadActivo = StartCoroutine(RutinaEfectoPostProcesado(nuevoPerfil, duracion));
+    }
+
+    private IEnumerator RutinaEfectoPostProcesado(PostProcessProfile nuevoPerfil, float duracion)
+    {
+        if (postProcesamiento == null || nuevoPerfil == null || perfilOriginal == null)
+            yield break;
+
+        // Cambiar al perfil del poder
+        postProcesamiento.profile = nuevoPerfil;
+        ActualizarReferenciasPostProcesado();
+        postProcesamiento.enabled = true;
+
+        float tiempo = 0f;
+        float tiempoParpadeo = Mathf.Min(0.5f, duracion * 0.01f); // Parpadeo breve
+        float tiempoNormal = duracion - tiempoParpadeo;
+
+        // Fase de uso normal
+        while (tiempo < tiempoNormal)
+        {
+            tiempo += Time.deltaTime;
+            yield return null;
+        }
+
+        // Fase de parpadeo (rápida)
+        float t = 0f;
+        bool visible = true;
+        while (t < tiempoParpadeo)
+        {
+            t += Time.deltaTime;
+            visible = !visible;
+            postProcesamiento.enabled = visible;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        // Asegurar que está encendido para la transición suave
+        postProcesamiento.enabled = true;
+
+        // Restaurar el perfil original
+        postProcesamiento.profile = perfilOriginal;
+        ActualizarReferenciasPostProcesado();
+
+        efectoHabilidadActivo = null;
+    }
+
 }

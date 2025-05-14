@@ -24,6 +24,9 @@ public class MenuRadial : MonoBehaviour
     public float enfriamientoHabilidad = 10f;
     public bool inmune = false;
     public CustomGravity customGravity;
+    [Header("UI")]
+    public Image barraDuracionHabilidad;
+    public GameObject barraHabilidad;
 
     // Valores originales
     public EstadoIndigena estadoOriginal;
@@ -31,8 +34,11 @@ public class MenuRadial : MonoBehaviour
 
     public bool menuBloqueado = false;
 
+    private Photon.Pun.PhotonView photonView;
+
     private void Awake()
     {
+        photonView = GetComponent<Photon.Pun.PhotonView>();
         menuRadial.action.Enable();
         menuRadial.action.performed += OnOpenMenu;
         freeLookCam = FindFirstObjectByType<CinemachineFreeLook>();
@@ -84,7 +90,7 @@ public class MenuRadial : MonoBehaviour
     //Esta función será llamada cuando presiones "E"
     private void OnOpenMenu(InputAction.CallbackContext context)
     {
-        if (menuBloqueado)
+        if (!photonView.IsMine || menuBloqueado)
             return;
 
         bool isOpen = piUi.PiOpened("Normal Menu");
@@ -220,7 +226,9 @@ public class MenuRadial : MonoBehaviour
     {
         // Aplicar los cambios
         ActivarPoder(estadosTransformaciones[0]);
-
+        barraHabilidad.SetActive(true);
+        controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.jaguarProfile, duracionPoderJaguar);
+        StartCoroutine(MostrarBarraDeDuracion(duracionPoderJaguar));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesJaguar());
     }
@@ -229,7 +237,9 @@ public class MenuRadial : MonoBehaviour
     {
         // Aplicar los cambios
         ActivarPoder(estadosTransformaciones[1]);
-
+        barraHabilidad.SetActive(true);
+        controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.tucanProfile, duracionPoder);
+        StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesTucan());
     }
@@ -238,7 +248,9 @@ public class MenuRadial : MonoBehaviour
     {
         // Aplicar los cambios
         ActivarPoder(estadosTransformaciones[2]);
-
+        barraHabilidad.SetActive(true);
+        controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.ranaProfile, duracionPoder);
+        StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesRana());
     }
@@ -252,6 +264,9 @@ public class MenuRadial : MonoBehaviour
         if(vida.cubierto)
         {
             ActivarPoder(estadosTransformaciones[3]);
+            barraHabilidad.SetActive(true);
+            controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.monoProfile, duracionPoder);
+            StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         }
 
         // Iniciar la corrutina para restaurar valores
@@ -263,6 +278,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoderJaguar);
 
         // Restaurar valores originales
+        barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
         StartCoroutine(HabilitarConFadeJaguar(piMenu.piList[0], enfriamientoHabilidad));
     }
@@ -271,6 +287,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
 
         StartCoroutine(HabilitarConFadeTucan(piMenu.piList[3], enfriamientoHabilidad));
@@ -281,6 +298,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
 
         StartCoroutine(HabilitarConFadeRana(piMenu.piList[2], enfriamientoHabilidad));
@@ -291,6 +309,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        barraHabilidad.SetActive(false);
         vida.cubierto = false;
         ActivarPoder(estadoOriginal);
         inmune = false;
@@ -375,6 +394,24 @@ public class MenuRadial : MonoBehaviour
     public void OnHoverExit()
     {
         Debug.Log("That's right and dont come back!");
+    }
+
+    private IEnumerator MostrarBarraDeDuracion(float duracion)
+    {
+        if (barraDuracionHabilidad == null)
+            yield break;
+
+        barraDuracionHabilidad.fillAmount = 1f;
+
+        float tiempo = 0f;
+        while (tiempo < duracion)
+        {
+            tiempo += Time.deltaTime;
+            barraDuracionHabilidad.fillAmount = 1f - (tiempo / duracion);
+            yield return null;
+        }
+
+        barraDuracionHabilidad.fillAmount = 0f;
     }
 
     void ActivarPoder(EstadoIndigena ei)
