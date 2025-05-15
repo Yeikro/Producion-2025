@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Santi A/GameSanti.unity
     guid: b0f8a3f6d6af9c24b825e53080f49076
+  - enabled: 1
+    path: Assets/Scenes/Graficos.unity
+    guid: 5176f79730f66b746b34d44af6fbee9a
+  - enabled: 0
+    path: Assets/Scenes/GameDaniNew.unity
+    guid: 01411d236c9ccc94192261a57d01d10e
   - enabled: 0
     path: Assets/Scenes/GameDamiela.unity
     guid: 9fdc5c6748634914a955ba0b333e87b3
