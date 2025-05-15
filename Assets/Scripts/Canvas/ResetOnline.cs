@@ -23,4 +23,9 @@ public class ResetOnline : MonoBehaviour
     {
         SceneManager.LoadScene("online");
     }
+
+    public void SalirJuego()
+    {
+        Application.Quit();
+    }
 }

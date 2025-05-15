@@ -45,10 +45,23 @@ public class ControlDePersonaje : MonoBehaviour
     public Image barraEnergia;
     bool estaCorriendo = false;
 
+    public bool controlesBloqueados = false;
+
     // Post procesamiento
     ChromaticAberration chromatic;
     Vignette vignette;
     PostProcessVolume postProcesamiento;
+
+    public ParticleSystem spwanParticulaJugador;
+
+    [Header("Perfiles de habilidad")]
+    public PostProcessProfile jaguarProfile;
+    public PostProcessProfile tucanProfile;
+    public PostProcessProfile ranaProfile;
+    public PostProcessProfile monoProfile;
+    public PostProcessProfile perfilOriginal;
+
+    private Coroutine efectoHabilidadActivo;
 
     void Awake()
     {
@@ -57,6 +70,11 @@ public class ControlDePersonaje : MonoBehaviour
 
     private void Start()
     {
+        if (postProcesamiento != null && postProcesamiento.profile != null)
+        {
+            perfilOriginal = postProcesamiento.profile;
+        }
+
         if (PV.IsMine)
         {
             CameraManager.instance.Inicializar(transform, camaraPunto);
@@ -110,7 +128,7 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Saltar()
     {
-        if (!PV.IsMine || animaciones == null) return;
+        if (controlesBloqueados || !PV.IsMine || animaciones == null) return;
         animaciones.SetTrigger("Jump");
     }
 
@@ -122,14 +140,20 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Ataque()
     {
-        if (!PV.IsMine || animaciones == null) return;
+        if (!PV.IsMine || animaciones == null || controlesBloqueados) return;
         animaciones.SetTrigger("Atack");
     }
 
     void Update()
     {
-        if (!PV.IsMine)
+        if (!PV.IsMine || controlesBloqueados)
+        {
+            animaciones.SetFloat("Horizontal", 0f);
+            animaciones.SetFloat("Vertical", 0f);
+            animaciones.SetBool("Defens", false);
+            animaciones.SetBool("Down", false);
             return;
+        }
 
         movimiento = Vector2.Lerp(movimiento, controlMover.action.ReadValue<Vector2>(), velSuavisada * Time.deltaTime);
 
@@ -224,6 +248,7 @@ public class ControlDePersonaje : MonoBehaviour
         Transform puntoRespawn = PuntosRespown.singleton.GetPosPersonaje();
         transform.position = puntoRespawn.position;
         vida.Reiniciar();
+        spwanParticulaJugador.Play();
         Debug.Log("¡Has reaparecido!");
     }
 
@@ -238,4 +263,74 @@ public class ControlDePersonaje : MonoBehaviour
             controlAtaque.action.Enable();
         }
     }
+
+    private void ActualizarReferenciasPostProcesado()
+    {
+        chromatic = null;
+        vignette = null;
+
+        if (postProcesamiento != null && postProcesamiento.profile != null)
+        {
+            if (postProcesamiento.profile.HasSettings<ChromaticAberration>())
+            {
+                postProcesamiento.profile.TryGetSettings(out chromatic);
+            }
+
+            if (postProcesamiento.profile.HasSettings<Vignette>())
+            {
+                postProcesamiento.profile.TryGetSettings(out vignette);
+            }
+        }
+    }
+
+    public void ActivarPostProcesadoTemporal(PostProcessProfile nuevoPerfil, float duracion)
+    {
+        if (efectoHabilidadActivo != null)
+            StopCoroutine(efectoHabilidadActivo);
+
+        efectoHabilidadActivo = StartCoroutine(RutinaEfectoPostProcesado(nuevoPerfil, duracion));
+    }
+
+    private IEnumerator RutinaEfectoPostProcesado(PostProcessProfile nuevoPerfil, float duracion)
+    {
+        if (postProcesamiento == null || nuevoPerfil == null || perfilOriginal == null)
+            yield break;
+
+        // Cambiar al perfil del poder
+        postProcesamiento.profile = nuevoPerfil;
+        ActualizarReferenciasPostProcesado();
+        postProcesamiento.enabled = true;
+
+        float tiempo = 0f;
+        float tiempoParpadeo = Mathf.Min(0.5f, duracion * 0.01f); // Parpadeo breve
+        float tiempoNormal = duracion - tiempoParpadeo;
+
+        // Fase de uso normal
+        while (tiempo < tiempoNormal)
+        {
+            tiempo += Time.deltaTime;
+            yield return null;
+        }
+
+        // Fase de parpadeo (rápida)
+        float t = 0f;
+        bool visible = true;
+        while (t < tiempoParpadeo)
+        {
+            t += Time.deltaTime;
+            visible = !visible;
+            postProcesamiento.enabled = visible;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        // Asegurar que está encendido para la transición suave
+        postProcesamiento.enabled = true;
+
+        // Restaurar el perfil original
+        postProcesamiento.profile = perfilOriginal;
+        ActualizarReferenciasPostProcesado();
+
+        efectoHabilidadActivo = null;
+    }
+
 }

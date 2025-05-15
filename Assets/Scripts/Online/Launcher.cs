@@ -116,7 +116,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;  // 🔹 Evita que nuevos jugadores se unan.
             PhotonNetwork.CurrentRoom.IsVisible = false;  // 🔹 Oculta la sala de la lista.
-            PhotonNetwork.LoadLevel(1);  // 🔹 Cargar la escena del juego.
+            PhotonNetwork.LoadLevel(2);  // 🔹 Cargar la escena del juego.
         }
     }
 

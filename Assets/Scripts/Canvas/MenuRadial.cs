@@ -23,41 +23,59 @@ public class MenuRadial : MonoBehaviour
     public float duracionPoder = 15f;
     public float enfriamientoHabilidad = 10f;
     public bool inmune = false;
+    public CustomGravity customGravity;
+
+    [Header("UI")]
+    public Image barraDuracionHabilidad;
+    public GameObject barraHabilidad;
 
     // Valores originales
-    private Vector3 fuerzaSaltoOriginal;
-    private float dañoRaycastOriginal;
-    private float multiplicadorCorrerOriginal;
-    private float velocidadGastoOriginal;
-    private float velocidadRecargaOriginal;
-    private float rangoAtaqueOriginal;
-    private float coberturaOriginal;
+    public EstadoIndigena estadoOriginal;
+    public EstadoIndigena[] estadosTransformaciones;
+
+    public bool menuBloqueado = false;
+
+    private Photon.Pun.PhotonView photonView;
+
+    public ParticleSystem particulasGeneral;
+    public ParticleSystem particulasJaguar;
+    public ParticleSystem particulasTucan;
+    public ParticleSystem particulasRana;
+    public ParticleSystem particulasMono;
 
     private void Awake()
     {
+        photonView = GetComponent<Photon.Pun.PhotonView>();
         menuRadial.action.Enable();
         menuRadial.action.performed += OnOpenMenu;
         freeLookCam = FindFirstObjectByType<CinemachineFreeLook>();
+        customGravity = GetComponent<CustomGravity>();
         if (freeLookCam != null)
         {
             originalXSpeed = freeLookCam.m_XAxis.m_MaxSpeed;
             originalYSpeed = freeLookCam.m_YAxis.m_MaxSpeed;
         }
-
-        fuerzaSaltoOriginal = controlDePersonaje.fuerzaSalto;
-        dañoRaycastOriginal = controlDePersonaje.dañoRaycast;
-        multiplicadorCorrerOriginal = controlDePersonaje.multiplicadorCorrer;
-        velocidadGastoOriginal = controlDePersonaje.velocidadGasto;
-        velocidadRecargaOriginal = controlDePersonaje.velocidadRecarga;
-        rangoAtaqueOriginal = controlDePersonaje.rangoAtaque;
-        coberturaOriginal = vida.cobertura;
+        estadoOriginal = new EstadoIndigena();
+        estadoOriginal.fuerzaSalto = controlDePersonaje.fuerzaSalto;
+        estadoOriginal.dañoRaycast = controlDePersonaje.dañoRaycast;
+        estadoOriginal.multiplicadorCorrer = controlDePersonaje.multiplicadorCorrer;
+        estadoOriginal.velocidadGasto = controlDePersonaje.velocidadGasto;
+        estadoOriginal.velocidadRecarga = controlDePersonaje.velocidadRecarga;
+        estadoOriginal.rangoAtaque = controlDePersonaje.rangoAtaque;
+        estadoOriginal.cobertura = vida.cobertura;
+        estadoOriginal.gravedad = customGravity.gravityScale;
         inmune = false;
+        for (int i = 0; i < piMenu.piData.Length; i++)
+        {
+            piMenu.piData[i].isInteractable = false;
+            //piMenu.piList[i].SetData(piMenu.piData[i], piMenu.innerRadius, piMenu.outerRadius, piMenu);
+        }
     }
 
     private void OnDisable()
     {
         menuRadial.action.performed -= OnOpenMenu;
-        menuRadial.action.Disable();
+        menuRadial.action.Disable();  
     }
 
     void Start()
@@ -79,6 +97,9 @@ public class MenuRadial : MonoBehaviour
     //Esta función será llamada cuando presiones "E"
     private void OnOpenMenu(InputAction.CallbackContext context)
     {
+        if (!photonView.IsMine || menuBloqueado)
+            return;
+
         bool isOpen = piUi.PiOpened("Normal Menu");
 
         if (!isOpen)
@@ -210,59 +231,57 @@ public class MenuRadial : MonoBehaviour
 
     public void ActivarPoderJaguar()
     {
-        // Guardar valores originales
-        fuerzaSaltoOriginal = controlDePersonaje.fuerzaSalto;
-        dañoRaycastOriginal = controlDePersonaje.dañoRaycast;
-        multiplicadorCorrerOriginal = controlDePersonaje.multiplicadorCorrer;
-        velocidadGastoOriginal = controlDePersonaje.velocidadGasto;
-        velocidadRecargaOriginal = controlDePersonaje.velocidadRecarga;
-
         // Aplicar los cambios
-        controlDePersonaje.fuerzaSalto *= 1.5f;
-        controlDePersonaje.daño = 4;
-        controlDePersonaje.multiplicadorCorrer = 10f;
-        controlDePersonaje.velocidadGasto = 0.2f;
-        controlDePersonaje.velocidadRecarga = 0.5f;
-
+        particulasGeneral.Play();
+        particulasJaguar.Play();
+        ActivarPoder(estadosTransformaciones[0]);
+        barraHabilidad.SetActive(true);
+        controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.jaguarProfile, duracionPoderJaguar);
+        StartCoroutine(MostrarBarraDeDuracion(duracionPoderJaguar));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesJaguar());
     }
 
     public void ActivarPoderTucan()
     {
-        // Guardar valores originales
-        fuerzaSaltoOriginal = controlDePersonaje.fuerzaSalto;
-
         // Aplicar los cambios
-        controlDePersonaje.fuerzaSalto *= 3.5f;
-
+        particulasGeneral.Play();
+        particulasTucan.Play();
+        ActivarPoder(estadosTransformaciones[1]);
+        barraHabilidad.SetActive(true);
+        controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.tucanProfile, duracionPoder);
+        StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesTucan());
     }
 
     public void ActivarPoderRana()
     {
-        // Guardar valores originales
-        rangoAtaqueOriginal = controlDePersonaje.rangoAtaque;
-
         // Aplicar los cambios
-        controlDePersonaje.rangoAtaque *= 3.5f;
-
+        particulasGeneral.Play();
+        particulasRana.Play();
+        ActivarPoder(estadosTransformaciones[2]);
+        barraHabilidad.SetActive(true);
+        controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.ranaProfile, duracionPoder);
+        StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesRana());
     }
 
     public void ActivarPoderMono()
     {
-        coberturaOriginal = vida.cobertura;
-
         inmune = true;
 
         vida.cubierto = true;
 
         if(vida.cubierto)
         {
-            vida.cobertura = 1f;
+            particulasGeneral.Play();
+            particulasMono.Play();
+            ActivarPoder(estadosTransformaciones[3]);
+            barraHabilidad.SetActive(true);
+            controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.monoProfile, duracionPoder);
+            StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         }
 
         // Iniciar la corrutina para restaurar valores
@@ -274,11 +293,10 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoderJaguar);
 
         // Restaurar valores originales
-        controlDePersonaje.fuerzaSalto = fuerzaSaltoOriginal;
-        controlDePersonaje.dañoRaycast = dañoRaycastOriginal;
-        controlDePersonaje.multiplicadorCorrer = multiplicadorCorrerOriginal;
-        controlDePersonaje.velocidadGasto = velocidadGastoOriginal;
-        controlDePersonaje.velocidadRecarga = velocidadRecargaOriginal;
+        particulasGeneral.Stop();
+        particulasJaguar.Stop();
+        barraHabilidad.SetActive(false);
+        ActivarPoder(estadoOriginal);
         StartCoroutine(HabilitarConFadeJaguar(piMenu.piList[0], enfriamientoHabilidad));
     }
     private IEnumerator RestaurarValoresOriginalesTucan()
@@ -286,7 +304,10 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
-        controlDePersonaje.fuerzaSalto = fuerzaSaltoOriginal;
+        particulasGeneral.Stop();
+        particulasTucan.Stop();
+        barraHabilidad.SetActive(false);
+        ActivarPoder(estadoOriginal);
 
         StartCoroutine(HabilitarConFadeTucan(piMenu.piList[3], enfriamientoHabilidad));
     }
@@ -296,7 +317,10 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
-        controlDePersonaje.rangoAtaque = rangoAtaqueOriginal;
+        particulasGeneral.Stop();
+        particulasRana.Stop();
+        barraHabilidad.SetActive(false);
+        ActivarPoder(estadoOriginal);
 
         StartCoroutine(HabilitarConFadeRana(piMenu.piList[2], enfriamientoHabilidad));
     }
@@ -306,8 +330,11 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        particulasGeneral.Stop();
+        particulasMono.Stop();
+        barraHabilidad.SetActive(false);
         vida.cubierto = false;
-        vida.cobertura = coberturaOriginal;
+        ActivarPoder(estadoOriginal);
         inmune = false;
 
         StartCoroutine(HabilitarConFadeMono(piMenu.piList[1], enfriamientoHabilidad));
@@ -379,13 +406,12 @@ public class MenuRadial : MonoBehaviour
 
     public void RestaurarTodosLosValores()
     {
-        controlDePersonaje.fuerzaSalto = fuerzaSaltoOriginal;
-        controlDePersonaje.dañoRaycast = dañoRaycastOriginal;
-        controlDePersonaje.multiplicadorCorrer = multiplicadorCorrerOriginal;
-        controlDePersonaje.velocidadGasto = velocidadGastoOriginal;
-        controlDePersonaje.velocidadRecarga = velocidadRecargaOriginal;
-        controlDePersonaje.rangoAtaque = rangoAtaqueOriginal;
-        vida.cobertura = coberturaOriginal;
+        ActivarPoder(estadoOriginal);
+        particulasGeneral.Stop();
+        particulasJaguar.Stop();
+        particulasTucan.Stop();
+        particulasMono.Stop();
+        particulasRana.Stop();
     }
 
     public void OnHoverEnter()
@@ -396,5 +422,35 @@ public class MenuRadial : MonoBehaviour
     public void OnHoverExit()
     {
         Debug.Log("That's right and dont come back!");
+    }
+
+    private IEnumerator MostrarBarraDeDuracion(float duracion)
+    {
+        if (barraDuracionHabilidad == null)
+            yield break;
+
+        barraDuracionHabilidad.fillAmount = 1f;
+
+        float tiempo = 0f;
+        while (tiempo < duracion)
+        {
+            tiempo += Time.deltaTime;
+            barraDuracionHabilidad.fillAmount = 1f - (tiempo / duracion);
+            yield return null;
+        }
+
+        barraDuracionHabilidad.fillAmount = 0f;
+    }
+
+    void ActivarPoder(EstadoIndigena ei)
+    {
+        controlDePersonaje.fuerzaSalto = ei.fuerzaSalto;
+        controlDePersonaje.dañoRaycast = ei.dañoRaycast;
+        controlDePersonaje.multiplicadorCorrer = ei.multiplicadorCorrer;
+        controlDePersonaje.velocidadGasto = ei.velocidadGasto;
+        controlDePersonaje.velocidadRecarga = ei.velocidadRecarga;
+        controlDePersonaje.rangoAtaque = ei.rangoAtaque;
+        vida.cobertura = ei.cobertura;
+        customGravity.gravityScale = ei.gravedad;
     }
 }
