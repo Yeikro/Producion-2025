@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.4784314, g: 0.6627451, b: 0.7058824, a: 1}
+  m_FogColor: {r: 0.43231574, g: 0.59508294, b: 0.6320754, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.003
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -5145,7 +5145,7 @@ Transform:
   m_GameObject: {fileID: 1798855265}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13181333, y: 0.4164335, z: -0.061161894, w: 0.8974785}
-  m_LocalPosition: {x: -0.21547842, y: 16.5, z: 11}
+  m_LocalPosition: {x: -0.21547842, y: 19.9, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6880,6 +6880,63 @@ MonoBehaviour:
   - {fileID: 5653378041196964232}
   - {fileID: 6303151180503337367}
   - {fileID: 1935423502515617419}
+--- !u!1001 &4380250896036392242
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1929641849276465673, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_Name
+      value: Grass 01 triple prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 102.01829
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.513768
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 76.69699
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929641849276702249, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3ddacc4ff24136b41b274e20f0fa3937, type: 3}
 --- !u!114 &4587832756938688183
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -6901,7 +6958,7 @@ Transform:
   m_GameObject: {fileID: 7399180017707351263}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.21547842, y: 16.5, z: 11}
+  m_LocalPosition: {x: -0.21547842, y: 19.9, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7521,3 +7578,4 @@ SceneRoots:
   - {fileID: 114295246}
   - {fileID: 1042668735}
   - {fileID: 755122700}
+  - {fileID: 4380250896036392242}
