@@ -29,6 +29,8 @@ public class ControladorAnimal : MonoBehaviour
     private GameObject jugadorObjetivoLocal = null;
     private bool estaInteractuandoGlobal = false;
 
+    public ParticleSystem particulaInteraccion;
+
     private IEnumerator Start()
     {
         if (accionInteractuar != null)
@@ -134,6 +136,8 @@ public class ControladorAnimal : MonoBehaviour
         jugadorObjetivoLocal = jugador;
 
         Debug.Log(">> Inicia secuencia de cámara...");
+
+        particulaInteraccion.Play();
 
         var piMenu = jugador.GetComponentInChildren<PiUI>();
 

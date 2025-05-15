@@ -24,6 +24,7 @@ public class MenuRadial : MonoBehaviour
     public float enfriamientoHabilidad = 10f;
     public bool inmune = false;
     public CustomGravity customGravity;
+
     [Header("UI")]
     public Image barraDuracionHabilidad;
     public GameObject barraHabilidad;
@@ -35,6 +36,12 @@ public class MenuRadial : MonoBehaviour
     public bool menuBloqueado = false;
 
     private Photon.Pun.PhotonView photonView;
+
+    public ParticleSystem particulasGeneral;
+    public ParticleSystem particulasJaguar;
+    public ParticleSystem particulasTucan;
+    public ParticleSystem particulasRana;
+    public ParticleSystem particulasMono;
 
     private void Awake()
     {
@@ -225,6 +232,8 @@ public class MenuRadial : MonoBehaviour
     public void ActivarPoderJaguar()
     {
         // Aplicar los cambios
+        particulasGeneral.Play();
+        particulasJaguar.Play();
         ActivarPoder(estadosTransformaciones[0]);
         barraHabilidad.SetActive(true);
         controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.jaguarProfile, duracionPoderJaguar);
@@ -236,6 +245,8 @@ public class MenuRadial : MonoBehaviour
     public void ActivarPoderTucan()
     {
         // Aplicar los cambios
+        particulasGeneral.Play();
+        particulasTucan.Play();
         ActivarPoder(estadosTransformaciones[1]);
         barraHabilidad.SetActive(true);
         controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.tucanProfile, duracionPoder);
@@ -247,6 +258,8 @@ public class MenuRadial : MonoBehaviour
     public void ActivarPoderRana()
     {
         // Aplicar los cambios
+        particulasGeneral.Play();
+        particulasRana.Play();
         ActivarPoder(estadosTransformaciones[2]);
         barraHabilidad.SetActive(true);
         controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.ranaProfile, duracionPoder);
@@ -263,6 +276,8 @@ public class MenuRadial : MonoBehaviour
 
         if(vida.cubierto)
         {
+            particulasGeneral.Play();
+            particulasMono.Play();
             ActivarPoder(estadosTransformaciones[3]);
             barraHabilidad.SetActive(true);
             controlDePersonaje.ActivarPostProcesadoTemporal(controlDePersonaje.monoProfile, duracionPoder);
@@ -278,6 +293,8 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoderJaguar);
 
         // Restaurar valores originales
+        particulasGeneral.Stop();
+        particulasJaguar.Stop();
         barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
         StartCoroutine(HabilitarConFadeJaguar(piMenu.piList[0], enfriamientoHabilidad));
@@ -287,6 +304,8 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        particulasGeneral.Stop();
+        particulasTucan.Stop();
         barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
 
@@ -298,6 +317,8 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        particulasGeneral.Stop();
+        particulasRana.Stop();
         barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
 
@@ -309,6 +330,8 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        particulasGeneral.Stop();
+        particulasMono.Stop();
         barraHabilidad.SetActive(false);
         vida.cubierto = false;
         ActivarPoder(estadoOriginal);
@@ -384,6 +407,11 @@ public class MenuRadial : MonoBehaviour
     public void RestaurarTodosLosValores()
     {
         ActivarPoder(estadoOriginal);
+        particulasGeneral.Stop();
+        particulasJaguar.Stop();
+        particulasTucan.Stop();
+        particulasMono.Stop();
+        particulasRana.Stop();
     }
 
     public void OnHoverEnter()

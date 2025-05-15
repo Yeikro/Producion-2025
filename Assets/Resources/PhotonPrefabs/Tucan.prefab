@@ -206,6 +206,7 @@ Transform:
   - {fileID: 1771210637882752026}
   - {fileID: 2017647311492111561}
   - {fileID: 6059418435809132422}
+  - {fileID: 6673553856273223711}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &642175617482634631
@@ -345,6 +346,7 @@ MonoBehaviour:
   rangoInteraccion: 2.5
   estaInteractuando: 0
   nombreAnimal: Tucan
+  particulaInteraccion: {fileID: 8788920887019346494}
 --- !u!114 &5264555880850547090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1502,3 +1504,70 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 8093100981768154318}
+--- !u!1001 &334217187093829657
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6013647489149154554}
+    m_Modifications:
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8724553825594870279, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+      propertyPath: m_Name
+      value: Interaccion con animal
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+--- !u!4 &6673553856273223711 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6358617705420179462, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+  m_PrefabInstance: {fileID: 334217187093829657}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8788920887019346494 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9033064415100027431, guid: d0d8782a152c4484b8a8de73e0b6c93f, type: 3}
+  m_PrefabInstance: {fileID: 334217187093829657}
+  m_PrefabAsset: {fileID: 0}

@@ -52,6 +52,8 @@ public class ControlDePersonaje : MonoBehaviour
     Vignette vignette;
     PostProcessVolume postProcesamiento;
 
+    public ParticleSystem spwanParticulaJugador;
+
     [Header("Perfiles de habilidad")]
     public PostProcessProfile jaguarProfile;
     public PostProcessProfile tucanProfile;
@@ -246,6 +248,7 @@ public class ControlDePersonaje : MonoBehaviour
         Transform puntoRespawn = PuntosRespown.singleton.GetPosPersonaje();
         transform.position = puntoRespawn.position;
         vida.Reiniciar();
+        spwanParticulaJugador.Play();
         Debug.Log("¡Has reaparecido!");
     }
 
