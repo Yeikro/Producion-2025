@@ -2137,12 +2137,15 @@ MonoBehaviour:
   velocidadRecarga: 0.08
   barraEnergia: {fileID: 7702116864656759861}
   controlesBloqueados: 0
+  postProcesamiento: {fileID: 0}
   spwanParticulaJugador: {fileID: 2044846818253630871}
-  jaguarProfile: {fileID: 11400000, guid: be31653dcdba18e49a1718d9feffbf3e, type: 2}
-  tucanProfile: {fileID: 11400000, guid: 078eb820c10ade64e86178a1e826c8c1, type: 2}
-  ranaProfile: {fileID: 11400000, guid: a94c36d94ae8f4a4b99838bf09bf19f1, type: 2}
-  monoProfile: {fileID: 11400000, guid: 176a9ff14cbc9cb43a21aa44dd5500d5, type: 2}
-  perfilOriginal: {fileID: 11400000, guid: b575a68a8e879454cbddf418ff42975b, type: 2}
+  jaguarProfile: {fileID: 11400000, guid: e193f80657103f441be225f3ad3031b1, type: 2}
+  tucanProfile: {fileID: 11400000, guid: 828ef98b74d4f8943b2bc538ce3fc2b2, type: 2}
+  ranaProfile: {fileID: 11400000, guid: 4598d22ac6370b64e932da1b31396b85, type: 2}
+  monoProfile: {fileID: 11400000, guid: 3320466d6d44c0a4bb23ee89faca92a9, type: 2}
+  perfilOriginal: {fileID: 11400000, guid: e10cacc3198ea43f08f0ecfaa0435918, type: 2}
+  perfilBase: {fileID: 11400000, guid: e10cacc3198ea43f08f0ecfaa0435918, type: 2}
+  perfilCorrer: {fileID: 11400000, guid: fcacdfb4c90c34642a04a69c4a5cb023, type: 2}
 --- !u!136 &6666563340571142190
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4798,11 +4801,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1093030944231551097, guid: f2bd15f2abd98434e9f83c04e2f03500, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 1093030944231551097, guid: f2bd15f2abd98434e9f83c04e2f03500, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1093030944231551097, guid: f2bd15f2abd98434e9f83c04e2f03500, type: 3}
       propertyPath: m_LocalRotation.w
