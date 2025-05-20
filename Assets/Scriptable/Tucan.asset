@@ -20,3 +20,4 @@ MonoBehaviour:
   rangoAtaque: 3
   cobertura: 0.5
   gravedad: 0.3
+  textura: {fileID: 2800000, guid: 06da4a709eee38047b4a55207ddf3e45, type: 3}

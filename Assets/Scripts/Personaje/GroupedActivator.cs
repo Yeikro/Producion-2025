@@ -25,7 +25,6 @@ public class GroupedActivator : MonoBehaviour
     public void ActivateGroup(int groupIndex)
     {
 
-        print("Se activo el indigena ----- " + groupIndex);
 
         if (currentCoroutine != null)
         {

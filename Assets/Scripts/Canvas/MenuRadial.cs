@@ -465,5 +465,6 @@ public class MenuRadial : MonoBehaviour
         controlDePersonaje.rangoAtaque = ei.rangoAtaque;
         vida.cobertura = ei.cobertura;
         customGravity.gravityScale = ei.gravedad;
+        groupedActivator.blendController.material.SetTexture("_Layer1",ei.textura);
     }
 }

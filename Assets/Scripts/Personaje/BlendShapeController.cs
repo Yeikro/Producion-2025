@@ -4,42 +4,43 @@ using System.Collections;
 public class BlendShapeController : MonoBehaviour
 {
     public SkinnedMeshRenderer skinnedMeshRenderer;
-
-    /// <summary>
-    /// Llama esta función para iniciar la transición a un blend shape específico.
-    /// </summary>
-    /// <param name="shapeIndex">Índice del blend shape que quieres activar (0 a n).</param>
-    /// 
+    public Material material;
 
     [ContextMenu("Activar 0")]
     public void A0()
     {
-        ActivateBlendShape(0);//mono
-
+        ActivateBlendShape(0);
     }
 
     [ContextMenu("Activar 1")]
     public void A1()
     {
-        ActivateBlendShape(1);//Rana
+        ActivateBlendShape(1);
     }
 
     [ContextMenu("Activar 2")]
     public void A2()
     {
-        ActivateBlendShape(2);//Jaguar
+        ActivateBlendShape(2);
     }
 
     [ContextMenu("Activar 3")]
     public void A3()
     {
-        ActivateBlendShape(3);//Tucan
+        ActivateBlendShape(3);
     }
 
     [ContextMenu("Desactiva")]
     public void Desactivar()
     {
         StartCoroutine(TransitionDesactivar());
+    }
+
+
+    private void Start()
+    {
+        material=skinnedMeshRenderer.material;
+        skinnedMeshRenderer.material=material;
     }
     public void ActivateBlendShape(int shapeIndex)
     {
@@ -49,10 +50,12 @@ public class BlendShapeController : MonoBehaviour
     private IEnumerator TransitionBlendShape(int targetIndex)
     {
         int blendShapeCount = skinnedMeshRenderer.sharedMesh.blendShapeCount;
-        float duration = 1f;
+        float duration = 2f;
         float elapsed = 0f;
 
-        // Captura los pesos iniciales
+        Material material = skinnedMeshRenderer.material;
+        float startImagensita = material.GetFloat("_Imagensita");
+
         float[] startWeights = new float[blendShapeCount];
         for (int i = 0; i < blendShapeCount; i++)
         {
@@ -64,6 +67,7 @@ public class BlendShapeController : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
 
+            // Interpolación del blend shape
             for (int i = 0; i < blendShapeCount; i++)
             {
                 float targetWeight = (i == targetIndex) ? 100f : 0f;
@@ -71,25 +75,30 @@ public class BlendShapeController : MonoBehaviour
                 skinnedMeshRenderer.SetBlendShapeWeight(i, newWeight);
             }
 
+            // Interpolación de _Imagensita
+            float newImagensita = Mathf.Lerp(startImagensita, 1f, t);
+            material.SetFloat("_Imagensita", newImagensita);
+
             yield return null;
         }
 
-        // Asegura que al final los valores estén perfectamente definidos
         for (int i = 0; i < blendShapeCount; i++)
         {
             skinnedMeshRenderer.SetBlendShapeWeight(i, i == targetIndex ? 100f : 0f);
         }
+
+        material.SetFloat("_Imagensita", 1f);
     }
-
-
 
     private IEnumerator TransitionDesactivar()
     {
         int blendShapeCount = skinnedMeshRenderer.sharedMesh.blendShapeCount;
-        float duration = 1f;
+        float duration = 2f;
         float elapsed = 0f;
 
-        // Captura los pesos iniciales
+        Material material = skinnedMeshRenderer.material;
+        float startImagensita = material.GetFloat("_Imagensita");
+
         float[] startWeights = new float[blendShapeCount];
         for (int i = 0; i < blendShapeCount; i++)
         {
@@ -103,18 +112,21 @@ public class BlendShapeController : MonoBehaviour
 
             for (int i = 0; i < blendShapeCount; i++)
             {
-                float targetWeight = 0f;
-                float newWeight = Mathf.Lerp(startWeights[i], targetWeight, t);
+                float newWeight = Mathf.Lerp(startWeights[i], 0f, t);
                 skinnedMeshRenderer.SetBlendShapeWeight(i, newWeight);
             }
+
+            float newImagensita = Mathf.Lerp(startImagensita, 0f, t);
+            material.SetFloat("_Imagensita", newImagensita);
 
             yield return null;
         }
 
-        // Asegura que al final los valores estén perfectamente definidos
         for (int i = 0; i < blendShapeCount; i++)
         {
             skinnedMeshRenderer.SetBlendShapeWeight(i, 0f);
         }
+
+        material.SetFloat("_Imagensita", 0f);
     }
 }

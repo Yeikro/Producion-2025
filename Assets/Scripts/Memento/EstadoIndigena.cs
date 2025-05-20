@@ -13,4 +13,5 @@ public class EstadoIndigena : ScriptableObject
     public float rangoAtaque;
     public float cobertura;
     public float gravedad;
+    public Texture2D textura;
 }
