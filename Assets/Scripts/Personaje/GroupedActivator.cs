@@ -24,6 +24,9 @@ public class GroupedActivator : MonoBehaviour
     /// <param name="groupIndex">Índice del grupo que deseas activar.</param>
     public void ActivateGroup(int groupIndex)
     {
+
+        print("Se activo el indigena ----- " + groupIndex);
+
         if (currentCoroutine != null)
         {
             StopCoroutine(currentCoroutine);
