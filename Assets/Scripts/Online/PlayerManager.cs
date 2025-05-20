@@ -17,39 +17,37 @@ public class PlayerManager : MonoBehaviour
     {
         if (PV.IsMine)
         {
-            StartCoroutine(CreateController());
+            CreateController();
         }
     }
 
-    IEnumerator CreateController()
+    void CreateController()
     {
+        // Buscar el GameObject llamado "Spawn Jugadores"
         GameObject spawnJugadores = GameObject.Find("Spawn Jugadores");
         if (spawnJugadores == null)
         {
             Debug.LogError("No se encontró el GameObject llamado 'Spawn Jugadores'");
-            yield break;
+            return;
         }
 
+        // Posicionar jugador cerca del objeto Spawn Jugadores (radio de 5 unidades)
         Vector3 centro = spawnJugadores.transform.position;
         Vector3 offset = Random.insideUnitSphere * 5f;
-        offset.y = 0f;
+        offset.y = 0f; // mantener en el plano horizontal
         Vector3 posicionJugador = centro + offset;
 
-        GameObject jugador = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), posicionJugador, Quaternion.identity);
-        if (jugador.GetComponent<PhotonView>().IsMine)
-        {
-            jugador.tag = "PlayerLocal";
-        }
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), posicionJugador, Quaternion.identity);
 
-        yield return new WaitForSeconds(0.1f); // Espera para asegurar que el jugador se instancie
-
+        // Buscar puntos de spawn para enemigos
         GameObject[] puntosSpawnEnemigos = GameObject.FindGameObjectsWithTag("SpawnEnemigo");
         if (puntosSpawnEnemigos.Length == 0)
         {
             Debug.LogError("No se encontraron puntos de spawn para enemigos con tag 'SpawnEnemigo'");
-            yield break;
+            return;
         }
 
+        // Seleccionar un punto aleatorio del arreglo
         int indiceAleatorio = Random.Range(0, puntosSpawnEnemigos.Length);
         Vector3 posicionEnemigo = puntosSpawnEnemigos[indiceAleatorio].transform.position;
 

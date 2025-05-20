@@ -5,8 +5,7 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using Cinemachine;
 using UnityEngine.UI;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.PostProcessing;
 
 public class ControlDePersonaje : MonoBehaviour
 {
@@ -51,22 +50,18 @@ public class ControlDePersonaje : MonoBehaviour
     // Post procesamiento
     ChromaticAberration chromatic;
     Vignette vignette;
-    public Volume postProcesamiento;
+    PostProcessVolume postProcesamiento;
 
     public ParticleSystem spwanParticulaJugador;
-    private VolumeProfile perfilActual;
 
     [Header("Perfiles de habilidad")]
-    public VolumeProfile jaguarProfile;
-    public VolumeProfile tucanProfile;
-    public VolumeProfile ranaProfile;
-    public VolumeProfile monoProfile;
-    public VolumeProfile perfilOriginal;
-    public VolumeProfile perfilBase;
-    public VolumeProfile perfilCorrer;
+    public PostProcessProfile jaguarProfile;
+    public PostProcessProfile tucanProfile;
+    public PostProcessProfile ranaProfile;
+    public PostProcessProfile monoProfile;
+    public PostProcessProfile perfilOriginal;
 
     private Coroutine efectoHabilidadActivo;
-    private bool modoAnimalActivo = false;
 
     void Awake()
     {
@@ -75,10 +70,9 @@ public class ControlDePersonaje : MonoBehaviour
 
     private void Start()
     {
-        if (postProcesamiento != null)
+        if (postProcesamiento != null && postProcesamiento.profile != null)
         {
-            perfilActual = perfilBase;
-            postProcesamiento.profile = perfilActual;
+            perfilOriginal = postProcesamiento.profile;
         }
 
         if (PV.IsMine)
@@ -113,18 +107,23 @@ public class ControlDePersonaje : MonoBehaviour
         ControlObjetivos.singleton.objetivos.Add(this.transform);
 
         // Obtener efectos de post procesamiento
-        GameObject postFX = GameObject.Find("Global Volume");
+        GameObject postFX = GameObject.Find("PostProcessing");
         if (postFX != null)
         {
-            postProcesamiento = postFX.GetComponent<Volume>();
+            postProcesamiento = postFX.GetComponent<PostProcessVolume>();
             if (postProcesamiento != null && postProcesamiento.profile != null)
             {
-                postProcesamiento.profile.TryGet(out chromatic);
-                postProcesamiento.profile.TryGet(out vignette);
+                if (postProcesamiento.profile.HasSettings<ChromaticAberration>())
+                {
+                    chromatic = postProcesamiento.profile.GetSetting<ChromaticAberration>();
+                }
+
+                if (postProcesamiento.profile.HasSettings<Vignette>())
+                {
+                    vignette = postProcesamiento.profile.GetSetting<Vignette>();
+                }
             }
         }
-
-        ActualizarReferenciasPostProcesado();
     }
 
     public void Saltar()
@@ -202,29 +201,17 @@ public class ControlDePersonaje : MonoBehaviour
             barraEnergia.fillAmount = energiaActual;
         }
 
-        if (modoAnimalActivo)
-        {
-            return;
-        }
-
         // Aplicar efectos post procesamiento al correr
-        bool correr = estaCorriendo && energiaActual > 0;
-
-        // Cambiar de perfil si es necesario
-        if (correr && perfilActual != perfilCorrer)
+        if (chromatic != null && vignette != null)
         {
-            CambiarPerfil(perfilCorrer);
-        }
-        else if (!correr && perfilActual != perfilBase)
-        {
-            CambiarPerfil(perfilBase);
-        }
-    }
+            float velocidadCambio = 1.5f * Time.deltaTime;
 
-    private void CambiarPerfil(VolumeProfile nuevoPerfil)
-    {
-        perfilActual = nuevoPerfil;
-        postProcesamiento.profile = perfilActual;
+            float intensidadChromaticObjetivo = (estaCorriendo && energiaActual > 0) ? 0.523f : 0f;
+            float intensidadVignetteObjetivo = (estaCorriendo && energiaActual > 0) ? 0.304f : 0f;
+
+            chromatic.intensity.value = Mathf.MoveTowards(chromatic.intensity.value, intensidadChromaticObjetivo, velocidadCambio);
+            vignette.intensity.value = Mathf.MoveTowards(vignette.intensity.value, intensidadVignetteObjetivo, velocidadCambio);
+        }
     }
 
     public void Atacar()
@@ -284,24 +271,27 @@ public class ControlDePersonaje : MonoBehaviour
 
         if (postProcesamiento != null && postProcesamiento.profile != null)
         {
-            postProcesamiento.profile.TryGet(out chromatic);
-            if (chromatic != null) chromatic.active = true;
+            if (postProcesamiento.profile.HasSettings<ChromaticAberration>())
+            {
+                postProcesamiento.profile.TryGetSettings(out chromatic);
+            }
 
-            postProcesamiento.profile.TryGet(out vignette);
-            if (vignette != null) vignette.active = true;
+            if (postProcesamiento.profile.HasSettings<Vignette>())
+            {
+                postProcesamiento.profile.TryGetSettings(out vignette);
+            }
         }
     }
 
-    public void ActivarPostProcesadoTemporal(VolumeProfile nuevoPerfil, float duracion)
+    public void ActivarPostProcesadoTemporal(PostProcessProfile nuevoPerfil, float duracion)
     {
         if (efectoHabilidadActivo != null)
             StopCoroutine(efectoHabilidadActivo);
 
-        modoAnimalActivo = true;
         efectoHabilidadActivo = StartCoroutine(RutinaEfectoPostProcesado(nuevoPerfil, duracion));
     }
 
-    private IEnumerator RutinaEfectoPostProcesado(VolumeProfile nuevoPerfil, float duracion)
+    private IEnumerator RutinaEfectoPostProcesado(PostProcessProfile nuevoPerfil, float duracion)
     {
         if (postProcesamiento == null || nuevoPerfil == null || perfilOriginal == null)
             yield break;
@@ -338,7 +328,6 @@ public class ControlDePersonaje : MonoBehaviour
 
         // Restaurar el perfil original
         postProcesamiento.profile = perfilOriginal;
-        modoAnimalActivo = false;
         ActualizarReferenciasPostProcesado();
 
         efectoHabilidadActivo = null;
