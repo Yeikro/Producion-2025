@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using Cinemachine;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class ControlDePersonaje : MonoBehaviour
 {
@@ -50,18 +51,22 @@ public class ControlDePersonaje : MonoBehaviour
     // Post procesamiento
     ChromaticAberration chromatic;
     Vignette vignette;
-    PostProcessVolume postProcesamiento;
+    public Volume postProcesamiento;
 
     public ParticleSystem spwanParticulaJugador;
+    private VolumeProfile perfilActual;
 
     [Header("Perfiles de habilidad")]
-    public PostProcessProfile jaguarProfile;
-    public PostProcessProfile tucanProfile;
-    public PostProcessProfile ranaProfile;
-    public PostProcessProfile monoProfile;
-    public PostProcessProfile perfilOriginal;
+    public VolumeProfile jaguarProfile;
+    public VolumeProfile tucanProfile;
+    public VolumeProfile ranaProfile;
+    public VolumeProfile monoProfile;
+    public VolumeProfile perfilOriginal;
+    public VolumeProfile perfilBase;
+    public VolumeProfile perfilCorrer;
 
     private Coroutine efectoHabilidadActivo;
+    private bool modoAnimalActivo = false;
 
     void Awake()
     {
@@ -70,9 +75,10 @@ public class ControlDePersonaje : MonoBehaviour
 
     private void Start()
     {
-        if (postProcesamiento != null && postProcesamiento.profile != null)
+        if (postProcesamiento != null)
         {
-            perfilOriginal = postProcesamiento.profile;
+            perfilActual = perfilBase;
+            postProcesamiento.profile = perfilActual;
         }
 
         if (PV.IsMine)
@@ -107,23 +113,18 @@ public class ControlDePersonaje : MonoBehaviour
         ControlObjetivos.singleton.objetivos.Add(this.transform);
 
         // Obtener efectos de post procesamiento
-        GameObject postFX = GameObject.Find("PostProcessing");
+        GameObject postFX = GameObject.Find("Global Volume");
         if (postFX != null)
         {
-            postProcesamiento = postFX.GetComponent<PostProcessVolume>();
+            postProcesamiento = postFX.GetComponent<Volume>();
             if (postProcesamiento != null && postProcesamiento.profile != null)
             {
-                if (postProcesamiento.profile.HasSettings<ChromaticAberration>())
-                {
-                    chromatic = postProcesamiento.profile.GetSetting<ChromaticAberration>();
-                }
-
-                if (postProcesamiento.profile.HasSettings<Vignette>())
-                {
-                    vignette = postProcesamiento.profile.GetSetting<Vignette>();
-                }
+                postProcesamiento.profile.TryGet(out chromatic);
+                postProcesamiento.profile.TryGet(out vignette);
             }
         }
+
+        ActualizarReferenciasPostProcesado();
     }
 
     public void Saltar()
@@ -201,17 +202,29 @@ public class ControlDePersonaje : MonoBehaviour
             barraEnergia.fillAmount = energiaActual;
         }
 
-        // Aplicar efectos post procesamiento al correr
-        if (chromatic != null && vignette != null)
+        if (modoAnimalActivo)
         {
-            float velocidadCambio = 1.5f * Time.deltaTime;
-
-            float intensidadChromaticObjetivo = (estaCorriendo && energiaActual > 0) ? 0.523f : 0f;
-            float intensidadVignetteObjetivo = (estaCorriendo && energiaActual > 0) ? 0.304f : 0f;
-
-            chromatic.intensity.value = Mathf.MoveTowards(chromatic.intensity.value, intensidadChromaticObjetivo, velocidadCambio);
-            vignette.intensity.value = Mathf.MoveTowards(vignette.intensity.value, intensidadVignetteObjetivo, velocidadCambio);
+            return;
         }
+
+        // Aplicar efectos post procesamiento al correr
+        bool correr = estaCorriendo && energiaActual > 0;
+
+        // Cambiar de perfil si es necesario
+        if (correr && perfilActual != perfilCorrer)
+        {
+            CambiarPerfil(perfilCorrer);
+        }
+        else if (!correr && perfilActual != perfilBase)
+        {
+            CambiarPerfil(perfilBase);
+        }
+    }
+
+    private void CambiarPerfil(VolumeProfile nuevoPerfil)
+    {
+        perfilActual = nuevoPerfil;
+        postProcesamiento.profile = perfilActual;
     }
 
     public void Atacar()
@@ -271,27 +284,24 @@ public class ControlDePersonaje : MonoBehaviour
 
         if (postProcesamiento != null && postProcesamiento.profile != null)
         {
-            if (postProcesamiento.profile.HasSettings<ChromaticAberration>())
-            {
-                postProcesamiento.profile.TryGetSettings(out chromatic);
-            }
+            postProcesamiento.profile.TryGet(out chromatic);
+            if (chromatic != null) chromatic.active = true;
 
-            if (postProcesamiento.profile.HasSettings<Vignette>())
-            {
-                postProcesamiento.profile.TryGetSettings(out vignette);
-            }
+            postProcesamiento.profile.TryGet(out vignette);
+            if (vignette != null) vignette.active = true;
         }
     }
 
-    public void ActivarPostProcesadoTemporal(PostProcessProfile nuevoPerfil, float duracion)
+    public void ActivarPostProcesadoTemporal(VolumeProfile nuevoPerfil, float duracion)
     {
         if (efectoHabilidadActivo != null)
             StopCoroutine(efectoHabilidadActivo);
 
+        modoAnimalActivo = true;
         efectoHabilidadActivo = StartCoroutine(RutinaEfectoPostProcesado(nuevoPerfil, duracion));
     }
 
-    private IEnumerator RutinaEfectoPostProcesado(PostProcessProfile nuevoPerfil, float duracion)
+    private IEnumerator RutinaEfectoPostProcesado(VolumeProfile nuevoPerfil, float duracion)
     {
         if (postProcesamiento == null || nuevoPerfil == null || perfilOriginal == null)
             yield break;
@@ -328,6 +338,7 @@ public class ControlDePersonaje : MonoBehaviour
 
         // Restaurar el perfil original
         postProcesamiento.profile = perfilOriginal;
+        modoAnimalActivo = false;
         ActualizarReferenciasPostProcesado();
 
         efectoHabilidadActivo = null;
