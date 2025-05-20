@@ -35,7 +35,11 @@ public class PlayerManager : MonoBehaviour
         offset.y = 0f;
         Vector3 posicionJugador = centro + offset;
 
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), posicionJugador, Quaternion.identity);
+        GameObject jugador = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), posicionJugador, Quaternion.identity);
+        if (jugador.GetComponent<PhotonView>().IsMine)
+        {
+            jugador.tag = "PlayerLocal";
+        }
 
         yield return new WaitForSeconds(0.1f); // Espera para asegurar que el jugador se instancie
 
