@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MenuTransformacion",
+                    "type": "Button",
+                    "id": "01a4e638-d258-41ca-a7ca-b30029dddd90",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OtroMenuRadial",
+                    "type": "Button",
+                    "id": "a5994189-8afe-4981-8bb6-a36cdb42275c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -333,6 +351,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Correr",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1ff2105-a311-44a0-a021-ffe08d6dac1a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MenuTransformacion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae7b8bd5-8e6f-4759-b19c-5c6f50a14ebe",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OtroMenuRadial",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

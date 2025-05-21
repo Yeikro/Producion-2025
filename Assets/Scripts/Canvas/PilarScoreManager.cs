@@ -60,7 +60,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnLeftRoom()
     {
         Debug.Log("Se salió de la sala, ahora desconectando...");
-        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("Menu");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -76,7 +76,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
-        SceneManager.LoadScene("online");
+        SceneManager.LoadScene("Menu");
     }
 
     public void RegistrarPilarRecuperado()

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
@@ -130,4 +130,117 @@ public class Test : MonoBehaviour
     {
         Debug.Log("That's right and dont come back!");
     }
+}*/
+
+using UnityEngine;
+using UnityEngine.InputSystem; // NUEVO
+using UnityEngine.UI;
+
+public class Test : MonoBehaviour
+{
+    [SerializeField]
+    PiUIManager piUi;
+
+    private PiUI normalMenu;
+    public InputActionProperty menuRadial;
+    //public ControlDePersonaje controlDePersonaje;
+
+    private void Awake()
+    {
+        menuRadial.action.Enable();
+        menuRadial.action.performed += OnOpenMenu;
+    }
+
+    /*private void OnEnable()
+    {
+        inputActions.Enable(); // NUEVO
+        inputActions.UI.OpenMenu.performed += OnOpenMenu; // NUEVO
+    }*/
+
+    private void OnDisable()
+    {
+        menuRadial.action.performed -= OnOpenMenu; // NUEVO
+        menuRadial.action.Disable(); // NUEVO
+    }
+
+    void Start()
+    {
+        normalMenu = piUi.GetPiUIOf("Normal Menu");
+    }
+
+    void Update()
+    {
+        // Puedes dejar el resto del update para joystick u otros propósitos
+        normalMenu.joystickInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        normalMenu.joystickButton = Input.GetButtonDown("Fire1");
+        if (!normalMenu.joystickButton)
+        {
+            normalMenu.joystickButton = Input.GetButtonUp("Fire1");
+        }
+    }
+
+    // NUEVO - Esta función será llamada cuando presiones "E"
+    private void OnOpenMenu(InputAction.CallbackContext context)
+    {
+        bool isOpen = piUi.PiOpened("Normal Menu");
+
+        if (!isOpen)
+        {
+            int i = 0;
+            foreach (PiUI.PiData data in normalMenu.piData)
+            {
+                if (string.IsNullOrWhiteSpace(data.sliceLabel))
+                {
+                    data.sliceLabel = "Slice " + i.ToString();
+                }
+
+                if (data.onSlicePressed == null || data.onSlicePressed.GetPersistentEventCount() == 0)
+                {
+                    data.onSlicePressed = new UnityEngine.Events.UnityEvent();
+                    data.onSlicePressed.AddListener(Jaguar);
+                }
+
+                i++;
+            }
+
+            piUi.UpdatePiMenu("Normal Menu");
+
+            // ✅ Mostrar cursor
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            // ✅ Ocultar cursor
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        piUi.ChangeMenuState("Normal Menu", new Vector2(Screen.width / 2f, Screen.height / 2f));
+    }
+
+    public void Jaguar()
+    {
+        piUi.ChangeMenuState("Normal Menu");
+
+        // ✅ Ocultar cursor al cerrar el menú
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        //controlDePersonaje.velSuavisada = controlDePersonaje.velSuavisada * 3;
+        //controlDePersonaje.fuerzaSalto = controlDePersonaje.fuerzaSalto * 3;
+
+        Debug.Log("Jaguar");
+    }
+
+    public void OnHoverEnter()
+    {
+        Debug.Log("Hey get off of me!");
+    }
+
+    public void OnHoverExit()
+    {
+        Debug.Log("That's right and dont come back!");
+    }
 }
+
+
