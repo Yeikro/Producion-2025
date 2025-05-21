@@ -39,7 +39,7 @@ public class BlendShapeController : MonoBehaviour
 
     private void Start()
     {
-        material=skinnedMeshRenderer.material;
+        material=skinnedMeshRenderer.sharedMaterial;
         skinnedMeshRenderer.material=material;
     }
     public void ActivateBlendShape(int shapeIndex)
