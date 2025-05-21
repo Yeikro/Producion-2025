@@ -43,6 +43,8 @@ public class MenuRadial : MonoBehaviour
     public ParticleSystem particulasRana;
     public ParticleSystem particulasMono;
 
+    public GroupedActivator groupedActivator;
+
     private void Awake()
     {
         photonView = GetComponent<Photon.Pun.PhotonView>();
@@ -240,6 +242,7 @@ public class MenuRadial : MonoBehaviour
         StartCoroutine(MostrarBarraDeDuracion(duracionPoderJaguar));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesJaguar());
+        groupedActivator.ActivateGroup(3);
     }
 
     public void ActivarPoderTucan()
@@ -253,6 +256,7 @@ public class MenuRadial : MonoBehaviour
         StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesTucan());
+        groupedActivator.ActivateGroup(4);
     }
 
     public void ActivarPoderRana()
@@ -266,6 +270,7 @@ public class MenuRadial : MonoBehaviour
         StartCoroutine(MostrarBarraDeDuracion(duracionPoder));
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesRana());
+        groupedActivator.ActivateGroup(2);
     }
 
     public void ActivarPoderMono()
@@ -286,6 +291,7 @@ public class MenuRadial : MonoBehaviour
 
         // Iniciar la corrutina para restaurar valores
         StartCoroutine(RestaurarValoresOriginalesMono());
+        groupedActivator.ActivateGroup(1);
     }
 
     private IEnumerator RestaurarValoresOriginalesJaguar()
@@ -293,23 +299,27 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoderJaguar);
 
         // Restaurar valores originales
+        groupedActivator.ActivateGroup(0);
         particulasGeneral.Stop();
         particulasJaguar.Stop();
         barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
         StartCoroutine(HabilitarConFadeJaguar(piMenu.piList[0], enfriamientoHabilidad));
+        
     }
     private IEnumerator RestaurarValoresOriginalesTucan()
     {
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        groupedActivator.ActivateGroup(0);
         particulasGeneral.Stop();
         particulasTucan.Stop();
         barraHabilidad.SetActive(false);
         ActivarPoder(estadoOriginal);
 
         StartCoroutine(HabilitarConFadeTucan(piMenu.piList[3], enfriamientoHabilidad));
+
     }
 
     private IEnumerator RestaurarValoresOriginalesRana()
@@ -317,6 +327,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        groupedActivator.ActivateGroup(0);
         particulasGeneral.Stop();
         particulasRana.Stop();
         barraHabilidad.SetActive(false);
@@ -330,6 +341,7 @@ public class MenuRadial : MonoBehaviour
         yield return new WaitForSeconds(duracionPoder);
 
         // Restaurar valores originales
+        groupedActivator.ActivateGroup(0);
         particulasGeneral.Stop();
         particulasMono.Stop();
         barraHabilidad.SetActive(false);
@@ -412,6 +424,7 @@ public class MenuRadial : MonoBehaviour
         particulasTucan.Stop();
         particulasMono.Stop();
         particulasRana.Stop();
+       
     }
 
     public void OnHoverEnter()
@@ -452,5 +465,6 @@ public class MenuRadial : MonoBehaviour
         controlDePersonaje.rangoAtaque = ei.rangoAtaque;
         vida.cobertura = ei.cobertura;
         customGravity.gravityScale = ei.gravedad;
+        groupedActivator.blendController.material.SetTexture("_Layer1",ei.textura);
     }
 }
