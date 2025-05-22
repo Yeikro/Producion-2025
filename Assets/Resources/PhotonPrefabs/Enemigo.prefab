@@ -1590,6 +1590,7 @@ GameObject:
   - component: {fileID: 636810266054844702}
   - component: {fileID: 7795468361144555758}
   - component: {fileID: 2305938542884769388}
+  - component: {fileID: 8423557962193455319}
   m_Layer: 6
   m_Name: Enemigo
   m_TagString: Enemigo
@@ -1825,6 +1826,20 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &8423557962193455319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5234643206285403033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35fd54ac079a8b47aa6549789157333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconPrefab: {fileID: 4922837886278913688, guid: 64491c38b1af452409456a53259a0f43, type: 3}
+  clampOnRadar: 1
 --- !u!1 &5258176150290285574
 GameObject:
   m_ObjectHideFlags: 0

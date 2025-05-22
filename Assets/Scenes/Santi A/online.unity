@@ -793,9 +793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Find Room
-
-'
+  m_text: Encontrar Sala
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a8965836db8320d43b6769dad22a5084, type: 2}
   m_sharedMaterial: {fileID: 8182860641851859402, guid: a8965836db8320d43b6769dad22a5084, type: 2}
@@ -1481,7 +1479,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit Game
+  m_text: Salir
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a8965836db8320d43b6769dad22a5084, type: 2}
   m_sharedMaterial: {fileID: 8182860641851859402, guid: a8965836db8320d43b6769dad22a5084, type: 2}
@@ -2135,9 +2133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Create Room
-
-'
+  m_text: Crear Sala
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a8965836db8320d43b6769dad22a5084, type: 2}
   m_sharedMaterial: {fileID: 8182860641851859402, guid: a8965836db8320d43b6769dad22a5084, type: 2}
@@ -3033,7 +3029,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Create Room
+  m_text: Crear Sala
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a8965836db8320d43b6769dad22a5084, type: 2}
   m_sharedMaterial: {fileID: 8182860641851859402, guid: a8965836db8320d43b6769dad22a5084, type: 2}
@@ -3461,7 +3457,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 79c6fd23153c22a46a0f2867eb1baa1d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.135
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3815,8 +3811,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -326, y: 80}
-  m_SizeDelta: {x: 600, y: 70}
+  m_AnchoredPosition: {x: -336, y: 80}
+  m_SizeDelta: {x: 464.723, y: 70}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1533725191
 MonoBehaviour:
@@ -3969,7 +3965,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Crear Sala
+  m_text: Iniciar Sala
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a8965836db8320d43b6769dad22a5084, type: 2}
   m_sharedMaterial: {fileID: 8182860641851859402, guid: a8965836db8320d43b6769dad22a5084, type: 2}

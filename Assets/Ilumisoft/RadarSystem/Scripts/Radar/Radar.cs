@@ -1,4 +1,5 @@
 using Ilumisoft.RadarSystem.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,9 +41,15 @@ namespace Ilumisoft.RadarSystem
         /// </summary>
         public GameObject Player;
 
-        private void Awake()
+        private IEnumerator Start()
         {
-            Player = GameObject.FindGameObjectWithTag("PlayerLocal");
+            // Espera hasta que el jugador exista
+            while ((Player = GameObject.FindGameObjectWithTag("Jugador")) == null)
+            {
+                yield return null; // espera un frame
+            }
+
+            Debug.Log("Jugador encontrado: " + Player.name);
         }
 
         private void OnEnable()

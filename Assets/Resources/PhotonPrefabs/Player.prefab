@@ -2129,7 +2129,7 @@ MonoBehaviour:
   multiplicadorCorrer: 3.5
   energiaMaxima: 1
   energiaActual: 1
-  velocidadGasto: 0.6
+  velocidadGasto: 0.2
   velocidadRecarga: 0.08
   barraEnergia: {fileID: 7702116864656759861}
   controlesBloqueados: 0
@@ -2142,6 +2142,7 @@ MonoBehaviour:
   perfilOriginal: {fileID: 11400000, guid: e10cacc3198ea43f08f0ecfaa0435918, type: 2}
   perfilBase: {fileID: 11400000, guid: e10cacc3198ea43f08f0ecfaa0435918, type: 2}
   perfilCorrer: {fileID: 11400000, guid: fcacdfb4c90c34642a04a69c4a5cb023, type: 2}
+  UI: {fileID: 5335353073929671666}
 --- !u!136 &6666563340571142190
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2266,7 +2267,7 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Down
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Transformar
   m_SynchronizeLayers:
   - SynchronizeType: 2
@@ -2348,8 +2349,8 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 414694318034272427, guid: 0037cac2e5d7f8347a22bddd0657d7b3, type: 3}
   controlDePersonaje: {fileID: 759808118104847036}
-  duracionPoderJaguar: 5
-  duracionPoder: 15
+  duracionPoderJaguar: 18
+  duracionPoder: 25
   enfriamientoHabilidad: 10
   inmune: 0
   customGravity: {fileID: 0}
@@ -2368,7 +2369,6 @@ MonoBehaviour:
   particulasRana: {fileID: 1758341290398815993}
   particulasMono: {fileID: 2733501973491170685}
   groupedActivator: {fileID: 1137746041773322895}
-  animaciones: {fileID: 1963246146734603905}
 --- !u!114 &4099931393752290512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2425,7 +2425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1541120256159871842
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3376,7 +3376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0, y: 1.996}
+  m_AnchoredPosition: {x: -0, y: 2.218}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1807634484592496807
@@ -3914,8 +3914,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Username
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a8965836db8320d43b6769dad22a5084, type: 2}
+  m_sharedMaterial: {fileID: 8182860641851859402, guid: a8965836db8320d43b6769dad22a5084, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5741,8 +5741,56 @@ PrefabInstance:
     m_TransformParent: {fileID: 3632375572119239218}
     m_Modifications:
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[0].icon
+      value: 
+      objectReference: {fileID: 509449810, guid: 6db5dba8cc7f97746a8140bbba0171e7, type: 3}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 2145511659, guid: 6db5dba8cc7f97746a8140bbba0171e7, type: 3}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[2].icon
+      value: 
+      objectReference: {fileID: -1291821694, guid: 6db5dba8cc7f97746a8140bbba0171e7, type: 3}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].icon
+      value: 
+      objectReference: {fileID: -1302292290, guid: 6db5dba8cc7f97746a8140bbba0171e7, type: 3}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[3].angle
       value: 57.099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[0].iconSize
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[1].iconSize
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[2].iconSize
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].iconSize
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[0].sliceLabel
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[1].sliceLabel
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[2].sliceLabel
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: piData.Array.data[3].sliceLabel
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 706128419253047582, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: piData.Array.data[0].isInteractable
@@ -5847,6 +5895,18 @@ PrefabInstance:
     - target: {fileID: 2315624624763389498, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
       propertyPath: m_Name
       value: MenuRadial
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874532879384713908, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: m_Color.b
+      value: 0.39670703
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874532879384713908, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: m_Color.g
+      value: 0.39670703
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874532879384713908, guid: 542b3e50ec66dd947a84e0d4f8560906, type: 3}
+      propertyPath: m_Color.r
+      value: 0.4811321
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

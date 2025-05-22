@@ -68,9 +68,12 @@ public class ControlDePersonaje : MonoBehaviour
     private Coroutine efectoHabilidadActivo;
     private bool modoAnimalActivo = false;
 
+    public GameObject UI;
+
     void Awake()
     {
         PV = GetComponent<PhotonView>();
+        StartCoroutine(EnableUIAfterDelay(58f));
     }
 
     private void Start()
@@ -344,4 +347,12 @@ public class ControlDePersonaje : MonoBehaviour
         efectoHabilidadActivo = null;
     }
 
+    IEnumerator EnableUIAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (UI != null)
+        {
+            UI.SetActive(true);
+        }
+    }
 }

@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
         GameObject jugador = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), posicionJugador, Quaternion.identity);
         if (jugador.GetComponent<PhotonView>().IsMine)
         {
-            jugador.tag = "PlayerLocal";
+            jugador.tag = "Jugador";
         }
 
         yield return new WaitForSeconds(0.1f); // Espera para asegurar que el jugador se instancie
