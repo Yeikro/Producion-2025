@@ -45,8 +45,6 @@ public class MenuRadial : MonoBehaviour
 
     public GroupedActivator groupedActivator;
 
-    public Animator animaciones;
-
     private void Awake()
     {
         photonView = GetComponent<Photon.Pun.PhotonView>();
@@ -426,7 +424,6 @@ public class MenuRadial : MonoBehaviour
         particulasTucan.Stop();
         particulasMono.Stop();
         particulasRana.Stop();
-        animaciones.SetTrigger("Transformar");
 
     }
 
