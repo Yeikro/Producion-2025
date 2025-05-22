@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7e836e8dff0f54483321b2eb90c9b7, type: 3}
+  m_Name: Jaguar
+  m_EditorClassIdentifier: 
+  fuerzaSalto: {x: 0, y: 4.5, z: 3}
+  "da\xF1oRaycast": 4
+  multiplicadorCorrer: 10
+  velocidadGasto: 0.2
+  velocidadRecarga: 0.5
+  rangoAtaque: 3
+  cobertura: 0.5
+  gravedad: 1
+  textura: {fileID: 2800000, guid: 4faf18543d037dc43be48bfcde2f1c9d, type: 3}
