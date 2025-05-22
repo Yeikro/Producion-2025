@@ -2265,6 +2265,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: Down
+  - Type: 9
+    SynchronizeType: 0
+    Name: Transformar
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
@@ -2365,6 +2368,7 @@ MonoBehaviour:
   particulasRana: {fileID: 1758341290398815993}
   particulasMono: {fileID: 2733501973491170685}
   groupedActivator: {fileID: 1137746041773322895}
+  animaciones: {fileID: 1963246146734603905}
 --- !u!114 &4099931393752290512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4541,6 +4545,7 @@ MonoBehaviour:
     - {fileID: 6917024579418598203}
   indice: 0
   blendController: {fileID: 601973804208991587}
+  animaciones: {fileID: 1963246146734603905}
 --- !u!1 &536516689730184070 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 959871158611142754, guid: c1dbb934a6e3c9945859263217e47fd6, type: 3}

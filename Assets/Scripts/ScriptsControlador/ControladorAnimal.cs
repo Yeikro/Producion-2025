@@ -91,6 +91,9 @@ public class ControladorAnimal : MonoBehaviour
                         if (registro != null && !registro.YaInteractuoCon(nombreAnimal))
                         {
                             jugador = go;
+                            go.GetComponent<Animator>().SetTrigger("Transformar");
+                            print("incio animacion de interaccion");
+                            go.transform.LookAt(transform);
                             StartCoroutine(InteraccionConJugador());
                         }
                         else
