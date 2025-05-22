@@ -424,7 +424,7 @@ public class MenuRadial : MonoBehaviour
         particulasTucan.Stop();
         particulasMono.Stop();
         particulasRana.Stop();
-       
+
     }
 
     public void OnHoverEnter()

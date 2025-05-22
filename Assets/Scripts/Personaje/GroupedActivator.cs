@@ -17,6 +17,8 @@ public class GroupedActivator : MonoBehaviour
     public BlendShapeController blendController;
 
     private Coroutine currentCoroutine;
+    public Animator animaciones;
+
 
     /// <summary>
     /// Llama este método para activar un grupo por su índice.
@@ -46,6 +48,7 @@ public class GroupedActivator : MonoBehaviour
     public void Activar()
     {
         ActivateGroup(indice);
+        
     }
 
     private IEnumerator ActivateGroupCoroutine(int groupIndex)
