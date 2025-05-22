@@ -279,6 +279,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1837937795}
+  - {fileID: 1801515028}
+  - {fileID: 1754968791}
   - {fileID: 916320977}
   - {fileID: 305482953}
   - {fileID: 176024276}
@@ -727,8 +729,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1754968791}
+  m_Children: []
   m_Father: {fileID: 114295246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -1542,8 +1543,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1801515028}
+  m_Children: []
   m_Father: {fileID: 114295246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -1842,7 +1842,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 91e851a4afabc3741bed9d61fa78965b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3476,11 +3476,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 305482953}
+  m_Father: {fileID: 114295246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143.5387, y: 8.345825}
+  m_AnchoredPosition: {x: -580.32, y: 410}
   m_SizeDelta: {x: 97.2015, y: 59.8658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1754968792
@@ -3657,11 +3657,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 916320977}
+  m_Father: {fileID: 114295246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143.5387, y: 16.345825}
+  m_AnchoredPosition: {x: -580.32, y: 497}
   m_SizeDelta: {x: 97.2015, y: 59.8658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1801515029
@@ -3888,18 +3888,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 894072513591150781, guid: bdb1cbda3fa076749b577d0be9dcd112, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1800261503034436371, guid: bdb1cbda3fa076749b577d0be9dcd112, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3644824351705604391, guid: bdb1cbda3fa076749b577d0be9dcd112, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7117402367348631381, guid: bdb1cbda3fa076749b577d0be9dcd112, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3943,10 +3931,6 @@ PrefabInstance:
     - target: {fileID: 7961353739284526197, guid: bdb1cbda3fa076749b577d0be9dcd112, type: 3}
       propertyPath: m_Name
       value: Radar
-      objectReference: {fileID: 0}
-    - target: {fileID: 8569482798926192067, guid: bdb1cbda3fa076749b577d0be9dcd112, type: 3}
-      propertyPath: m_Layer
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4668,7 +4652,7 @@ VideoPlayer:
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
-  - 1
+  - 0.5
   m_Url: 
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
@@ -6174,8 +6158,8 @@ SceneRoots:
   - {fileID: 988771340}
   - {fileID: 675347931}
   - {fileID: 327845170}
-  - {fileID: 1844829325}
   - {fileID: 114295246}
+  - {fileID: 1844829325}
   - {fileID: 423870032}
   - {fileID: 1708911098243671624}
   - {fileID: 5527400511362326882}
