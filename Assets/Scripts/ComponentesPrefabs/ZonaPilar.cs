@@ -7,6 +7,8 @@ public class ZonaPilar : MonoBehaviour
 {
     public Vida vida;
     public GameObject canvasVidaMundo;
+    public GameObject indicador;
+    public ParticleSystem zonaParticula;
 
     private int jugadoresDentro = 0;
     private int enemigosDentro = 0;
@@ -51,6 +53,9 @@ public class ZonaPilar : MonoBehaviour
             {
                 // Pilar muerto → marcar como tal, quitar de objetivos y desactivar zona
                 vida.estaMuerto = true;
+                canvasVidaMundo.SetActive(false);
+                indicador.SetActive(false);
+                zonaParticula.Stop();
 
                 Debug.Log("pilar caido");
 
@@ -112,6 +117,9 @@ public class ZonaPilar : MonoBehaviour
             }
 
             PilarScoreManager.instance.RegistrarPilarRecuperado();
+            canvasVidaMundo.SetActive(false);
+            indicador.SetActive(false);
+            zonaParticula.Stop();
         }
     }
 }

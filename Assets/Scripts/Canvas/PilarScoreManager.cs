@@ -118,7 +118,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             PV.RPC("RPC_FinDelJuego", RpcTarget.All, "¡Victoria de los españoles!");
         }
-        else if (pilaresVivos >= 1)
+        else if (pilaresVivos >= 3)
         {
             PV.RPC("RPC_FinDelJuego", RpcTarget.All, "¡Victoria de los jugadores!");
         }
