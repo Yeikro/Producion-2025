@@ -24,6 +24,8 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private PhotonView PV;
 
+    public bool acaboJuego = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -48,6 +50,14 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 VolverAlInicioSeguro();
             });
+        }
+    }
+
+    public void LateUpdate()
+    {
+        if(acaboJuego)
+        {
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
@@ -136,6 +146,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             panelVictoria.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
+            acaboJuego = true;
         }
 
         if (textoVictoria != null)
