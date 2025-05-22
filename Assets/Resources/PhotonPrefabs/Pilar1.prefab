@@ -201,6 +201,8 @@ GameObject:
   - component: {fileID: 2795036150843938692}
   - component: {fileID: 1825490164481599415}
   - component: {fileID: 6840282309618147121}
+  - component: {fileID: 4546100526632653782}
+  - component: {fileID: 3443440945269855313}
   m_Layer: 0
   m_Name: Circulo
   m_TagString: Untagged
@@ -5018,6 +5020,43 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &4546100526632653782
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6850077555623315360}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.43
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3443440945269855313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6850077555623315360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271d3141aa38bd04caf36bde21007057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: {fileID: -3890634647989014299}
+  canvasVidaMundo: {fileID: 1029319427056573820}
+  indicador: {fileID: 9014990227425346216}
+  zonaParticula: {fileID: 1825490164481599415}
 --- !u!1 &7168779388732332552
 GameObject:
   m_ObjectHideFlags: 0
@@ -5486,5 +5525,10 @@ PrefabInstance:
 --- !u!4 &4053171687284206576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6919565539377876676, guid: 14daa78c49be7b4488bd5f00dc1fc67e, type: 3}
+  m_PrefabInstance: {fileID: 6357110281463260468}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9014990227425346216 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2676074720769058716, guid: 14daa78c49be7b4488bd5f00dc1fc67e, type: 3}
   m_PrefabInstance: {fileID: 6357110281463260468}
   m_PrefabAsset: {fileID: 0}
