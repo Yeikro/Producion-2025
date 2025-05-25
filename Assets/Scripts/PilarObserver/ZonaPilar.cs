@@ -13,10 +13,16 @@ public class ZonaPilar : MonoBehaviour
     private int jugadoresDentro = 0;
     private int enemigosDentro = 0;
 
+    private PilarSubject pilarSubject;
+
     private void Start()
     {
         if (vida == null)
             vida = GetComponentInParent<Vida>();
+
+        pilarSubject = GetComponentInParent<PilarSubject>();
+        if (pilarSubject == null)
+            Debug.LogError("No se encontró PilarSubject en el padre del Pilar");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,7 +39,7 @@ public class ZonaPilar : MonoBehaviour
 
     private void Update()
     {
-        if (!vida.GetComponent<PhotonView>().IsMine) return; // Solo el dueño controla la lógica
+        if (!vida.GetComponent<PhotonView>().IsMine) return;
 
         if (vida.estaMuerto || vida.vidaActual >= vida.vidaInicial) return;
 
@@ -41,7 +47,6 @@ public class ZonaPilar : MonoBehaviour
 
         if (diferencia == 0)
         {
-            // Igual número → no se cura ni se daña y sale de la lista de objetivos
             if (ControlObjetivos.singleton.objetivos.Contains(transform.parent))
             {
                 ControlObjetivos.singleton.objetivos.Remove(transform.parent);
@@ -51,7 +56,6 @@ public class ZonaPilar : MonoBehaviour
         {
             if (vida.vidaActual <= 0f)
             {
-                // Pilar muerto → marcar como tal, quitar de objetivos y desactivar zona
                 vida.estaMuerto = true;
                 canvasVidaMundo.SetActive(false);
                 indicador.SetActive(false);
@@ -59,18 +63,17 @@ public class ZonaPilar : MonoBehaviour
 
                 Debug.Log("pilar caido");
 
-                PilarScoreManager.instance.RegistrarPilarMuerto();
+                pilarSubject?.NotificarMuerte(); // <--- INVOKE EN LUGAR DIRECTO
 
                 if (ControlObjetivos.singleton.objetivos.Contains(transform.parent))
                 {
                     ControlObjetivos.singleton.objetivos.Remove(transform.parent);
                 }
 
-                gameObject.SetActive(false); //Desactiva la zona de curación
+                gameObject.SetActive(false);
                 return;
             }
 
-            // Sigue siendo un objetivo
             if (!ControlObjetivos.singleton.objetivos.Contains(transform.parent))
             {
                 ControlObjetivos.singleton.objetivos.Add(transform.parent);
@@ -80,13 +83,11 @@ public class ZonaPilar : MonoBehaviour
 
             if (diferencia > 0)
             {
-                // Más jugadores → curar
                 vida.vidaActual = Mathf.Min(vida.vidaActual + cambio, vida.vidaInicial);
                 vida.ActualizarInterfaz();
             }
             else
             {
-                // Más enemigos → dañar
                 vida.vidaActual = Mathf.Max(vida.vidaActual - cambio, 0);
                 vida.ActualizarInterfaz();
 
@@ -96,7 +97,7 @@ public class ZonaPilar : MonoBehaviour
 
                     Debug.Log("pilar caido");
 
-                    PilarScoreManager.instance.RegistrarPilarMuerto();
+                    pilarSubject?.NotificarMuerte(); // <--- INVOKE EN LUGAR DIRECTO
 
                     if (ControlObjetivos.singleton.objetivos.Contains(transform.parent))
                     {
@@ -108,7 +109,6 @@ public class ZonaPilar : MonoBehaviour
             }
         }
 
-        // Si se curó al máximo → dejar de ser objetivo
         if (vida.vidaActual >= vida.vidaInicial)
         {
             if (ControlObjetivos.singleton.objetivos.Contains(transform.parent))
@@ -116,10 +116,14 @@ public class ZonaPilar : MonoBehaviour
                 ControlObjetivos.singleton.objetivos.Remove(transform.parent);
             }
 
-            PilarScoreManager.instance.RegistrarPilarRecuperado();
+            pilarSubject?.NotificarRecuperacion(); // <--- INVOKE EN LUGAR DIRECTO
+
+            Debug.Log("pilar recuperado");
             canvasVidaMundo.SetActive(false);
             indicador.SetActive(false);
             zonaParticula.Stop();
         }
     }
 }
+
+

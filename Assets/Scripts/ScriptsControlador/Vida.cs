@@ -1,6 +1,5 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,14 +15,16 @@ public class Vida : MonoBehaviour, IPunObservable
     public float vidaActual;
     public UnityEvent eventoMorir;
     public bool estaMuerto = false;
-    public float modificador = 1;//hace que tenga mas o menos da�o, sirve para la trasformacion de los animales//
-
+    public float modificador = 1;
     public bool cubierto = false;
     public float cobertura = 0.5f;
+
+    private PilarSubject pilarSubject;
 
     void Awake()
     {
         PV = GetComponent<PhotonView>();
+        pilarSubject = GetComponent<PilarSubject>();
     }
 
     void Start()
@@ -34,9 +35,7 @@ public class Vida : MonoBehaviour, IPunObservable
             Destroy(ui);
 
         if (menuRadial == null && PV.IsMine)
-        {
             menuRadial = FindAnyObjectByType<MenuRadial>();
-        }
     }
 
     [PunRPC]
@@ -44,7 +43,7 @@ public class Vida : MonoBehaviour, IPunObservable
     {
         if (estaMuerto) return;
 
-        if (menuRadial!=null && menuRadial.inmune)
+        if (menuRadial != null && menuRadial.inmune)
         {
             vidaActual -= cuanto * (1 - cobertura);
         }
@@ -58,14 +57,13 @@ public class Vida : MonoBehaviour, IPunObservable
         if (vidaActual <= 0)
         {
             vidaActual = 0;
-            print("Muerto!! ->" + gameObject.name);
-            eventoMorir.Invoke();
             estaMuerto = true;
+            print("Muerto!! ->" + gameObject.name);
+
+            eventoMorir.Invoke();
         }
-        
+
         CameraShake.Instance.ShakeCamera(0.3f, 0.5f, 3f);
-
-
     }
 
     public void ActualizarInterfaz()
@@ -95,3 +93,4 @@ public class Vida : MonoBehaviour, IPunObservable
         }
     }
 }
+

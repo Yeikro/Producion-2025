@@ -5225,6 +5225,7 @@ GameObject:
   - component: {fileID: 4477348817259451272}
   - component: {fileID: -3890634647989014299}
   - component: {fileID: -2064010474955253659}
+  - component: {fileID: -3846274142700159927}
   m_Layer: 0
   m_Name: Pilar1
   m_TagString: Untagged
@@ -5396,6 +5397,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ff2ccdbcedc5e448ae9c3d4bc6d4270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3846274142700159927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8909559011680477483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47543cb69a635494496f9a98129cca6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2991170257585072708
