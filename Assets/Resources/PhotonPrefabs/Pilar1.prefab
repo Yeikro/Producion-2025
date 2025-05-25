@@ -5226,6 +5226,7 @@ GameObject:
   - component: {fileID: -3890634647989014299}
   - component: {fileID: -2064010474955253659}
   - component: {fileID: -3846274142700159927}
+  - component: {fileID: 7284244762808990847}
   m_Layer: 0
   m_Name: Pilar1
   m_TagString: Untagged
@@ -5411,6 +5412,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47543cb69a635494496f9a98129cca6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7284244762808990847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8909559011680477483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5250599cf21104a880aa3734202ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabsRocas:
+  - {fileID: 1462947858900394185, guid: 7ddc28a41ec63f040b72fcf5e72f8376, type: 3}
+  - {fileID: 6923255150310774827, guid: b271377179e077748bf122f7eec3bb9d, type: 3}
+  - {fileID: 1514737103342296755, guid: 8928802ca6d03ba4cbf8d6d0dce05f8d, type: 3}
+  - {fileID: 1301938802739481962, guid: 5e9bf9f56c890924ba35e21f3decd3a2, type: 3}
+  minRocas: 4
+  maxRocas: 7
 --- !u!1001 &2991170257585072708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5469,7 +5489,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8946036001658953980, guid: d4de0f80ac2c4d34c9b020ea3dc2c1fe, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6202747356132643873, guid: d4de0f80ac2c4d34c9b020ea3dc2c1fe, type: 3}
+    - {fileID: 2860713169614237482, guid: d4de0f80ac2c4d34c9b020ea3dc2c1fe, type: 3}
+    - {fileID: 5931223105341334686, guid: d4de0f80ac2c4d34c9b020ea3dc2c1fe, type: 3}
+    - {fileID: 822472210828120063, guid: d4de0f80ac2c4d34c9b020ea3dc2c1fe, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4de0f80ac2c4d34c9b020ea3dc2c1fe, type: 3}
