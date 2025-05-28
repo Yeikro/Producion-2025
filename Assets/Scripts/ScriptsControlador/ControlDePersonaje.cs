@@ -253,6 +253,7 @@ public class ControlDePersonaje : MonoBehaviour
 
     public void Morir()
     {
+        Invoke("Respawn", 5f);
         if (!vida.estaMuerto)
         {
             Invoke("Respawn", 5f);
