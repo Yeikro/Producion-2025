@@ -3,7 +3,7 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -26,6 +26,8 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public bool acaboJuego = false;
 
+    private List<PilarSubject> pilaresRegistrados = new List<PilarSubject>();
+
     private void Awake()
     {
         if (instance == null)
@@ -33,7 +35,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
         else
             Destroy(gameObject);
 
-        PV = GetComponent<PhotonView>(); // 👈 Agregado
+        PV = GetComponent<PhotonView>();
     }
 
     private void Start()
@@ -55,7 +57,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void LateUpdate()
     {
-        if(acaboJuego)
+        if (acaboJuego)
         {
             Cursor.lockState = CursorLockMode.None;
         }
@@ -64,7 +66,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
     public void VolverAlInicioSeguro()
     {
         Time.timeScale = 1f;
-        PhotonNetwork.LeaveRoom();  // Se encadena todo por callbacks
+        PhotonNetwork.LeaveRoom();
     }
 
     public override void OnLeftRoom()
@@ -77,7 +79,6 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         Debug.Log("Desconectado de Photon. Cargando escena online...");
 
-        // Destruir objetos persistentes (más confiable)
         foreach (GameObject go in GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             if (go.scene.buildIndex == -1)
@@ -121,8 +122,7 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
     private void RevisarCondicionesVictoria()
     {
         if (juegoFinalizado) return;
-
-        if (!PhotonNetwork.IsMasterClient) return; // 👈 Solo el master revisa
+        if (!PhotonNetwork.IsMasterClient) return;
 
         if (pilaresCaidos >= 3)
         {
@@ -171,5 +171,16 @@ public class PilarScoreManager : MonoBehaviourPunCallbacks, IPunObservable
             RevisarCondicionesVictoria();
         }
     }
+
+    public void RegistrarNuevoPilar(PilarSubject subject)
+    {
+        if (!pilaresRegistrados.Contains(subject))
+        {
+            pilaresRegistrados.Add(subject);
+            subject.OnMuerto += RegistrarPilarMuerto;
+            subject.OnRecuperado += RegistrarPilarRecuperado;
+        }
+    }
 }
+
 
