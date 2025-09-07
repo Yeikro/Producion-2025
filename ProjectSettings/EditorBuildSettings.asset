@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Santi A/online.unity
     guid: 7fb82eaefbfedb84181e2f14f185ec7e
   - enabled: 1
+    path: Assets/Scenes/Santi A/Valentina.unity
+    guid: 1e8a007e6125c314e8d24075ef2b9f46
+  - enabled: 0
     path: Assets/Scenes/Santi A/GameSanti.unity
     guid: b0f8a3f6d6af9c24b825e53080f49076
   - enabled: 1
